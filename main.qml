@@ -6,35 +6,59 @@ Window {
     width: 1000
     height: 600
 
+
+    color: "lightgray"
+
     Component
     {
         id: childrenDelegate
-        Item
+
+        MouseArea
         {
-            height: 50
+
+            height: 100
             width: parent.width
 
-            Text
+            onClicked: childrenList.currentIndex = index
+
+            Image
             {
+                id:image
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                width: parent.width / 2
+                anchors.margins: 5
+                width: parent.width / 3
+                fillMode: Image.PreserveAspectFit
+                source: "./images/child.jpg"
+            }
+
+            Text
+            {
+                id:name
+                anchors.left: image.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                width: parent.width / 3
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pointSize: 16
                 text: "Name"
             }
-            Image
+
+            Text
             {
-                anchors.right: parent.right
+                id:group
+                anchors.left: name.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                anchors.margins: 5
-                width: parent.width / 2
-                fillMode: Image.PreserveAspectFit
-                source: "./images/child.jpg"
+                width: parent.width / 3
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pointSize: 16
+                text: "Group"
             }
+
         }
     }
 
@@ -53,6 +77,8 @@ Window {
             anchors.fill: parent
             anchors.margins: 10
             clip: true
+            focus: true
+            highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
             model: 20
             delegate: childrenDelegate
         }
