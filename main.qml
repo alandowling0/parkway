@@ -8,6 +8,8 @@ Window {
 
     color: "lightgray"    
 
+    Component.onCompleted: showMaximized()
+
     ChildrenList
     {
         id: children
