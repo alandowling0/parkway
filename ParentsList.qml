@@ -13,8 +13,27 @@ Rectangle {
         anchors.fill: parent
         anchors.margins: 10
         clip: true
-        model: 2
+        model: parentsModel
         delegate: delegate
+    }
+
+    ListModel
+    {
+        id: parentsModel
+
+        ListElement
+        {
+            name: "Mum"
+            email: "mummy@example.com"
+            phone: "07654 123456"
+        }
+
+        ListElement
+        {
+            name: "Dad"
+            email: "daddy@example.com"
+            phone: "07654 654321"
+        }
     }
 
     Component
@@ -37,7 +56,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pointSize: 12
-                text: "Mum"
+                text: model.name
                 wrapMode: Text.Wrap
             }
 
@@ -52,7 +71,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pointSize: 12
-                text: "email@example.com"
+                text: model.email
                 wrapMode: Text.Wrap
             }
 
@@ -67,7 +86,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pointSize: 12
-                text: "07654 123456"
+                text: model.phone
                 wrapMode: Text.Wrap
             }
         }
