@@ -11,7 +11,6 @@ Window {
     ChildrenList
     {
         id: children
-
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
@@ -22,11 +21,20 @@ Window {
     ParentsList
     {
         id: parents
-
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.left: children.right
-        height: parent.height / 4
+        height: parent.height / 5
         anchors.margins: 10
+    }
+
+    AttendedDays
+    {
+        id: attendedDays
+        anchors.top: parents.bottom
+        anchors.right: parent.right
+        anchors.left: children.right
+        anchors.margins: 10
+        height: parent.height / 5
     }
 }

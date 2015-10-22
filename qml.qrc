@@ -4,5 +4,6 @@
         <file>images/child.jpg</file>
         <file>ChildrenList.qml</file>
         <file>ParentsList.qml</file>
+        <file>AttendedDays.qml</file>
     </qresource>
 </RCC>
