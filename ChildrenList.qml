@@ -6,6 +6,7 @@ Rectangle
     height: 600
     border.color: "red"
     border.width: 2
+    radius: 5
 
     ListView
     {
