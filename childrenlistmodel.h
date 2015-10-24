@@ -2,6 +2,7 @@
 
 #include <QAbstractListModel>
 #include <QList>
+#include <QtSql>
 
 class Child
 {
@@ -32,6 +33,7 @@ public:
     Q_INVOKABLE void doSomething();
 
     ChildrenListModel(QObject *parent = 0);
+    ~ChildrenListModel();
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex & index, int role) const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
@@ -40,4 +42,6 @@ public:
 
 private:
     QList<Child> iChildren;
+
+    QSqlDatabase iSqliteDatabase;
 };

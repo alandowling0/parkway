@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick sql
 
 CONFIG += c++11
 
@@ -16,7 +16,7 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 DISTFILES += \
-    images/child.jpg
+    database/parkway.db
 
 HEADERS += \
     childrenlistmodel.h

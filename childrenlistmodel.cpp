@@ -27,8 +27,47 @@ QString Child::Group() const
 ChildrenListModel::ChildrenListModel(QObject *parent)
     :QAbstractListModel(parent)
 {
-    AddChild(Child("Sara", "child.jpg", "Pandas"));
-    AddChild(Child("Robert", "child.jpg", "Koalas"));
+    iSqliteDatabase = QSqlDatabase::addDatabase("QSQLITE");
+    iSqliteDatabase.setDatabaseName("..\\parkway\\database\\parkway.db");
+
+    bool open = iSqliteDatabase.open();
+    if(!open)
+    {
+       qDebug() << iSqliteDatabase.lastError().text();
+       assert(open);
+    }
+
+    QSqlQuery pragma("PRAGMA foreign_keys = ON;");
+    if(!pragma.exec())
+        qDebug() << pragma.lastError().text();
+
+    QSqlQuery query;
+
+    query.prepare("SELECT Children.name, Children.image, Groups.name "
+                  "FROM Children "
+                  "INNER JOIN Groups "
+                  "ON Children.\"group\"=Groups.id");
+
+    if(!query.exec())
+        qDebug() << query.lastError().text();
+
+    if(query.first())
+    {
+        do
+        {
+            auto name = query.value(0).toString();
+            auto image = query.value(1).toString();
+            auto group = query.value(2).toString();
+
+            AddChild(Child(name, image, group));
+
+        }while(query.next());
+    }
+}
+
+ChildrenListModel::~ChildrenListModel()
+{
+    iSqliteDatabase.close();
 }
 
 void ChildrenListModel::doSomething()

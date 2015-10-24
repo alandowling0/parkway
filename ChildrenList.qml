@@ -12,11 +12,12 @@ Rectangle
     border.width: 2
     radius: 5
 
-    MouseArea{
-        anchors.fill: parent
-        onClicked: {console.log("onClicked");childrenListModel.doSomething()}
-        z: 100
-    }
+    property string imageRoot: "./images/"
+//    MouseArea{
+//        anchors.fill: parent
+//        onClicked: {console.log("onClicked");childrenListModel.doSomething()}
+//        z: 100
+//    }
 
     ListView
     {
@@ -49,7 +50,7 @@ Rectangle
                 anchors.margins: 5
                 width: parent.width / 3
                 fillMode: Image.PreserveAspectFit
-                source: "./images/child.jpg"
+                source: imageRoot + model.image
             }
 
             Text
