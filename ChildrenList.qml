@@ -1,12 +1,22 @@
 import QtQuick 2.0
 
+import com.panchito.parkway 1.0
+
 Rectangle
 {
+    ChildrenListModel{id:childrenListModel}
+
     width: 1000
     height: 600
     border.color: "red"
     border.width: 2
     radius: 5
+
+    MouseArea{
+        anchors.fill: parent
+        onClicked: {console.log("onClicked");childrenListModel.doSomething()}
+        z: 100
+    }
 
     ListView
     {
@@ -16,7 +26,7 @@ Rectangle
         clip: true
         focus: true
         highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
-        model: 20
+        model: childrenListModel
         delegate: delegate
     }
 
@@ -52,7 +62,7 @@ Rectangle
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pointSize: 16
-                text: "Name"
+                text: model.name
                 wrapMode: Text.Wrap
             }
 
@@ -66,7 +76,7 @@ Rectangle
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pointSize: 16
-                text: "Group"
+                text: model.group
                 wrapMode: Text.Wrap
             }
         }

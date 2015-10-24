@@ -2,7 +2,10 @@ TEMPLATE = app
 
 QT += qml quick
 
-SOURCES += main.cpp
+CONFIG += c++11
+
+SOURCES += main.cpp \
+    childrenlistmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -14,3 +17,6 @@ include(deployment.pri)
 
 DISTFILES += \
     images/child.jpg
+
+HEADERS += \
+    childrenlistmodel.h
