@@ -18,6 +18,8 @@ Window {
         anchors.left: parent.left
         width: parent.width / 2
         anchors.margins: 10
+
+        onChildSelected: parents.setChild(childName)
     }
 
     ParentsList

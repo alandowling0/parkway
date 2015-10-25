@@ -9,6 +9,11 @@ Rectangle {
     border.width: 2
     radius: 5
 
+    function setChild(childName)
+    {
+        parentsListModel.setChild(childName)
+    }
+
     ParentsListModel { id: parentsListModel }
 
     ListView

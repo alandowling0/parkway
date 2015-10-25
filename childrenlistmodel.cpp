@@ -14,9 +14,12 @@ ChildrenListModel::ChildrenListModel(QObject *parent)
    }
 }
 
-void ChildrenListModel::doSomething()
+QString ChildrenListModel::getChildName(int index) const
 {
-    qDebug() << "ChildrenListModel::doSomething";
+    auto modelIndex =  QAbstractItemModel::createIndex(index, 0);
+    QVariant name = data(modelIndex, NameRole);
+
+    return name.toString();
 }
 
 QHash<int, QByteArray> ChildrenListModel::roleNames() const

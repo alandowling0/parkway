@@ -6,17 +6,19 @@
 ParentsListModel::ParentsListModel(QObject *parent)
     :QAbstractListModel(parent)
 {
-    auto parents = iDatabase.GetParents("Sara");
+
+}
+
+void ParentsListModel::setChild(QString const& childName)
+{
+    ClearParents();
+
+    auto parents = iDatabase.GetParents(childName.toStdString());
 
     for(auto const& parent : parents)
     {
         AddParent(parent);
     }
-}
-
-void ParentsListModel::doSomething()
-{
-    qDebug() << "ParentsListModel::doSomething";
 }
 
 QHash<int, QByteArray> ParentsListModel::roleNames() const
@@ -67,4 +69,14 @@ void ParentsListModel::AddParent(Parent const& parent)
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     iParents.push_back(parent);
     endInsertRows();
+}
+
+void ParentsListModel::ClearParents()
+{
+    if(!iParents.empty())
+    {
+        beginRemoveRows(QModelIndex(), 0, rowCount()-1);
+        iParents.clear();
+        endRemoveRows();
+    }
 }

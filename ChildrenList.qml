@@ -4,6 +4,7 @@ import com.panchito.parkway 1.0
 
 Rectangle
 {
+    id: root
     ChildrenListModel{id:childrenListModel}
 
     width: 1000
@@ -13,6 +14,8 @@ Rectangle
     radius: 5
 
     property string imageRoot: "./images/"
+
+    signal childSelected(string childName)
 
     ListView
     {
@@ -24,6 +27,11 @@ Rectangle
         highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
         model: childrenListModel
         delegate: delegate
+
+        onCurrentIndexChanged:
+        {
+            root.childSelected(childrenListModel.getChildName(currentIndex))
+        }
     }
 
     Component

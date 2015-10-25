@@ -17,7 +17,7 @@ public:
         GroupRole
     };
 
-    Q_INVOKABLE void doSomething();
+    Q_INVOKABLE QString getChildName(int index) const;
 
     ChildrenListModel(QObject *parent = 0);
     QHash<int, QByteArray> roleNames() const override;
