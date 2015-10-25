@@ -6,7 +6,7 @@
 ParentsListModel::ParentsListModel(QObject *parent)
     :QAbstractListModel(parent)
 {
-    auto parents = iDatabase.GetAllParents();
+    auto parents = iDatabase.GetParents("Sara");
 
     for(auto const& parent : parents)
     {

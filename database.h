@@ -14,6 +14,8 @@ public:
     std::vector<Child> GetAllChildren();
     std::vector<Parent> GetAllParents();
 
+    std::vector<Parent> GetParents(std::string const& childName);
+
 private:
      void Open();
      void Close();

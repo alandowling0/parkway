@@ -77,3 +77,51 @@ std::vector<Parent> Database::GetAllParents()
 
     return parents;
 }
+
+std::vector<Parent> Database::GetParents(std::string const& childName)
+{
+    std::vector<Parent> parents;
+
+    QSqlQuery child(iSqliteDatabase);
+    child.prepare("SELECT id FROM Children WHERE name=?");
+    child.addBindValue(childName.c_str());
+    if(!child.exec())
+        qDebug() << child.lastError().text();
+
+    while(child.next())
+    {
+        auto childId = child.value(0);
+
+        QSqlQuery relation(iSqliteDatabase);
+        relation.prepare("SELECT parent FROM Relations WHERE child=?");
+        relation.addBindValue(childId);
+
+        if(!relation.exec())
+            qDebug() << relation.lastError().text();
+
+        while(relation.next())
+        {
+            auto parentId = relation.value(0);
+
+            QSqlQuery parent(iSqliteDatabase);
+            parent.prepare("SELECT Parents.name, Parents.email, Parents.phone "
+                           "FROM Parents "
+                           "WHERE Parents.id=?");
+            parent.addBindValue(parentId);
+
+            if(!parent.exec())
+                qDebug() << parent.lastError().text();
+
+            while(parent.next())
+            {
+                auto name = parent.value(0).toString();
+                auto email = parent.value(1).toString();
+                auto phone = parent.value(2).toString();
+
+                parents.emplace_back(name, email, phone);
+            }
+        }
+    }
+
+    return parents;
+}
