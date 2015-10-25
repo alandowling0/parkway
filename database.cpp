@@ -34,7 +34,7 @@ std::vector<Child> Database::GetAllChildren()
 
     QSqlQuery query(iSqliteDatabase);
 
-    query.prepare("SELECT Children.name, Children.image, Groups.name "
+    query.prepare("SELECT Children.name, Children.image, Groups.name, Children.dob "
                   "FROM Children "
                   "INNER JOIN Groups "
                   "ON Children.\"group\"=Groups.id");
@@ -47,8 +47,9 @@ std::vector<Child> Database::GetAllChildren()
         auto name = query.value(0).toString();
         auto image = query.value(1).toString();
         auto group = query.value(2).toString();
+        auto dob = query.value(3).toString();
 
-        children.emplace_back(name, image, group);
+        children.emplace_back(name, image, group, dob);
     }
 
     return children;

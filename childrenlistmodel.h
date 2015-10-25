@@ -14,7 +14,8 @@ public:
     enum ChildRoles {
         NameRole = Qt::UserRole + 1,
         ImageRole,
-        GroupRole
+        GroupRole,
+        AgeRole
     };
 
     Q_INVOKABLE QString getChildName(int index) const;

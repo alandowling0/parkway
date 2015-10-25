@@ -28,6 +28,7 @@ QHash<int, QByteArray> ChildrenListModel::roleNames() const
     roles[NameRole] = "name";
     roles[ImageRole] = "image";
     roles[GroupRole] = "group";
+    roles[AgeRole] = "age";
     return roles;
 }
 
@@ -51,6 +52,9 @@ QVariant ChildrenListModel::data(const QModelIndex &index, int role) const
             break;
         case GroupRole:
             data = QVariant(child.Group());
+            break;
+        case AgeRole:
+            data = QVariant(child.Age());
             break;
         default:
             assert(false);

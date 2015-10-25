@@ -49,8 +49,7 @@ Rectangle {
     {
         id: delegate
 
-        MouseArea
-        {
+        Item{
             height: 50
             width: parent.width
 
@@ -64,7 +63,7 @@ Rectangle {
                 width: parent.width / 3
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.pointSize: 12
+                font.pointSize: 14
                 text: model.name
                 wrapMode: Text.Wrap
             }
@@ -79,7 +78,7 @@ Rectangle {
                 width: parent.width / 3
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.pointSize: 12
+                font.pointSize: 14
                 text: model.email
                 wrapMode: Text.Wrap
             }
@@ -94,7 +93,7 @@ Rectangle {
                 width: parent.width / 3
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.pointSize: 12
+                font.pointSize: 14
                 text: model.phone
                 wrapMode: Text.Wrap
             }

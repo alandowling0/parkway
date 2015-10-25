@@ -28,7 +28,7 @@ Window {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.left: children.right
-        height: parent.height / 5
+        height: parent.height / 4
         anchors.margins: 10
     }
 
@@ -39,6 +39,6 @@ Window {
         anchors.right: parent.right
         anchors.left: children.right
         anchors.margins: 10
-        height: parent.height / 5
+        height: parent.height / 6
     }
 }

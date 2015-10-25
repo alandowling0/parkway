@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 
 import com.panchito.parkway 1.0
 
@@ -17,6 +17,68 @@ Rectangle
 
     signal childSelected(string childName)
 
+    Component
+    {
+        id: header
+
+        Item
+        {
+            height: 50
+            width: childrenList.width
+
+            Text
+            {
+                id: headerImage
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                width: parent.width / 4
+
+            }
+            Text
+            {
+                id: headerName
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.left: headerImage.right
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                width: parent.width / 4
+                text: "Name"
+                font.pointSize: 16
+                font.bold: true
+            }
+            Text
+            {
+                id: headerGroup
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.left: headerName.right
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                width: parent.width / 4
+                text: "Group"
+                font.pointSize: 16
+                font.bold: true
+            }
+            Text
+            {
+                id: headerAge
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.left: headerGroup.right
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                width: parent.width / 4
+                text: "Age"
+                font.pointSize: 16
+                font.bold: true
+            }
+        }
+    }
+
     ListView
     {
         id: childrenList
@@ -27,6 +89,7 @@ Rectangle
         highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
         model: childrenListModel
         delegate: delegate
+        header: header
 
         onCurrentIndexChanged:
         {
@@ -51,7 +114,7 @@ Rectangle
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.margins: 5
-                width: parent.width / 3
+                width: parent.width / 4
                 fillMode: Image.PreserveAspectFit
                 source: imageRoot + model.image
             }
@@ -62,7 +125,7 @@ Rectangle
                 anchors.left: image.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                width: parent.width / 3
+                width: parent.width / 4
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pointSize: 16
@@ -76,11 +139,25 @@ Rectangle
                 anchors.left: name.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                width: parent.width / 3
+                width: parent.width / 4
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pointSize: 16
                 text: model.group
+                wrapMode: Text.Wrap
+            }
+
+            Text
+            {
+                id:age
+                anchors.left: group.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                width: parent.width / 4
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pointSize: 16
+                text: model.age
                 wrapMode: Text.Wrap
             }
         }
