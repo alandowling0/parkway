@@ -1,10 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>   
+        <file>main.qml</file>
         <file>ChildrenList.qml</file>
         <file>ParentsList.qml</file>
         <file>AttendedDays.qml</file>
         <file>images/robert.jpg</file>
+        <file>images/matilde.jpg</file>
         <file>images/sara.jpg</file>
     </qresource>
 </RCC>

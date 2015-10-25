@@ -13,11 +13,6 @@ Rectangle
     radius: 5
 
     property string imageRoot: "./images/"
-//    MouseArea{
-//        anchors.fill: parent
-//        onClicked: {console.log("onClicked");childrenListModel.doSomething()}
-//        z: 100
-//    }
 
     ListView
     {

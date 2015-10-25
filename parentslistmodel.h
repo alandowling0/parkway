@@ -3,31 +3,32 @@
 #include <QAbstractListModel>
 #include <QList>
 #include <QtSql>
-#include "child.h"
+
+#include "parent.h"
 #include "database.h"
 
-class ChildrenListModel : public QAbstractListModel
+class ParentsListModel : public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    enum ChildRoles {
+    enum ParentRoles {
         NameRole = Qt::UserRole + 1,
-        ImageRole,
-        GroupRole
+        EmailRole,
+        PhoneRole
     };
 
     Q_INVOKABLE void doSomething();
 
-    ChildrenListModel(QObject *parent = 0);
+    ParentsListModel(QObject *parent = 0);
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex & index, int role) const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
 
-    void AddChild(Child const& child);
+    void AddParent(Parent const& parent);
 
 private:
-    QList<Child> iChildren;
+    QList<Parent> iParents;
 
     Database iDatabase;
 };

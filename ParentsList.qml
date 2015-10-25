@@ -1,5 +1,7 @@
 import QtQuick 2.0
 
+import com.panchito.parkway 1.0
+
 Rectangle {
     width: 1000
     height: 600
@@ -7,13 +9,15 @@ Rectangle {
     border.width: 2
     radius: 5
 
+    ParentsListModel { id: parentsListModel }
+
     ListView
     {
         id: parentsList
         anchors.fill: parent
         anchors.margins: 10
         clip: true
-        model: parentsModel
+        model: parentsListModel
         delegate: delegate
     }
 

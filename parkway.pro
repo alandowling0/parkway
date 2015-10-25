@@ -5,7 +5,11 @@ QT += qml quick sql
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    childrenlistmodel.cpp
+    childrenlistmodel.cpp \
+    parentslistmodel.cpp \
+    child.cpp \
+    parent.cpp \
+    database.cpp
 
 RESOURCES += qml.qrc
 
@@ -19,4 +23,8 @@ DISTFILES += \
     database/parkway.db
 
 HEADERS += \
-    childrenlistmodel.h
+    childrenlistmodel.h \
+    parentslistmodel.h \
+    child.h \
+    parent.h \
+    database.h
