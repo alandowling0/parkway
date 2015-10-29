@@ -1,5 +1,6 @@
 import QtQuick 2.5
-
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import com.panchito.parkway 1.0
 
 Rectangle
@@ -104,8 +105,24 @@ Rectangle
         {
             height: 100
             width: parent.width
-
-            onClicked: childrenList.currentIndex = index
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onPressAndHold:
+            {
+                childrenList.currentIndex = index
+                contextMenu.popup();
+            }
+            onClicked:
+            {
+                if (mouse.button == Qt.LeftButton)
+                {
+                    childrenList.currentIndex = index
+                }
+                else if (mouse.button == Qt.RightButton)
+                {
+                    childrenList.currentIndex = index
+                    contextMenu.popup();
+                }
+            }
 
             Image
             {
@@ -160,6 +177,23 @@ Rectangle
                 text: model.age
                 wrapMode: Text.Wrap
             }
+        }
+    }
+
+    Menu
+    {
+        id: contextMenu
+
+        style: MenuStyle
+        {
+            frame: Rectangle{border.color: "blue"}
+            itemDelegate.label: Text{text: styleData.text; font.pointSize: 30;}
+        }
+        MenuItem {
+            text: "Edit";
+        }
+        MenuItem {
+            text: "Delete";
         }
     }
 }
