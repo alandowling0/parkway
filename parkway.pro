@@ -9,7 +9,9 @@ SOURCES += main.cpp \
     parentslistmodel.cpp \
     child.cpp \
     parent.cpp \
-    database.cpp
+    database.cpp \
+    timetableslistmodel.cpp \
+    timetable.cpp
 
 RESOURCES += qml.qrc
 
@@ -27,4 +29,6 @@ HEADERS += \
     parentslistmodel.h \
     child.h \
     parent.h \
-    database.h
+    database.h \
+    timetableslistmodel.h \
+    timetable.h

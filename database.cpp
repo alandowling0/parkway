@@ -126,3 +126,42 @@ std::vector<Parent> Database::GetParents(std::string const& childName)
 
     return parents;
 }
+
+
+std::vector<Timetable> Database::GetTimetables(std::string const& childName)
+{
+    std::vector<Timetable> timetables;
+
+    QSqlQuery child(iSqliteDatabase);
+    child.prepare("SELECT id FROM Children WHERE name=?");
+    child.addBindValue(childName.c_str());
+    if(!child.exec())
+        qDebug() << child.lastError().text();
+
+    while(child.next())
+    {
+        auto childId = child.value(0);
+
+        QSqlQuery timetable(iSqliteDatabase);
+        timetable.prepare("SELECT term, monday, tuesday, wednesday, thursday, friday "
+                          "FROM Timetables WHERE child=?");
+        timetable.addBindValue(childId);
+
+        if(!timetable.exec())
+            qDebug() << timetable.lastError().text();
+
+        while(timetable.next())
+        {
+            auto term = timetable.value(0).toString();
+            auto mon = timetable.value(1).toBool();
+            auto tue = timetable.value(2).toBool();
+            auto wed = timetable.value(3).toBool();
+            auto thu = timetable.value(4).toBool();
+            auto fri = timetable.value(5).toBool();
+
+            timetables.emplace_back(QString(childName.c_str()), term, mon, tue, wed, thu, fri);
+        }
+    }
+
+    return timetables;
+}

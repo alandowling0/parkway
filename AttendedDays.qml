@@ -1,67 +1,121 @@
 import QtQuick 2.0
 
-Rectangle{
+import com.panchito.parkway 1.0
+
+Rectangle
+{
     width: 1000
     height: 600
     border.color: "red"
     border.width: 2
     radius: 5
 
+    function setChild(childName)
+    {
+        timetablesListModel.setChild(childName)
+    }
+
+    TimetablesListModel{id:timetablesListModel}
+
     ListView
     {
         id: daysList
         anchors.fill: parent
-        model: daysModel
+        anchors.margins: 10
+        clip: true
+        model: timetablesListModel
         delegate: daysDelegate
-        orientation: ListView.Horizontal
-        interactive: false
-    }
-
-    ListModel{
-        id: daysModel
-        ListElement
-        {
-            day: "MON"
-            attends: true
-        }
-
-        ListElement
-        {
-            day: "TUE"
-            attends: false
-        }
-
-        ListElement
-        {
-            day: "WED"
-            attends: true
-        }
-
-        ListElement
-        {
-            day: "THU"
-            attends: false
-        }
-
-        ListElement
-        {
-            day: "FRI"
-            attends: true
-        }
     }
 
     Component
     {
         id: daysDelegate
-        Text
+
+        Item
         {
-            height: daysList.height
-            width: daysList.width / daysModel.count
-            text: model.day
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            opacity: model.attends ? 1.0 : 0.3
-            font.pointSize: 16
+            height: 100
+            width: parent.width
+
+            Text
+            {
+                id: monday
+
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.margins: 5
+                width: parent.width / 5
+
+                text: "MON"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                opacity: model.mon ? 1.0 : 0.3
+                font.pointSize: 16
+            }
+            Text
+            {
+                id: tuesday
+
+                anchors.left: monday.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.margins: 5
+                width: parent.width / 5
+
+                text: "TUE"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                opacity: model.tue ? 1.0 : 0.3
+                font.pointSize: 16
+            }
+            Text
+            {
+                id: wednesday
+
+                anchors.left: tuesday.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.margins: 5
+                width: parent.width / 5
+
+                text: "WED"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                opacity: model.wed ? 1.0 : 0.3
+                font.pointSize: 16
+            }
+            Text
+            {
+                id: thursday
+
+                anchors.left: wednesday.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.margins: 5
+                width: parent.width / 5
+
+                text: "THU"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                opacity: model.thu ? 1.0 : 0.3
+                font.pointSize: 16
+            }
+            Text
+            {
+                id: friday
+
+                anchors.left: thursday.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.margins: 5
+                width: parent.width / 5
+
+                text: "FRI"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                opacity: model.fri ? 1.0 : 0.3
+                font.pointSize: 16
+            }
         }
     }
 }

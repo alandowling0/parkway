@@ -19,7 +19,12 @@ Window {
         width: parent.width / 2
         anchors.margins: 10
 
-        onChildSelected: parents.setChild(childName)
+        onChildSelected:
+        {
+            parents.setChild(childName)
+            attendedDays.setChild(childName)
+        }
+
     }
 
     ParentsList
