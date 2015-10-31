@@ -18,13 +18,14 @@ public:
         AgeRole
     };
 
-    Q_INVOKABLE QString getChildName(int index) const;
+    Q_INVOKABLE QString getChildName(int index) const; //Enable various UI components to know the name of the currently selected child
 
     ChildrenListModel(QObject *parent = 0);
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex & index, int role) const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
 
+private:
     void AddChild(Child const& child);
 
 private:

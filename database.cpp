@@ -83,44 +83,35 @@ std::vector<Parent> Database::GetParents(std::string const& childName)
 {
     std::vector<Parent> parents;
 
-    QSqlQuery child(iSqliteDatabase);
-    child.prepare("SELECT id FROM Children WHERE name=?");
-    child.addBindValue(childName.c_str());
-    if(!child.exec())
-        qDebug() << child.lastError().text();
+    auto childId = ChildId(childName);
 
-    while(child.next())
+    QSqlQuery relation(iSqliteDatabase);
+    relation.prepare("SELECT parent FROM Relations WHERE child=?");
+    relation.addBindValue(childId);
+
+    if(!relation.exec())
+        qDebug() << relation.lastError().text();
+
+    while(relation.next())
     {
-        auto childId = child.value(0);
+        auto parentId = relation.value(0);
 
-        QSqlQuery relation(iSqliteDatabase);
-        relation.prepare("SELECT parent FROM Relations WHERE child=?");
-        relation.addBindValue(childId);
+        QSqlQuery parent(iSqliteDatabase);
+        parent.prepare("SELECT Parents.name, Parents.email, Parents.phone "
+                       "FROM Parents "
+                       "WHERE Parents.id=?");
+        parent.addBindValue(parentId);
 
-        if(!relation.exec())
-            qDebug() << relation.lastError().text();
+        if(!parent.exec())
+            qDebug() << parent.lastError().text();
 
-        while(relation.next())
+        while(parent.next())
         {
-            auto parentId = relation.value(0);
+            auto name = parent.value(0).toString();
+            auto email = parent.value(1).toString();
+            auto phone = parent.value(2).toString();
 
-            QSqlQuery parent(iSqliteDatabase);
-            parent.prepare("SELECT Parents.name, Parents.email, Parents.phone "
-                           "FROM Parents "
-                           "WHERE Parents.id=?");
-            parent.addBindValue(parentId);
-
-            if(!parent.exec())
-                qDebug() << parent.lastError().text();
-
-            while(parent.next())
-            {
-                auto name = parent.value(0).toString();
-                auto email = parent.value(1).toString();
-                auto phone = parent.value(2).toString();
-
-                parents.emplace_back(name, email, phone);
-            }
+            parents.emplace_back(name, email, phone);
         }
     }
 
@@ -132,36 +123,45 @@ std::vector<Timetable> Database::GetTimetables(std::string const& childName)
 {
     std::vector<Timetable> timetables;
 
-    QSqlQuery child(iSqliteDatabase);
-    child.prepare("SELECT id FROM Children WHERE name=?");
-    child.addBindValue(childName.c_str());
-    if(!child.exec())
-        qDebug() << child.lastError().text();
+    auto childId = ChildId(childName);
 
-    while(child.next())
+    QSqlQuery timetable(iSqliteDatabase);
+    timetable.prepare("SELECT term, monday, tuesday, wednesday, thursday, friday "
+                      "FROM Timetables WHERE child=?");
+    timetable.addBindValue(childId);
+
+    if(!timetable.exec())
+        qDebug() << timetable.lastError().text();
+
+    while(timetable.next())
     {
-        auto childId = child.value(0);
+        auto term = timetable.value(0).toString();
+        auto mon = timetable.value(1).toBool();
+        auto tue = timetable.value(2).toBool();
+        auto wed = timetable.value(3).toBool();
+        auto thu = timetable.value(4).toBool();
+        auto fri = timetable.value(5).toBool();
 
-        QSqlQuery timetable(iSqliteDatabase);
-        timetable.prepare("SELECT term, monday, tuesday, wednesday, thursday, friday "
-                          "FROM Timetables WHERE child=?");
-        timetable.addBindValue(childId);
-
-        if(!timetable.exec())
-            qDebug() << timetable.lastError().text();
-
-        while(timetable.next())
-        {
-            auto term = timetable.value(0).toString();
-            auto mon = timetable.value(1).toBool();
-            auto tue = timetable.value(2).toBool();
-            auto wed = timetable.value(3).toBool();
-            auto thu = timetable.value(4).toBool();
-            auto fri = timetable.value(5).toBool();
-
-            timetables.emplace_back(QString(childName.c_str()), term, mon, tue, wed, thu, fri);
-        }
+        timetables.emplace_back(QString(childName.c_str()), term, mon, tue, wed, thu, fri);
     }
 
     return timetables;
+}
+
+int Database::ChildId(std::string const& childName)
+{
+    QSqlQuery childId(iSqliteDatabase);
+    childId.prepare("SELECT id FROM Children WHERE name=?");
+    childId.addBindValue(childName.c_str());
+    if(!childId.exec())
+        qDebug() << childId.lastError().text();
+
+    if(childId.first())
+    {
+        return childId.value(0).toInt();
+    }
+    else
+    {
+        return -1;
+    }
 }

@@ -22,6 +22,8 @@ private:
      void Open();
      void Close();
 
+     int ChildId(std::string const& childName);
+
 private:
      QSqlDatabase iSqliteDatabase;
      QString iConnectionName;

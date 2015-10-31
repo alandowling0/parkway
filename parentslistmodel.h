@@ -29,7 +29,6 @@ private:
     void AddParent(Parent const& parent);
     void ClearParents();
 
-
 private:
     QList<Parent> iParents;
 
