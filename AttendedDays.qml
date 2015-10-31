@@ -25,6 +25,7 @@ Rectangle
         clip: true
         model: timetablesListModel
         delegate: daysDelegate
+        interactive: false
     }
 
     Component
@@ -33,8 +34,8 @@ Rectangle
 
         Item
         {
-            height: 100
-            width: parent.width
+            width: daysList.width
+            height: daysList.height
 
             Text
             {

@@ -8,5 +8,9 @@
         <file>images/matilde.jpg</file>
         <file>images/sara.jpg</file>
         <file>images/add.png</file>
+        <file>ChildrenListModel.qml</file>
+        <file>images/face.jpg</file>
+        <file>TimetablesListModel.qml</file>
+        <file>ParentsListModel.qml</file>
     </qresource>
 </RCC>
