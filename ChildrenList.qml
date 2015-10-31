@@ -91,7 +91,8 @@ Rectangle
         model: childrenListModel
         delegate: delegate
         header: header
-
+        footer: footer
+        footerPositioning: ListView.OverlayFooter
         onCurrentIndexChanged:
         {
             root.childSelected(childrenListModel.getChildName(currentIndex))
@@ -176,6 +177,29 @@ Rectangle
                 font.pointSize: 16
                 text: model.age
                 wrapMode: Text.Wrap
+            }
+        }
+    }
+
+    Component
+    {
+        id: footer
+        Rectangle
+        {
+            height: 75
+            width: childrenList.width
+            z: 2
+
+            Button
+            {
+                anchors.fill: parent
+                anchors.margins: 10
+
+                Image{
+                    anchors.fill: parent
+                    source: imageRoot + "add.png"
+                    fillMode: Image.PreserveAspectFit
+                }
             }
         }
     }
