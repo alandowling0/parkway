@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Window 2.2
 import com.panchito.parkway 1.0
 
 Rectangle
@@ -195,10 +196,16 @@ Rectangle
                 anchors.fill: parent
                 anchors.margins: 10
 
-                Image{
+                Image
+                {
                     anchors.fill: parent
                     source: imageRoot + "add.png"
                     fillMode: Image.PreserveAspectFit
+                }
+
+                onClicked:
+                {
+                    addChild.show()
                 }
             }
         }
@@ -218,6 +225,20 @@ Rectangle
         }
         MenuItem {
             text: "Delete";
+        }
+    }
+
+    Window
+    {
+        id: addChild
+
+        height: 600
+        width: 1000
+        modality: Qt.WindowModal
+
+        AddChild{
+            anchors.fill: parent
+            onDone: addChild.close()
         }
     }
 }

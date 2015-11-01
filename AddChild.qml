@@ -2,9 +2,12 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
-Rectangle {
+Rectangle
+{
     width: 1000
     height: 620
+
+    signal done();
 
     Image
     {
@@ -54,6 +57,24 @@ Rectangle {
         }
     }
 
+    Button
+    {
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        height: 100
+        width: 200
+        onClicked: done()
+
+        Text
+        {
+            anchors.fill: parent
+            text: "Done"
+            font.pointSize: 20
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+
     Item
     {
         id:calendar
@@ -70,88 +91,108 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: calendar.visible = false
             }
-        }
-        MouseArea
-        {
-            anchors.centerIn: parent
 
-            height: 500
-            width: 500
-            onClicked: {}
-        }
-        Calendar
-        {
-            anchors.centerIn: parent
-
-            height: 500
-            width: 500
-
-            property date today: new Date()
-            maximumDate: Date.fromLocaleDateString(today.toLocaleDateString())
-
-            onClicked:{
-                calendar.visible = false
-                dob.text = date.toLocaleDateString()
-            }
-
-            style: CalendarStyle
+            MouseArea
             {
-                navigationBar: Rectangle
+                anchors.centerIn: parent
+
+                height: 500
+                width: 500
+                onClicked: {}
+
+                Calendar
                 {
-                    height: calendar.height / 5
+                    anchors.fill: parent
 
-                    Text
+                    property date today: new Date()
+                    maximumDate: Date.fromLocaleDateString(today.toLocaleDateString())
+
+                    onClicked:
                     {
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        anchors.left: previousMonth.right
-                        anchors.right: nextMonth.left
-                        text: styleData.title
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        font.pointSize: 12
+                        calendar.visible = false
+                        dob.text = date.toLocaleDateString()
                     }
 
-                    ToolButton
+                    style: CalendarStyle
                     {
-                        id: previousYear
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        anchors.left: parent.left
-                        width: parent.width / 6
-                        iconSource: "./images/2left.png"
-                        onClicked: control.showPreviousYear()
-                    }
-                    ToolButton
-                    {
-                        id: previousMonth
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        anchors.left: previousYear.right
-                        width: parent.width / 6
-                        iconSource: "./images/left.png"
-                        onClicked: control.showPreviousMonth()
-                    }
+                        navigationBar: Rectangle
+                        {
+                            height: calendar.height / 6
 
-                    ToolButton
-                    {
-                        id: nextYear
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        anchors.right: parent.right
-                        width: parent.width / 6
-                        iconSource: "./images/2right.png"
-                        onClicked: control.showNextYear()
-                    }
-                    ToolButton
-                    {
-                        id: nextMonth
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        anchors.right: nextYear.left
-                        width: parent.width / 6
-                        iconSource: "./images/right.png"
-                        onClicked: control.showNextMonth()
+                            Text
+                            {
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.left: previousMonth.right
+                                anchors.right: nextMonth.left
+                                text: styleData.title
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                font.pointSize: 12
+                            }
+
+                            ToolButton
+                            {
+                                id: previousYear
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.left: parent.left
+                                width: parent.width / 6
+                                onClicked: control.showPreviousYear()
+                                Image
+                                {
+                                    anchors.fill:parent
+                                    anchors.margins: 25
+                                    source: "./images/2left.png"
+                                }
+                            }
+                            ToolButton
+                            {
+                                id: previousMonth
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.left: previousYear.right
+                                width: parent.width / 6
+                                onClicked: control.showPreviousMonth()
+                                Image
+                                {
+                                    anchors.fill:parent
+                                    anchors.margins: 25
+                                    source: "./images/left.png"
+                                }
+                            }
+
+                            ToolButton
+                            {
+                                id: nextYear
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width / 6
+                                onClicked: control.showNextYear()
+                                Image
+                                {
+                                    anchors.fill:parent
+                                    anchors.margins: 25
+                                    source: "./images/2right.png"
+                                }
+                            }
+                            ToolButton
+                            {
+                                id: nextMonth
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: nextYear.left
+                                width: parent.width / 6
+                                onClicked: control.showNextMonth()
+                                Image
+                                {
+                                    anchors.fill:parent
+                                    anchors.margins: 25
+                                    source: "./images/right.png"
+                                }
+                            }
+                        }
                     }
                 }
             }
