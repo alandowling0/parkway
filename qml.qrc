@@ -12,5 +12,10 @@
         <file>images/face.jpg</file>
         <file>TimetablesListModel.qml</file>
         <file>ParentsListModel.qml</file>
+        <file>AddChild.qml</file>
+        <file>images/2left.png</file>
+        <file>images/2right.png</file>
+        <file>images/left.png</file>
+        <file>images/right.png</file>
     </qresource>
 </RCC>
