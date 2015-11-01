@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Dialogs 1.2
 
 Rectangle
 {
@@ -20,6 +21,12 @@ Rectangle
 
         source: "./images/face.jpg"
         fillMode: Image.PreserveAspectFit
+
+        MouseArea
+        {
+            anchors.fill: parent
+            onClicked: fileDialog.open()
+        }
     }
 
     TextField
@@ -73,6 +80,15 @@ Rectangle
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }
+    }
+
+    FileDialog
+    {
+        id: fileDialog
+        title: "Please choose a photo"
+        nameFilters: [ "Image files (*.jpg *.png)" ]
+
+        onAccepted: photo.source = fileDialog.fileUrl
     }
 
     Item
