@@ -1,84 +1,133 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.2
 
 Rectangle
 {
     width: 1000
-    height: 620
+    height: 300
 
-    signal done();
+    property int textInputMaxLength: 100
+    property int textInputFontSize: 20
 
-    Image
+    signal saved;
+    signal canceled;
+
+    Item
     {
-        id: photo
+        id: dataArea
 
         anchors.top: parent.top
         anchors.left: parent.left
-        height: parent.height / 2
-        width: parent.width / 3
+        anchors.right: parent.right
+        anchors.bottom: buttonArea.top
 
-        source: "./images/face.jpg"
-        fillMode: Image.PreserveAspectFit
-
-        MouseArea
+        Image
         {
-            anchors.fill: parent
-            onClicked: fileDialog.open()
+            id: photo
+            anchors.top: dataArea.top
+            anchors.bottom: dataArea.bottom
+            anchors.left: dataArea.left
+            width: dataArea.height
+
+            source: "./images/face.jpg"
+            fillMode: Image.PreserveAspectFit
+
+            MouseArea
+            {
+                anchors.fill: parent
+                onClicked: fileDialog.open()
+            }
+        }
+
+        TextField
+        {
+            id: enterName
+            anchors.top: dataArea.top
+            anchors.right: dataArea.right
+            anchors.left: photo.right
+            height: dataArea.height / 3
+            font.pointSize: textInputFontSize
+            maximumLength: textInputMaxLength
+            selectByMouse: true
+            placeholderText: "Name"
+        }
+
+        TextField
+        {
+            id: enterDob
+            anchors.top: enterName.bottom
+            anchors.right: dataArea.right
+            anchors.left: photo.right
+            height: dataArea.height / 3
+            font.pointSize: textInputFontSize
+            maximumLength: textInputMaxLength
+            selectByMouse: true
+            placeholderText: "Date of Birth"
+
+            Button
+            {
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                width: parent.height
+                onClicked: dobPicker.visible = true
+
+                Image
+                {
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectFit
+                    source: "./images/calendar.png"
+                }
+
+            }
+        }
+
+        ComboBox
+        {
+            id: enterGroup
+            anchors.top: enterDob.bottom
+            anchors.right: dataArea.right
+            anchors.left: photo.right
+            height: dataArea.height / 3
+            model: ListModel
+                {
+                    ListElement{name: "Pandas"}
+                    ListElement {name: "Koalas"}
+                    ListElement{name: "Giraffes"}
+                }
         }
     }
 
-    TextField
+    Item
     {
-        id: name
-        anchors.top: parent.top
-        anchors.left: photo.right
-        anchors.right: parent.right
-        height: 75
-        anchors.margins: 25
-        font.pointSize: 20
-        clip: true
-        maximumLength: 100
-        selectByMouse: true
-        placeholderText: "Enter name"
-    }
+        id: buttonArea
 
-    TextField
-    {
-        id: dob
-        anchors.top: name.bottom
-        anchors.left: photo.right
-        anchors.right: parent.right
-        height: 75
-        anchors.margins: 25
-        font.pointSize: 20
-        clip: true
-        maximumLength: 100
-        selectByMouse: true
-        placeholderText: "Enter date of birth"
-
-        MouseArea{
-            anchors.fill: parent
-            onClicked: calendar.visible = true
-        }
-    }
-
-    Button
-    {
-        anchors.right: parent.right
         anchors.bottom: parent.bottom
-        height: 100
-        width: 200
-        onClicked: done()
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 50
 
-        Text
+        Button
         {
-            anchors.fill: parent
-            text: "Done"
-            font.pointSize: 20
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+            id: cancelButton
+            anchors.top: buttonArea.top
+            anchors.bottom: buttonArea.bottom
+            anchors.right: buttonArea.right
+            width: 200
+            text: "Cancel"
+            onClicked: canceled()
+        }
+
+        Button
+        {
+            id: saveButton
+            anchors.top: buttonArea.top
+            anchors.bottom: buttonArea.bottom
+            anchors.right: cancelButton.left
+            width: 200
+            text: "Save"
+            onClicked: saved()
         }
     }
 
@@ -87,132 +136,21 @@ Rectangle
         id: fileDialog
         title: "Please choose a photo"
         nameFilters: [ "Image files (*.jpg *.png)" ]
-
+        folder: shortcuts.pictures
         onAccepted: photo.source = fileDialog.fileUrl
     }
 
-    Item
+    DatePicker
     {
-        id:calendar
-        anchors.fill: parent
+        id: dobPicker
         visible: false
-
-        Rectangle
-        {
-            anchors.fill: parent
-            opacity: 0.75
-
-            MouseArea
+        anchors.fill: parent
+        onDateNotPicked: visible=false
+        onDatePicked:
             {
-                anchors.fill: parent
-                onClicked: calendar.visible = false
+            enterDob.text = date
+            visible=false
             }
-
-            MouseArea
-            {
-                anchors.centerIn: parent
-
-                height: 500
-                width: 500
-                onClicked: {}
-
-                Calendar
-                {
-                    anchors.fill: parent
-
-                    property date today: new Date()
-                    maximumDate: Date.fromLocaleDateString(today.toLocaleDateString())
-
-                    onClicked:
-                    {
-                        calendar.visible = false
-                        dob.text = date.toLocaleDateString()
-                    }
-
-                    style: CalendarStyle
-                    {
-                        navigationBar: Rectangle
-                        {
-                            height: calendar.height / 6
-
-                            Text
-                            {
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
-                                anchors.left: previousMonth.right
-                                anchors.right: nextMonth.left
-                                text: styleData.title
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                font.pointSize: 12
-                            }
-
-                            ToolButton
-                            {
-                                id: previousYear
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
-                                anchors.left: parent.left
-                                width: parent.width / 6
-                                onClicked: control.showPreviousYear()
-                                Image
-                                {
-                                    anchors.fill:parent
-                                    anchors.margins: 25
-                                    source: "./images/2left.png"
-                                }
-                            }
-                            ToolButton
-                            {
-                                id: previousMonth
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
-                                anchors.left: previousYear.right
-                                width: parent.width / 6
-                                onClicked: control.showPreviousMonth()
-                                Image
-                                {
-                                    anchors.fill:parent
-                                    anchors.margins: 25
-                                    source: "./images/left.png"
-                                }
-                            }
-
-                            ToolButton
-                            {
-                                id: nextYear
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
-                                anchors.right: parent.right
-                                width: parent.width / 6
-                                onClicked: control.showNextYear()
-                                Image
-                                {
-                                    anchors.fill:parent
-                                    anchors.margins: 25
-                                    source: "./images/2right.png"
-                                }
-                            }
-                            ToolButton
-                            {
-                                id: nextMonth
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
-                                anchors.right: nextYear.left
-                                width: parent.width / 6
-                                onClicked: control.showNextMonth()
-                                Image
-                                {
-                                    anchors.fill:parent
-                                    anchors.margins: 25
-                                    source: "./images/right.png"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 

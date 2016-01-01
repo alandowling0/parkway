@@ -22,7 +22,8 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 DISTFILES += \
-    database/parkway.db
+    database/parkway.db \
+    images/calendar.png
 
 HEADERS += \
     childrenlistmodel.h \

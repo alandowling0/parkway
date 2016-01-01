@@ -35,7 +35,7 @@ QString Child::Age() const
     auto years = days / 365.0;
 
     std::stringstream ss;
-    ss << std::setprecision(2) << years;
+    ss << std::setprecision(3) << years;
 
     return QString(ss.str().c_str());
 }

@@ -232,13 +232,14 @@ Rectangle
     {
         id: addChild
 
-        height: 600
+        height: 300
         width: 1000
         modality: Qt.WindowModal
 
         AddChild{
             anchors.fill: parent
-            onDone: addChild.close()
+            onSaved: addChild.close()
+            onCanceled: addChild,close()
         }
     }
 }

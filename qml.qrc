@@ -13,9 +13,11 @@
         <file>TimetablesListModel.qml</file>
         <file>ParentsListModel.qml</file>
         <file>AddChild.qml</file>
-        <file>images/2left.png</file>
-        <file>images/2right.png</file>
-        <file>images/left.png</file>
-        <file>images/right.png</file>
+        <file>images/PreviousYear.png</file>
+        <file>images/NextYear.png</file>
+        <file>images/PreviousMonth.png</file>
+        <file>images/NextMonth.png</file>
+        <file>DatePicker.qml</file>
+        <file>images/calendar.png</file>
     </qresource>
 </RCC>
