@@ -79,6 +79,28 @@ std::vector<Parent> Database::GetAllParents()
     return parents;
 }
 
+std::vector<std::string> Database::GetAllGroups()
+{
+    std::vector<std::string> groups;
+
+    QSqlQuery query(iSqliteDatabase);
+
+    query.prepare("SELECT Groups.name "
+                  "FROM Groups ");
+
+    if(!query.exec())
+        qDebug() << query.lastError().text();
+
+    while(query.next())
+    {
+        auto name = query.value(0).toString().toStdString();
+
+        groups.emplace_back(name);
+    }
+
+    return groups;
+}
+
 std::vector<Parent> Database::GetParents(std::string const& childName)
 {
     std::vector<Parent> parents;

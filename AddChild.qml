@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
+import com.panchito.parkway 1.0
 
 Rectangle
 {
@@ -12,6 +13,8 @@ Rectangle
 
     signal saved;
     signal canceled;
+
+    GroupsListModel{id:groupsListModel}
 
     Item
     {
@@ -79,7 +82,6 @@ Rectangle
                     fillMode: Image.PreserveAspectFit
                     source: "./images/calendar.png"
                 }
-
             }
         }
 
@@ -90,12 +92,8 @@ Rectangle
             anchors.right: dataArea.right
             anchors.left: photo.right
             height: dataArea.height / 3
-            model: ListModel
-                {
-                    ListElement{name: "Pandas"}
-                    ListElement {name: "Koalas"}
-                    ListElement{name: "Giraffes"}
-                }
+            model: groupsListModel
+            textRole: "name"
         }
     }
 

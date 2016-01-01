@@ -14,6 +14,7 @@ public:
 
     std::vector<Child> GetAllChildren();
     std::vector<Parent> GetAllParents();
+    std::vector<std::string> GetAllGroups();
 
     std::vector<Parent> GetParents(std::string const& childName);
     std::vector<Timetable> GetTimetables(std::string const& childName);

@@ -19,5 +19,6 @@
         <file>images/NextMonth.png</file>
         <file>DatePicker.qml</file>
         <file>images/calendar.png</file>
+        <file>GroupsListModel.qml</file>
     </qresource>
 </RCC>
