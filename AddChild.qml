@@ -10,9 +10,18 @@ Rectangle
 
     property int textInputMaxLength: 100
     property int textInputFontSize: 20
+    property string annonymousFace: "./images/face.jpg"
 
     signal saved;
     signal canceled;
+
+    function clear()
+    {
+        photo.source = annonymousFace
+        enterName.text = ""
+        enterDob.text = ""
+        enterGroup.currentIndex = 0
+    }
 
     GroupsListModel{id:groupsListModel}
 
@@ -33,7 +42,7 @@ Rectangle
             anchors.left: dataArea.left
             width: dataArea.height
 
-            source: "./images/face.jpg"
+            source: annonymousFace
             fillMode: Image.PreserveAspectFit
 
             MouseArea

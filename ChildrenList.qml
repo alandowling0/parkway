@@ -205,7 +205,7 @@ Rectangle
 
                 onClicked:
                 {
-                    addChild.show()
+                    addChildWindow.show()
                 }
             }
         }
@@ -230,7 +230,7 @@ Rectangle
 
     Window
     {
-        id: addChild
+        id: addChildWindow
 
         height: 400
         width: 1000
@@ -238,10 +238,17 @@ Rectangle
         modality: Qt.WindowModal
         title: "Add Child"
 
+        onClosing:
+        {
+            addChild.clear()
+        }
+
         AddChild{
+            id: addChild
+
             anchors.fill: parent
-            onSaved: addChild.close()
-            onCanceled: addChild.close()
+            onSaved: addChildWindow.close()
+            onCanceled: addChildWindow.close()
         }
     }
 }
