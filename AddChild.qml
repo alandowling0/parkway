@@ -76,6 +76,7 @@ Rectangle
             maximumLength: textInputMaxLength
             selectByMouse: true
             placeholderText: "Date of Birth"
+            readOnly: true
 
             Button
             {
