@@ -43,7 +43,7 @@ Item {
 
             onClicked:
             {
-                datePicked(date.toLocaleDateString())
+                datePicked(date.toLocaleDateString(Locale.ShortFormat))
             }
 
             style: CalendarStyle
