@@ -234,7 +234,9 @@ Rectangle
 
         height: 400
         width: 1000
+        minimumWidth: height * 2
         modality: Qt.WindowModal
+        title: "Add Child"
 
         AddChild{
             anchors.fill: parent
