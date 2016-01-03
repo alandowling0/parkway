@@ -12,18 +12,18 @@ public:
     Database();
     ~Database();
 
-    std::vector<Child> GetAllChildren();
-    std::vector<Parent> GetAllParents();
-    std::vector<std::string> GetAllGroups();
+    std::vector<Child> GetAllChildren() const;
+    std::vector<Parent> GetAllParents() const;
+    std::vector<std::string> GetAllGroups() const;
 
-    std::vector<Parent> GetParents(std::string const& childName);
-    std::vector<Timetable> GetTimetables(std::string const& childName);
+    std::vector<Parent> GetParents(std::string const& childName) const;
+    std::vector<Timetable> GetTimetables(std::string const& childName) const;
 
 private:
      void Open();
      void Close();
 
-     int ChildId(std::string const& childName);
+     int ChildId(std::string const& childName) const;
 
 private:
      QSqlDatabase iSqliteDatabase;

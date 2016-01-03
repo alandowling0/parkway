@@ -28,7 +28,7 @@ Database::~Database()
     QSqlDatabase::removeDatabase(iConnectionName);
 }
 
-std::vector<Child> Database::GetAllChildren()
+std::vector<Child> Database::GetAllChildren() const
 {
     std::vector<Child> children;
 
@@ -55,7 +55,7 @@ std::vector<Child> Database::GetAllChildren()
     return children;
 }
 
-std::vector<Parent> Database::GetAllParents()
+std::vector<Parent> Database::GetAllParents() const
 {
     std::vector<Parent> parents;
 
@@ -79,7 +79,7 @@ std::vector<Parent> Database::GetAllParents()
     return parents;
 }
 
-std::vector<std::string> Database::GetAllGroups()
+std::vector<std::string> Database::GetAllGroups() const
 {
     std::vector<std::string> groups;
 
@@ -101,7 +101,7 @@ std::vector<std::string> Database::GetAllGroups()
     return groups;
 }
 
-std::vector<Parent> Database::GetParents(std::string const& childName)
+std::vector<Parent> Database::GetParents(std::string const& childName) const
 {
     std::vector<Parent> parents;
 
@@ -141,7 +141,7 @@ std::vector<Parent> Database::GetParents(std::string const& childName)
 }
 
 
-std::vector<Timetable> Database::GetTimetables(std::string const& childName)
+std::vector<Timetable> Database::GetTimetables(std::string const& childName) const
 {
     std::vector<Timetable> timetables;
 
@@ -170,7 +170,7 @@ std::vector<Timetable> Database::GetTimetables(std::string const& childName)
     return timetables;
 }
 
-int Database::ChildId(std::string const& childName)
+int Database::ChildId(std::string const& childName) const
 {
     QSqlQuery childId(iSqliteDatabase);
     childId.prepare("SELECT id FROM Children WHERE name=?");
