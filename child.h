@@ -18,3 +18,10 @@ private:
     QString iGroup;
     QString iDateOfBirth;
 };
+
+namespace ChildUtils
+{
+    bool CompareName(Child const& child, Child const& other);
+    bool CompareAge(Child const& child, Child const& other);
+    bool CompareGroup(Child const& child, Child const& other);
+}

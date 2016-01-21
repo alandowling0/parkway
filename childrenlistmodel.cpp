@@ -1,7 +1,7 @@
 #include "childrenlistmodel.h"
 #include <QDebug>
 #include <cassert>
-
+#include <algorithm>
 
 ChildrenListModel::ChildrenListModel(QObject *parent)
     :QAbstractListModel(parent)
@@ -20,6 +20,11 @@ QString ChildrenListModel::getChildName(int index) const
     QVariant name = data(modelIndex, NameRole);
 
     return name.toString();
+}
+
+void ChildrenListModel::sortBy(int column)
+{
+    sort(Qt::UserRole + column);
 }
 
 QHash<int, QByteArray> ChildrenListModel::roleNames() const
@@ -67,6 +72,33 @@ QVariant ChildrenListModel::data(const QModelIndex &index, int role) const
 int ChildrenListModel::rowCount(const QModelIndex & /*parent*/) const
 {
     return iChildren.size();
+}
+
+void ChildrenListModel::sort(int column, Qt::SortOrder order)
+{
+    layoutAboutToBeChanged();
+
+    switch(column)
+    {
+    case NameRole:
+        std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::CompareName);
+        break;
+    case AgeRole:
+        std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::CompareAge);
+        break;
+    case GroupRole:
+        std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::CompareGroup);
+        break;
+    default:
+        assert(false);
+    }
+
+    if(order == Qt::SortOrder::DescendingOrder)
+    {
+        std::reverse(iChildren.begin(), iChildren.end());
+    }
+
+    layoutChanged();
 }
 
 void ChildrenListModel::AddChild(Child const& child)

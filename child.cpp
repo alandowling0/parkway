@@ -39,3 +39,19 @@ QString Child::Age() const
 
     return QString(ss.str().c_str());
 }
+
+bool ChildUtils::CompareName(Child const& child, Child const& other)
+{
+    return child.Name() < other.Name();
+}
+
+bool ChildUtils::CompareAge(Child const& child, Child const& other)
+{
+    return child.Age() < other.Age();
+}
+
+bool ChildUtils::CompareGroup(Child const& child, Child const& other)
+{
+    return child.Group() < other.Group();
+}
+

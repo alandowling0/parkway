@@ -51,6 +51,12 @@ Rectangle
                 text: "Name"
                 font.pointSize: 16
                 font.bold: true
+
+                MouseArea
+                {
+                    anchors.fill: parent
+                    onClicked: childrenListModel.sortBy(1)
+                }
             }
             Text
             {
@@ -64,6 +70,12 @@ Rectangle
                 text: "Group"
                 font.pointSize: 16
                 font.bold: true
+
+                MouseArea
+                {
+                    anchors.fill: parent
+                    onClicked: childrenListModel.sortBy(3)
+                }
             }
             Text
             {
@@ -77,6 +89,12 @@ Rectangle
                 text: "Age"
                 font.pointSize: 16
                 font.bold: true
+
+                MouseArea
+                {
+                    anchors.fill: parent
+                    onClicked: childrenListModel.sortBy(4)
+                }
             }
         }
     }
