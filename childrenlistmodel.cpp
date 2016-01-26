@@ -4,7 +4,7 @@
 #include <algorithm>
 
 ChildrenListModel::ChildrenListModel(QObject *parent)
-    :QAbstractListModel(parent)
+    :QAbstractListModel(parent), iSortRole(NameRole), iSortOrder(Qt::AscendingOrder)
 {
    auto children = iDatabase.GetAllChildren();
 
@@ -12,6 +12,8 @@ ChildrenListModel::ChildrenListModel(QObject *parent)
    {
        AddChild(child);
    }
+
+   std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::CompareName);
 }
 
 QString ChildrenListModel::getChildName(int index) const
