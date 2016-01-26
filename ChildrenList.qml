@@ -55,7 +55,7 @@ Rectangle
                 MouseArea
                 {
                     anchors.fill: parent
-                    onClicked: childrenListModel.sortBy(1)
+                    onClicked: childrenListModel.sortByName()
                 }
             }
             Text
@@ -74,7 +74,7 @@ Rectangle
                 MouseArea
                 {
                     anchors.fill: parent
-                    onClicked: childrenListModel.sortBy(3)
+                    onClicked: childrenListModel.sortByGroup()
                 }
             }
             Text
@@ -93,7 +93,7 @@ Rectangle
                 MouseArea
                 {
                     anchors.fill: parent
-                    onClicked: childrenListModel.sortBy(4)
+                    onClicked: childrenListModel.sortByAge()
                 }
             }
         }

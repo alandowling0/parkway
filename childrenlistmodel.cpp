@@ -22,9 +22,19 @@ QString ChildrenListModel::getChildName(int index) const
     return name.toString();
 }
 
-void ChildrenListModel::sortBy(int column)
+void ChildrenListModel::sortByName()
 {
-    sort(Qt::UserRole + column);
+    sort(NameRole);
+}
+
+void ChildrenListModel::sortByAge()
+{
+    sort(AgeRole);
+}
+
+void ChildrenListModel::sortByGroup()
+{
+    sort(GroupRole);
 }
 
 QHash<int, QByteArray> ChildrenListModel::roleNames() const
@@ -74,11 +84,11 @@ int ChildrenListModel::rowCount(const QModelIndex & /*parent*/) const
     return iChildren.size();
 }
 
-void ChildrenListModel::sort(int column, Qt::SortOrder order)
+void ChildrenListModel::sort(ChildRole sortRole)
 {
     layoutAboutToBeChanged();
 
-    switch(column)
+    switch(sortRole)
     {
     case NameRole:
         std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::CompareName);
@@ -93,10 +103,20 @@ void ChildrenListModel::sort(int column, Qt::SortOrder order)
         assert(false);
     }
 
-    if(order == Qt::SortOrder::DescendingOrder)
+    //Ordinarily sort ascending
+    //if already sorted ascending by this column then sort descending
+    //hence the sort order will toggle
+    if(iSortRole == sortRole && iSortOrder == Qt::AscendingOrder)
     {
         std::reverse(iChildren.begin(), iChildren.end());
+        iSortOrder = Qt::DescendingOrder;
     }
+    else
+    {
+        iSortOrder = Qt::AscendingOrder;
+    }
+
+    iSortRole = sortRole;
 
     layoutChanged();
 }
