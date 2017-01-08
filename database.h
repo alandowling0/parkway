@@ -2,6 +2,7 @@
 
 #include <QString>
 #include <QtSql>
+#include <QByteArray>
 #include "child.h"
 #include "parent.h"
 #include "timetable.h"
@@ -18,6 +19,8 @@ public:
 
     std::vector<Parent> GetParents(std::string const& childName) const;
     std::vector<Timetable> GetTimetables(std::string const& childName) const;
+
+    QByteArray GetImageData(std::string const& childName) const;
 
 private:
      void Open();

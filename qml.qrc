@@ -4,9 +4,6 @@
         <file>ChildrenList.qml</file>
         <file>ParentsList.qml</file>
         <file>AttendedDays.qml</file>
-        <file>images/robert.jpg</file>
-        <file>images/matilde.jpg</file>
-        <file>images/sara.jpg</file>
         <file>images/add.png</file>
         <file>ChildrenListModel.qml</file>
         <file>images/face.jpg</file>

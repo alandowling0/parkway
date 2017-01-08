@@ -5,6 +5,7 @@
 #include "parentslistmodel.h"
 #include "timetableslistmodel.h"
 #include "groupslistmodel.h"
+#include "childimageprovider.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,6 +17,9 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+
+    engine.addImageProvider("childimageprovider", new ChildImageProvider());
+
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();

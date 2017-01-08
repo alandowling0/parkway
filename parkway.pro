@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     database.cpp \
     timetableslistmodel.cpp \
     timetable.cpp \
-    groupslistmodel.cpp
+    groupslistmodel.cpp \
+    childimageprovider.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,4 +35,5 @@ HEADERS += \
     database.h \
     timetableslistmodel.h \
     timetable.h \
-    groupslistmodel.h
+    groupslistmodel.h \
+    childimageprovider.h

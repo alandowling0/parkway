@@ -170,6 +170,30 @@ std::vector<Timetable> Database::GetTimetables(std::string const& childName) con
     return timetables;
 }
 
+QByteArray Database::GetImageData(std::string const& childName) const
+{
+    QByteArray data;
+
+    auto childId = ChildId(childName);
+
+    QSqlQuery query(iSqliteDatabase);
+    query.prepare("SELECT imageData FROM Children WHERE id=?");
+    query.addBindValue(childId);
+
+    auto queryOk = query.exec() && query.first();
+    if(queryOk)
+    {
+        data = query.value(0).toByteArray();
+    }
+    else
+    {
+        qDebug() << query.lastError().text();
+    }
+
+    return data;
+}
+
+
 int Database::ChildId(std::string const& childName) const
 {
     QSqlQuery childId(iSqliteDatabase);
