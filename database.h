@@ -23,9 +23,6 @@ public:
     QByteArray GetImageData(std::string const& childName) const;
 
 private:
-     void Open();
-     void Close();
-
      int ChildId(std::string const& childName) const;
 
 private:
