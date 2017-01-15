@@ -1,4 +1,4 @@
-import QtQuick 2.0
+ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import com.panchito.parkway 1.0
@@ -12,7 +12,7 @@ Rectangle
     property int textInputFontSize: 20
     property string annonymousFace: "./images/face.jpg"
 
-    signal saved;
+    signal saved(string name, string dob, string group, string image);
     signal canceled;
 
     function clear()
@@ -135,7 +135,7 @@ Rectangle
             anchors.right: cancelButton.left
             width: 200
             text: "Save"
-            onClicked: saved()
+            onClicked: saved(enterName.text, enterDob.text, enterGroup.currentText, photo.source)
         }
     }
 

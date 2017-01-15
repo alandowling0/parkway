@@ -24,9 +24,29 @@ QString Child::Group() const
     return iGroup;
 }
 
-QString Child::Age() const
+QString Child::DateOfBirth() const
 {
-    auto dob = QDate::fromString(iDateOfBirth, "dd/MM/yyyy");
+    return iDateOfBirth;
+}
+
+bool ChildUtils::CompareName(Child const& child, Child const& other)
+{
+    return child.Name() < other.Name();
+}
+
+bool ChildUtils::CompareAge(Child const& child, Child const& other)
+{
+    return ChildUtils::Age(child) < ChildUtils::Age(other);
+}
+
+bool ChildUtils::CompareGroup(Child const& child, Child const& other)
+{
+    return child.Group() < other.Group();
+}
+
+QString ChildUtils::Age(Child const& child)
+{
+    auto dob = QDate::fromString(child.DateOfBirth(), "dd/MM/yyyy");
     auto today = QDate::currentDate();
 
     //seems wrong way around but it works
@@ -39,19 +59,3 @@ QString Child::Age() const
 
     return QString(ss.str().c_str());
 }
-
-bool ChildUtils::CompareName(Child const& child, Child const& other)
-{
-    return child.Name() < other.Name();
-}
-
-bool ChildUtils::CompareAge(Child const& child, Child const& other)
-{
-    return child.Age() < other.Age();
-}
-
-bool ChildUtils::CompareGroup(Child const& child, Child const& other)
-{
-    return child.Group() < other.Group();
-}
-

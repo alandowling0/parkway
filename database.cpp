@@ -193,6 +193,19 @@ QByteArray Database::GetImageData(std::string const& childName) const
     return data;
 }
 
+void Database::AddChild(Child const& child)
+{
+    auto groupId = GroupId(child.Group().toStdString());
+
+    QSqlQuery query(iSqliteDatabase);
+    query.prepare("INSERT INTO Children (name, \"group\", dob) "
+                  "VALUES (?, ?, ?)");
+    query.addBindValue(child.Name());
+    query.addBindValue(groupId);
+    query.addBindValue(child.DateOfBirth());
+
+    query.exec();
+}
 
 int Database::ChildId(std::string const& childName) const
 {
@@ -211,3 +224,22 @@ int Database::ChildId(std::string const& childName) const
         return -1;
     }
 }
+
+int Database::GroupId(std::string const& groupName) const
+{
+    QSqlQuery groupId(iSqliteDatabase);
+    groupId.prepare("SELECT id FROM Groups WHERE name=?");
+    groupId.addBindValue(groupName.c_str());
+    if(!groupId.exec())
+        qDebug() << groupId.lastError().text();
+
+    if(groupId.first())
+    {
+        return groupId.value(0).toInt();
+    }
+    else
+    {
+        return -1;
+    }
+}
+

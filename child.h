@@ -10,7 +10,7 @@ public:
     QString Name() const;
     QString Image() const;
     QString Group() const;
-    QString Age() const;
+    QString DateOfBirth() const;
 
 private:
     QString iName;
@@ -24,4 +24,6 @@ namespace ChildUtils
     bool CompareName(Child const& child, Child const& other);
     bool CompareAge(Child const& child, Child const& other);
     bool CompareGroup(Child const& child, Child const& other);
+
+    QString Age(Child const& child);
 }

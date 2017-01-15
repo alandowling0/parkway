@@ -18,19 +18,22 @@ public:
         AgeRole
     };
 
-    Q_INVOKABLE QString getChildName(int index) const; //Enable various UI components to know the name of the currently selected child
+    ChildrenListModel(QObject *parent = 0);
+
+    Q_INVOKABLE void addChild(QString const& name, QString const& image, QString const& group, QString const& dateOfBirth);
+    Q_INVOKABLE QString getChildName(int index) const;
+
     Q_INVOKABLE void sortByName();
     Q_INVOKABLE void sortByAge();
     Q_INVOKABLE void sortByGroup();
 
-    ChildrenListModel(QObject *parent = 0);
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex & index, int role) const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
-    void sort(ChildRole sortRole);
 
 private:
-    void AddChild(Child const& child);
+    void addChild(Child const& child);
+    void sort(ChildRole sortRole);
 
 private:
     QList<Child> iChildren;
