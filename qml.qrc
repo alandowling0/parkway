@@ -17,5 +17,6 @@
         <file>DatePicker.qml</file>
         <file>images/calendar.png</file>
         <file>GroupsListModel.qml</file>
+        <file>database/parkway.db</file>
     </qresource>
 </RCC>

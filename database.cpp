@@ -7,7 +7,7 @@ Database::Database()
     auto count = names.size();
     iConnectionName = QString(std::to_string(count).c_str());
     iSqliteDatabase = QSqlDatabase::addDatabase("QSQLITE", iConnectionName);
-    iSqliteDatabase.setDatabaseName("../parkway/database/parkway.db");
+    iSqliteDatabase.setDatabaseName("parkway.db");
 
     bool open = iSqliteDatabase.open();
     if(!open)
