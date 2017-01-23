@@ -1,13 +1,15 @@
 #include "database.h"
 #include <cassert>
 
+const QString Database::DATABASE_NAME = "parkway.db";
+
 Database::Database()
 {
     auto names = QSqlDatabase::connectionNames();
     auto count = names.size();
     iConnectionName = QString(std::to_string(count).c_str());
     iSqliteDatabase = QSqlDatabase::addDatabase("QSQLITE", iConnectionName);
-    iSqliteDatabase.setDatabaseName("parkway.db");
+    iSqliteDatabase.setDatabaseName(DATABASE_NAME);
 
     bool open = iSqliteDatabase.open();
     if(!open)

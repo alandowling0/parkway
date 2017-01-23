@@ -15,16 +15,16 @@ int main(int argc, char *argv[])
     qmlRegisterType<TimetablesListModel>("com.panchito.parkway", 1, 0, "TimetablesListModel");
     qmlRegisterType<GroupsListModel>("com.panchito.parkway", 1, 0, "GroupsListModel");
 
-    if(QFile::exists("parkway.db"))
+    if(QFile::exists(Database::DATABASE_NAME))
     {
-        auto removeOk = QFile::remove("parkway.db");
+        auto removeOk = QFile::remove(Database::DATABASE_NAME);
 
         qDebug() << removeOk;
     }
-    QFile database(":/database/parkway.db");
-    database.copy("parkway.db");
+    QFile database(":/database/" + Database::DATABASE_NAME);
+    database.copy(Database::DATABASE_NAME);
 
-    QFile copy("parkway.db");
+    QFile copy(Database::DATABASE_NAME);
     copy.setPermissions(QFile::WriteUser);
 
     QGuiApplication app(argc, argv);

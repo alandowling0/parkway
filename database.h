@@ -22,6 +22,8 @@ public:
 
     void AddChild(Child const& child);
 
+    static const QString DATABASE_NAME;
+
 private:
      int ChildId(std::string const& childName) const;
      int GroupId(std::string const& groupName) const;
