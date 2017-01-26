@@ -36,7 +36,7 @@ std::vector<Child> Database::GetAllChildren() const
 
     QSqlQuery query(iSqliteDatabase);
 
-    query.prepare("SELECT Children.name, Children.image, Groups.name, Children.dob "
+    query.prepare("SELECT Children.name, Children.dob, Groups.name "
                   "FROM Children "
                   "INNER JOIN Groups "
                   "ON Children.\"group\"=Groups.id");
@@ -47,11 +47,10 @@ std::vector<Child> Database::GetAllChildren() const
     while(query.next())
     {
         auto name = query.value(0).toString();
-        auto image = query.value(1).toString();
+        auto dob = query.value(1).toString();
         auto group = query.value(2).toString();
-        auto dob = query.value(3).toString();
 
-        children.emplace_back(name, image, group, dob);
+        children.emplace_back(name, dob, group);
     }
 
     return children;
@@ -200,11 +199,11 @@ void Database::AddChild(Child const& child)
     auto groupId = GroupId(child.Group().toStdString());
 
     QSqlQuery query(iSqliteDatabase);
-    query.prepare("INSERT INTO Children (name, \"group\", dob) "
+    query.prepare("INSERT INTO Children (name, dob, \"group\") "
                   "VALUES (?, ?, ?)");
     query.addBindValue(child.Name());
-    query.addBindValue(groupId);
     query.addBindValue(child.DateOfBirth());
+    query.addBindValue(groupId);
 
     query.exec();
 }

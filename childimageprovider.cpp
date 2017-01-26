@@ -6,7 +6,7 @@ ChildImageProvider::ChildImageProvider() :
 
 }
 
-QImage ChildImageProvider::requestImage(const QString &id, QSize */*size*/, const QSize &/*requestedSize*/)
+QImage ChildImageProvider::requestImage(QString const& id, QSize */*size*/, QSize const& /*requestedSize*/)
 {
     QMutexLocker locker(&iMutex);
 

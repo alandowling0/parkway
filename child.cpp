@@ -4,8 +4,8 @@
 #include <QString>
 #include <QDate>
 
-Child::Child(const QString &name, const QString &image, const QString &group, const QString &dateOfBirth)
-    :iName(name), iImage(image), iGroup(group), iDateOfBirth(dateOfBirth)
+Child::Child(QString const& name, QString const& dateOfBirth, QString const& group)
+    :iName(name), iDateOfBirth(dateOfBirth), iGroup(group)
 {
 }
 
@@ -14,9 +14,9 @@ QString Child::Name() const
     return iName;
 }
 
-QString Child::Image() const
+QString Child::DateOfBirth() const
 {
-    return iImage;
+    return iDateOfBirth;
 }
 
 QString Child::Group() const
@@ -24,10 +24,7 @@ QString Child::Group() const
     return iGroup;
 }
 
-QString Child::DateOfBirth() const
-{
-    return iDateOfBirth;
-}
+
 
 bool ChildUtils::CompareName(Child const& child, Child const& other)
 {
@@ -49,7 +46,6 @@ QString ChildUtils::Age(Child const& child)
     auto dob = QDate::fromString(child.DateOfBirth(), "dd/MM/yyyy");
     auto today = QDate::currentDate();
 
-    //seems wrong way around but it works
     auto days = dob.daysTo(today);
 
     auto years = days / 365.0;

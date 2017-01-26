@@ -16,9 +16,9 @@ ChildrenListModel::ChildrenListModel(QObject *parent)
    std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::CompareName);
 }
 
-void ChildrenListModel::addChild(QString const& name, QString const& image, QString const& group, QString const& dateOfBirth)
+void ChildrenListModel::addChild(QString const& name, QString const& dateOfBirth, QString const& group)
 {
-    auto child = Child(name, image, group, dateOfBirth);
+    auto child = Child(name, dateOfBirth, group);
     addChild(child);
     iDatabase.AddChild(child);
 }
@@ -50,7 +50,6 @@ QHash<int, QByteArray> ChildrenListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
-    roles[ImageRole] = "image";
     roles[GroupRole] = "group";
     roles[AgeRole] = "age";
     return roles;
@@ -70,9 +69,6 @@ QVariant ChildrenListModel::data(const QModelIndex &index, int role) const
         {
         case NameRole:
             data = QVariant(child.Name());
-            break;
-        case ImageRole:
-            data = QVariant(child.Image());
             break;
         case GroupRole:
             data = QVariant(child.Group());
@@ -130,7 +126,7 @@ void ChildrenListModel::sort(ChildRole sortRole)
     layoutChanged();
 }
 
-void ChildrenListModel:: addChild(Child const& child)
+void ChildrenListModel::addChild(Child const& child)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     iChildren.push_back(child);

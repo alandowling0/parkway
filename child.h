@@ -5,18 +5,16 @@
 class Child
 {
 public:
-    Child(const QString &name, const QString &image, const QString &group, const QString &dateOfBirth);
+    Child(QString const& name, QString const& dateOfBirth, QString const& group);
 
     QString Name() const;
-    QString Image() const;
-    QString Group() const;
     QString DateOfBirth() const;
+    QString Group() const;
 
 private:
     QString iName;
-    QString iImage;
-    QString iGroup;
     QString iDateOfBirth;
+    QString iGroup;
 };
 
 namespace ChildUtils
