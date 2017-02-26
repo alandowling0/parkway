@@ -270,7 +270,7 @@ Rectangle
 
                 addChildWindow.close()
 
-                childrenListModel.addChild(name, group, dob)
+                childrenListModel.addChild(name, dob, group)
             }
             onCanceled: addChildWindow.close()
         }
