@@ -2,7 +2,7 @@ TEMPLATE = app
 
 QT += qml quick sql
 
-CONFIG += c++11
+CONFIG += c++14
 
 SOURCES += main.cpp \
     childrenlistmodel.cpp \
@@ -15,18 +15,6 @@ SOURCES += main.cpp \
     groupslistmodel.cpp \
     childimageprovider.cpp
 
-RESOURCES += qml.qrc
-
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
-
-# Default rules for deployment.
-include(deployment.pri)
-
-DISTFILES += \
-    database/parkway.db \
-    images/calendar.png
-
 HEADERS += \
     childrenlistmodel.h \
     parentslistmodel.h \
@@ -37,3 +25,10 @@ HEADERS += \
     timetable.h \
     groupslistmodel.h \
     childimageprovider.h
+
+RESOURCES += qml.qrc
+
+# Default rules for deployment.
+include(deployment.pri)
+
+
