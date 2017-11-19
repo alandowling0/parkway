@@ -10,11 +10,6 @@
 
 int main(int argc, char *argv[])
 {
-    qmlRegisterType<ChildrenListModel>("com.panchito.parkway", 1, 0, "ChildrenListModel");
-    qmlRegisterType<ParentsListModel>("com.panchito.parkway", 1, 0, "ParentsListModel");
-    qmlRegisterType<TimetablesListModel>("com.panchito.parkway", 1, 0, "TimetablesListModel");
-    qmlRegisterType<GroupsListModel>("com.panchito.parkway", 1, 0, "GroupsListModel");
-
     if(QFile::exists(Database::DATABASE_NAME))
     {
         auto removeOk = QFile::remove(Database::DATABASE_NAME);
@@ -30,9 +25,11 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-
     engine.addImageProvider("childimageprovider", new ChildImageProvider());
-
+    engine.rootContext()->setContextProperty(QString("childrenListModel"), new ChildrenListModel());
+    engine.rootContext()->setContextProperty(QString("parentsListModel"), new ParentsListModel());
+    engine.rootContext()->setContextProperty(QString("timetablesListModel"), new TimetablesListModel());
+    engine.rootContext()->setContextProperty(QString("groupsListModel"), new GroupsListModel());
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();

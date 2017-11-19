@@ -2,12 +2,10 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Window 2.2
-import com.panchito.parkway 1.0
 
 Rectangle
 {
     id: root
-    ChildrenListModel{id:childrenListModel}
 
     width: 1000
     height: 600
@@ -112,6 +110,7 @@ Rectangle
         header: header
         footer: footer
         footerPositioning: ListView.OverlayFooter
+        currentIndex: -1
         onCurrentIndexChanged:
         {
             root.childSelected(childrenListModel.getChildName(currentIndex))

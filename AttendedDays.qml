@@ -1,7 +1,5 @@
 import QtQuick 2.0
 
-import com.panchito.parkway 1.0
-
 Rectangle
 {
     width: 1000
@@ -14,8 +12,6 @@ Rectangle
     {
         timetablesListModel.setChild(childName)
     }
-
-    TimetablesListModel{id:timetablesListModel}
 
     ListView
     {

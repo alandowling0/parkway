@@ -1,7 +1,5 @@
 import QtQuick 2.0
 
-import com.panchito.parkway 1.0
-
 Rectangle {
     width: 1000
     height: 600
@@ -13,8 +11,6 @@ Rectangle {
     {
         parentsListModel.setChild(childName)
     }
-
-    ParentsListModel { id: parentsListModel }
 
     ListView
     {

@@ -1,7 +1,6 @@
- import QtQuick 2.0
+import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
-import com.panchito.parkway 1.0
 
 Rectangle
 {
@@ -23,8 +22,6 @@ Rectangle
         enterGroup.currentIndex = 0
     }
 
-    GroupsListModel{id:groupsListModel}
-
     Item
     {
         id: dataArea
@@ -45,11 +42,11 @@ Rectangle
             source: annonymousFace
             fillMode: Image.PreserveAspectFit
 
-            MouseArea
-            {
-                anchors.fill: parent
-                onClicked: fileDialog.open()
-            }
+//            MouseArea
+//            {
+//                anchors.fill: parent
+//                onClicked: fileDialog.open()
+//            }
         }
 
         TextField
@@ -139,14 +136,14 @@ Rectangle
         }
     }
 
-    FileDialog
-    {
-        id: fileDialog
-        title: "Please choose a photo"
-        nameFilters: [ "Image files (*.jpg *.png)" ]
-        folder: shortcuts.pictures
-        onAccepted: photo.source = fileDialog.fileUrl
-    }
+//    FileDialog
+//    {
+//        id: fileDialog
+//        title: "Please choose a photo"
+//        nameFilters: [ "Image files (*.jpg *.png)" ]
+//        folder: shortcuts.pictures
+//        onAccepted: photo.source = fileDialog.fileUrl
+//    }
 
     DatePicker
     {
