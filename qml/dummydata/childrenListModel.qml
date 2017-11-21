@@ -26,7 +26,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -34,7 +34,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -42,7 +42,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -50,7 +50,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -58,7 +58,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -66,7 +66,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -74,7 +74,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -82,7 +82,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -90,7 +90,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -98,7 +98,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -106,7 +106,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -114,7 +114,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -122,7 +122,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }
@@ -130,7 +130,7 @@ ListModel
     ListElement
     {
         name: "test"
-        image: "face.jpg"
+        imageUrl: "../images/face.jpg"
         group: "test group"
         age: 3
     }

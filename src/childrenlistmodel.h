@@ -14,7 +14,8 @@ public:
     enum ChildRole {
         NameRole = Qt::UserRole + 1,
         GroupRole,
-        AgeRole
+        AgeRole,
+        ImageRole
     };
 
     ChildrenListModel(QObject *parent = 0);

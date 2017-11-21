@@ -3,6 +3,11 @@
 #include <cassert>
 #include <algorithm>
 
+namespace
+{
+    const QString ChildImageProvider = "image://childimageprovider/";
+}
+
 ChildrenListModel::ChildrenListModel(QObject *parent)
     :QAbstractListModel(parent), iSortRole(NameRole), iSortOrder(Qt::AscendingOrder)
 {
@@ -52,6 +57,7 @@ QHash<int, QByteArray> ChildrenListModel::roleNames() const
     roles[NameRole] = "name";
     roles[GroupRole] = "group";
     roles[AgeRole] = "age";
+    roles[ImageRole] = "imageUrl";
     return roles;
 }
 
@@ -75,6 +81,9 @@ QVariant ChildrenListModel::data(const QModelIndex &index, int role) const
             break;
         case AgeRole:
             data = QVariant(ChildUtils::Age(child));
+            break;
+        case ImageRole:
+            data = QVariant(ChildImageProvider + child.Name());
             break;
         default:
             assert(false);

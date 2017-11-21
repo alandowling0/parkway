@@ -152,7 +152,7 @@ Rectangle
                 anchors.margins: 5
                 width: parent.width / 4
                 fillMode: Image.PreserveAspectFit
-                source: "image://childimageprovider/" + model.name
+                source: model.imageUrl
             }
 
             Text
