@@ -53,5 +53,5 @@ QString ChildUtils::Age(Child const& child)
     std::stringstream ss;
     ss << std::setprecision(3) << years;
 
-    return QString(ss.str().c_str());
+    return QString::fromStdString(ss.str());
 }

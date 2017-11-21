@@ -10,7 +10,7 @@ QImage ChildImageProvider::requestImage(QString const& id, QSize */*size*/, QSiz
 {
     QMutexLocker locker(&iMutex);
 
-    auto data = iDatabase.GetImageData(id.toStdString());
+    auto data = iDatabase.GetImageData(id);
 
     return QImage::fromData(data);
 }

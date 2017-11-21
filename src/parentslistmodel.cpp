@@ -13,7 +13,7 @@ void ParentsListModel::setChild(QString const& childName)
 {
     ClearParents();
 
-    auto parents = iDatabase.GetParents(childName.toStdString());
+    auto parents = iDatabase.GetParents(childName);
 
     for(auto const& parent : parents)
     {

@@ -10,7 +10,7 @@ GroupsListModel::GroupsListModel(QObject *parent)
 
    for(auto const& group : groups)
    {
-       iGroupNames.push_back(QString::fromStdString(group));
+       iGroupNames.push_back(group);
    }
 
    emit groupNamesChanged();

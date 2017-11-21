@@ -11,7 +11,7 @@ void TimetablesListModel::setChild(QString const& childName)
 {
     ClearTimetables();
 
-    auto timetables = iDatabase.GetTimetables(childName.toStdString());
+    auto timetables = iDatabase.GetTimetables(childName);
 
     for(auto const& timetable : timetables)
     {

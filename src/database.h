@@ -15,18 +15,18 @@ public:
 
     std::vector<Child> GetAllChildren() const;
     std::vector<Parent> GetAllParents() const;
-    std::vector<std::string> GetAllGroups() const;
-    std::vector<Parent> GetParents(std::string const& childName) const;
-    std::vector<Timetable> GetTimetables(std::string const& childName) const;
-    QByteArray GetImageData(std::string const& childName) const;
+    std::vector<QString> GetAllGroups() const;
+    std::vector<Parent> GetParents(QString const& childName) const;
+    std::vector<Timetable> GetTimetables(QString const& childName) const;
+    QByteArray GetImageData(QString const& childName) const;
 
     void AddChild(Child const& child);
 
     static const QString DATABASE_NAME;
 
 private:
-     int ChildId(std::string const& childName) const;
-     int GroupId(std::string const& groupName) const;
+     int ChildId(QString const& childName) const;
+     int GroupId(QString const& groupName) const;
 
 private:
      QSqlDatabase iSqliteDatabase;

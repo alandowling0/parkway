@@ -7,7 +7,7 @@ Database::Database()
 {
     auto names = QSqlDatabase::connectionNames();
     auto count = names.size();
-    iConnectionName = QString(std::to_string(count).c_str());
+    iConnectionName = QString::number(count);
     iSqliteDatabase = QSqlDatabase::addDatabase("QSQLITE", iConnectionName);
     iSqliteDatabase.setDatabaseName(DATABASE_NAME);
 
@@ -80,9 +80,9 @@ std::vector<Parent> Database::GetAllParents() const
     return parents;
 }
 
-std::vector<std::string> Database::GetAllGroups() const
+std::vector<QString> Database::GetAllGroups() const
 {
-    std::vector<std::string> groups;
+    std::vector<QString> groups;
 
     QSqlQuery query(iSqliteDatabase);
 
@@ -94,7 +94,7 @@ std::vector<std::string> Database::GetAllGroups() const
 
     while(query.next())
     {
-        auto name = query.value(0).toString().toStdString();
+        auto name = query.value(0).toString();
 
         groups.emplace_back(name);
     }
@@ -102,7 +102,7 @@ std::vector<std::string> Database::GetAllGroups() const
     return groups;
 }
 
-std::vector<Parent> Database::GetParents(std::string const& childName) const
+std::vector<Parent> Database::GetParents(QString const& childName) const
 {
     std::vector<Parent> parents;
 
@@ -142,7 +142,7 @@ std::vector<Parent> Database::GetParents(std::string const& childName) const
 }
 
 
-std::vector<Timetable> Database::GetTimetables(std::string const& childName) const
+std::vector<Timetable> Database::GetTimetables(QString const& childName) const
 {
     std::vector<Timetable> timetables;
 
@@ -165,13 +165,13 @@ std::vector<Timetable> Database::GetTimetables(std::string const& childName) con
         auto thu = timetable.value(4).toBool();
         auto fri = timetable.value(5).toBool();
 
-        timetables.emplace_back(QString(childName.c_str()), term, mon, tue, wed, thu, fri);
+        timetables.emplace_back(childName, term, mon, tue, wed, thu, fri);
     }
 
     return timetables;
 }
 
-QByteArray Database::GetImageData(std::string const& childName) const
+QByteArray Database::GetImageData(QString const& childName) const
 {
     QByteArray data;
 
@@ -196,7 +196,7 @@ QByteArray Database::GetImageData(std::string const& childName) const
 
 void Database::AddChild(Child const& child)
 {
-    auto groupId = GroupId(child.Group().toStdString());
+    auto groupId = GroupId(child.Group());
 
     QSqlQuery query(iSqliteDatabase);
     query.prepare("INSERT INTO Children (name, dob, \"group\") "
@@ -208,11 +208,11 @@ void Database::AddChild(Child const& child)
     query.exec();
 }
 
-int Database::ChildId(std::string const& childName) const
+int Database::ChildId(QString const& childName) const
 {
     QSqlQuery childId(iSqliteDatabase);
     childId.prepare("SELECT id FROM Children WHERE name=?");
-    childId.addBindValue(childName.c_str());
+    childId.addBindValue(childName);
     if(!childId.exec())
         qDebug() << childId.lastError().text();
 
@@ -226,11 +226,11 @@ int Database::ChildId(std::string const& childName) const
     }
 }
 
-int Database::GroupId(std::string const& groupName) const
+int Database::GroupId(QString const& groupName) const
 {
     QSqlQuery groupId(iSqliteDatabase);
     groupId.prepare("SELECT id FROM Groups WHERE name=?");
-    groupId.addBindValue(groupName.c_str());
+    groupId.addBindValue(groupName);
     if(!groupId.exec())
         qDebug() << groupId.lastError().text();
 
