@@ -67,7 +67,7 @@ Item {
                             anchors.bottom: parent.bottom
                             width: height
                             anchors.horizontalCenter: parent.horizontalCenter
-                            source: "./images/PreviousYear.png"
+                            source: "../images/PreviousYear.png"
                         }
                     }
 
@@ -85,7 +85,7 @@ Item {
                             anchors.bottom: parent.bottom
                             width: height
                             anchors.horizontalCenter: parent.horizontalCenter
-                            source: "./images/PreviousMonth.png"
+                            source: "../images/PreviousMonth.png"
                         }
                     }
 
@@ -116,7 +116,7 @@ Item {
                             anchors.bottom: parent.bottom
                             width: height
                             anchors.horizontalCenter: parent.horizontalCenter
-                            source: "./images/NextYear.png"
+                            source: "../images/NextYear.png"
                         }
                     }
 
@@ -134,7 +134,7 @@ Item {
                             anchors.bottom: parent.bottom
                             width: height
                             anchors.horizontalCenter: parent.horizontalCenter
-                            source: "./images/NextMonth.png"
+                            source: "../images/NextMonth.png"
                         }
                     }
                 }

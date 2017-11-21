@@ -4,27 +4,27 @@ QT += qml quick sql
 
 CONFIG += c++14
 
-SOURCES += main.cpp \
-    childrenlistmodel.cpp \
-    parentslistmodel.cpp \
-    child.cpp \
-    parent.cpp \
-    database.cpp \
-    timetableslistmodel.cpp \
-    timetable.cpp \
-    groupslistmodel.cpp \
-    childimageprovider.cpp
+SOURCES += src/main.cpp \
+    src/childrenlistmodel.cpp \
+    src/parentslistmodel.cpp \
+    src/child.cpp \
+    src/parent.cpp \
+    src/database.cpp \
+    src/timetableslistmodel.cpp \
+    src/timetable.cpp \
+    src/groupslistmodel.cpp \
+    src/childimageprovider.cpp
 
 HEADERS += \
-    childrenlistmodel.h \
-    parentslistmodel.h \
-    child.h \
-    parent.h \
-    database.h \
-    timetableslistmodel.h \
-    timetable.h \
-    groupslistmodel.h \
-    childimageprovider.h
+    src/childrenlistmodel.h \
+    src/parentslistmodel.h \
+    src/child.h \
+    src/parent.h \
+    src/database.h \
+    src/timetableslistmodel.h \
+    src/timetable.h \
+    src/groupslistmodel.h \
+    src/childimageprovider.h
 
 RESOURCES += qml.qrc
 

@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QString("parentsListModel"), new ParentsListModel());
     engine.rootContext()->setContextProperty(QString("timetablesListModel"), new TimetablesListModel());
     engine.rootContext()->setContextProperty(QString("groupsListModel"), new GroupsListModel());
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
     return app.exec();
 }

@@ -13,7 +13,7 @@ Rectangle
     border.width: 2
     radius: 5
 
-    property string imageRoot: "./images/"
+    property string imageRoot: "../images/"
 
     signal childSelected(string childName)
 

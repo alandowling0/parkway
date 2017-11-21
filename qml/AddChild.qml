@@ -9,7 +9,7 @@ Rectangle
 
     property int textInputMaxLength: 100
     property int textInputFontSize: 20
-    property string annonymousFace: "./images/face.jpg"
+    property string annonymousFace: "../images/face.jpg"
 
     signal saved(string name, string dob, string group, string image);
     signal canceled;
@@ -87,7 +87,7 @@ Rectangle
                 {
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
-                    source: "./images/calendar.png"
+                    source: "../images/calendar.png"
                 }
             }
         }

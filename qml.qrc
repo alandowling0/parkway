@@ -1,22 +1,22 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>ChildrenList.qml</file>
-        <file>ParentsList.qml</file>
-        <file>AttendedDays.qml</file>
+        <file>qml/main.qml</file>
+        <file>qml/ChildrenList.qml</file>
+        <file>qml/ParentsList.qml</file>
+        <file>qml/AttendedDays.qml</file>
         <file>images/add.png</file>
-        <file>ChildrenListModel.qml</file>
+        <file>qml/ChildrenListModel.qml</file>
         <file>images/face.jpg</file>
-        <file>TimetablesListModel.qml</file>
-        <file>ParentsListModel.qml</file>
-        <file>AddChild.qml</file>
+        <file>qml/TimetablesListModel.qml</file>
+        <file>qml/ParentsListModel.qml</file>
+        <file>qml/AddChild.qml</file>
         <file>images/PreviousYear.png</file>
         <file>images/NextYear.png</file>
         <file>images/PreviousMonth.png</file>
         <file>images/NextMonth.png</file>
-        <file>DatePicker.qml</file>
+        <file>qml/DatePicker.qml</file>
         <file>images/calendar.png</file>
-        <file>GroupsListModel.qml</file>
+        <file>qml/GroupsListModel.qml</file>
         <file>database/parkway.db</file>
     </qresource>
 </RCC>
