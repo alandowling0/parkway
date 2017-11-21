@@ -28,14 +28,6 @@ void ChildrenListModel::addChild(QString const& name, QString const& dateOfBirth
     iDatabase.AddChild(child);
 }
 
-QString ChildrenListModel::getChildName(int index) const
-{
-    auto modelIndex =  QAbstractItemModel::createIndex(index, 0);
-    QVariant name = data(modelIndex, NameRole);
-
-    return name.toString();
-}
-
 void ChildrenListModel::sortByName()
 {
     sort(NameRole);

@@ -13,9 +13,8 @@ Rectangle
     border.width: 2
     radius: 5
 
+    property string selectedChildName: ""
     property string imageRoot: "../images/"
-
-    signal childSelected(string childName)
 
     Component
     {
@@ -29,6 +28,7 @@ Rectangle
             Text
             {
                 id: headerImage
+
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
@@ -37,9 +37,11 @@ Rectangle
                 width: parent.width / 4
 
             }
+
             Text
             {
                 id: headerName
+
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.left: headerImage.right
@@ -56,9 +58,11 @@ Rectangle
                     onClicked: childrenListModel.sortByName()
                 }
             }
+
             Text
             {
                 id: headerGroup
+
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.left: headerName.right
@@ -75,9 +79,11 @@ Rectangle
                     onClicked: childrenListModel.sortByGroup()
                 }
             }
+
             Text
             {
                 id: headerAge
+
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.left: headerGroup.right
@@ -100,6 +106,7 @@ Rectangle
     ListView
     {
         id: childrenList
+
         anchors.fill: parent
         anchors.margins: 10
         clip: true
@@ -111,15 +118,12 @@ Rectangle
         footer: footer
         footerPositioning: ListView.OverlayFooter
         currentIndex: -1
-        onCurrentIndexChanged:
-        {
-            root.childSelected(childrenListModel.getChildName(currentIndex))
-        }
     }
 
     Component
     {
         id: delegate
+
         MouseArea
         {
             height: 100
@@ -132,11 +136,12 @@ Rectangle
             }
             onClicked:
             {
-                if (mouse.button == Qt.LeftButton)
+                if (mouse.button === Qt.LeftButton)
                 {
                     childrenList.currentIndex = index
+                    root.selectedChildName = model.name
                 }
-                else if (mouse.button == Qt.RightButton)
+                else if (mouse.button === Qt.RightButton)
                 {
                     childrenList.currentIndex = index
                     contextMenu.popup();
@@ -146,6 +151,7 @@ Rectangle
             Image
             {
                 id:image
+
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -158,6 +164,7 @@ Rectangle
             Text
             {
                 id:name
+
                 anchors.left: image.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -172,6 +179,7 @@ Rectangle
             Text
             {
                 id:group
+
                 anchors.left: name.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -186,6 +194,7 @@ Rectangle
             Text
             {
                 id:age
+
                 anchors.left: group.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -202,6 +211,7 @@ Rectangle
     Component
     {
         id: footer
+
         Rectangle
         {
             height: 75

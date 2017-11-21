@@ -24,8 +24,6 @@ public:
     Q_INVOKABLE void sortByName();
     Q_INVOKABLE void sortByAge();
     Q_INVOKABLE void sortByGroup();
-    Q_INVOKABLE QString getChildName(int index) const;
-
 
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex & index, int role) const override;

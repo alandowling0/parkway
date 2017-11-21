@@ -7,14 +7,14 @@ Rectangle {
     border.width: 2
     radius: 5
 
-    function setChild(childName)
-    {
-        parentsListModel.setChild(childName)
-    }
+    property string childName: ""
+
+    onChildNameChanged: parentsListModel.setChild(childName)
 
     ListView
     {
         id: parentsList
+
         anchors.fill: parent
         anchors.margins: 10
         clip: true
@@ -22,36 +22,19 @@ Rectangle {
         delegate: delegate
     }
 
-    ListModel
-    {
-        id: parentsModel
-
-        ListElement
-        {
-            name: "Mum"
-            email: "mummy@example.com"
-            phone: "07654 123456"
-        }
-
-        ListElement
-        {
-            name: "Dad"
-            email: "daddy@example.com"
-            phone: "07654 654321"
-        }
-    }
-
     Component
     {
         id: delegate
 
-        Item{
+        Item
+        {
             height: 50
             width: parent.width
 
             Text
             {
-                id:name
+                id: name
+
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -66,7 +49,8 @@ Rectangle {
 
             Text
             {
-                id:email
+                id: email
+
                 anchors.left: name.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -81,7 +65,8 @@ Rectangle {
 
             Text
             {
-                id:phone
+                id: phone
+
                 anchors.left: email.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom

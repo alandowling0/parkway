@@ -13,37 +13,38 @@ Window {
     ChildrenList
     {
         id: children
+
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: parent.width / 2
         anchors.margins: 10
 
-        onChildSelected:
-        {
-            parents.setChild(childName)
-            attendedDays.setChild(childName)
-        }
-
     }
 
     ParentsList
     {
         id: parents
+
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.left: children.right
         height: parent.height / 4
         anchors.margins: 10
+
+        childName: children.selectedChildName
     }
 
     AttendedDays
     {
         id: attendedDays
+
         anchors.top: parents.bottom
         anchors.right: parent.right
         anchors.left: children.right
         anchors.margins: 10
         height: parent.height / 6
+
+        childName: children.selectedChildName
     }
 }

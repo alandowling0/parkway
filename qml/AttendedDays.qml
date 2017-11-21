@@ -8,10 +8,9 @@ Rectangle
     border.width: 2
     radius: 5
 
-    function setChild(childName)
-    {
-        timetablesListModel.setChild(childName)
-    }
+    property string childName: ""
+
+    onChildNameChanged: timetablesListModel.setChild(childName)
 
     ListView
     {

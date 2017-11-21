@@ -17,11 +17,6 @@ ListModel
 	function sortByGroup()
 	{
 	}
-	
-    function getChildName(index)
-	{
-		return get(index).name
-	}
 
     ListElement
     {
