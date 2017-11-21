@@ -4,55 +4,23 @@
 
 
 GroupsListModel::GroupsListModel(QObject *parent)
-    :QAbstractListModel(parent)
+    :QObject(parent)
 {
    auto groups = iDatabase.GetAllGroups();
 
    for(auto const& group : groups)
    {
-       AddGroup(group);
+       iGroupNames.push_back(QString::fromStdString(group));
    }
+
+   emit groupNamesChanged();
 }
 
-QHash<int, QByteArray> GroupsListModel::roleNames() const
+QStringList GroupsListModel::groupNames() const
 {
-    QHash<int, QByteArray> roles;
-    roles[NameRole] = "name";
-    return roles;
+    return iGroupNames;
 }
 
-QVariant GroupsListModel::data(const QModelIndex &index, int role) const
-{
-    QVariant data;
 
-    auto row = index.row();
 
-    if(row < iGroupNames.size())
-    {
-        auto group = iGroupNames.at(row);
-
-        switch (role)
-        {
-        case NameRole:
-            data = QVariant(group.c_str());
-            break;
-        default:
-            assert(false);
-        }
-    }
-
-    return data;
-}
-
-int GroupsListModel::rowCount(const QModelIndex & /*parent*/) const
-{
-    return iGroupNames.size();
-}
-
-void GroupsListModel::AddGroup(std::string const& group)
-{
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    iGroupNames.push_back(group);
-    endInsertRows();
-}
 

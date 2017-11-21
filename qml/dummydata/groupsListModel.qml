@@ -1,25 +1,7 @@
 import QtQuick 2.0
 
-ListModel
+Item
 {
-    ListElement
-    {
-        name: "Pandas"
-    }
-
-    ListElement
-    {
-        name: "Koalas"
-    }
-
-    ListElement
-    {
-        name: "Giraffes"
-    }
-
-    ListElement
-    {
-        name: "Squirrels"
-    }
+	property var groupNames: ["Pandas", "Koalas", "Giraffes", "Squirrels"]
 }
 

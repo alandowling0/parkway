@@ -1,30 +1,26 @@
 #pragma once
 
-#include <QAbstractListModel>
+#include <QObject>
 #include <QList>
-#include <QtSql>
-#include <string>
+#include <QString>
 #include "database.h"
 
-class GroupsListModel : public QAbstractListModel
+class GroupsListModel : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QStringList groupNames READ groupNames NOTIFY groupNamesChanged)
+
 public:
-    enum GroupRoles {
-        NameRole = Qt::UserRole + 1,
-    };
+    GroupsListModel(QObject *parent = nullptr);
 
-    GroupsListModel(QObject *parent = 0);
-    QHash<int, QByteArray> roleNames() const override;
-    QVariant data(const QModelIndex & index, int role) const override;
-    int rowCount(const QModelIndex & parent = QModelIndex()) const override;
+    QStringList groupNames() const;
+
+signals:
+    void groupNamesChanged();
 
 private:
-    void AddGroup(std::string const& child);
-
-private:
-    QList<std::string> iGroupNames;
+    QStringList iGroupNames;
 
     Database iDatabase;
 };

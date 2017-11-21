@@ -34,6 +34,7 @@ Rectangle
         Image
         {
             id: photo
+
             anchors.top: dataArea.top
             anchors.bottom: dataArea.bottom
             anchors.left: dataArea.left
@@ -52,6 +53,7 @@ Rectangle
         TextField
         {
             id: enterName
+
             anchors.top: dataArea.top
             anchors.right: dataArea.right
             anchors.left: photo.right
@@ -65,6 +67,7 @@ Rectangle
         TextField
         {
             id: enterDob
+
             anchors.top: enterName.bottom
             anchors.right: dataArea.right
             anchors.left: photo.right
@@ -95,12 +98,12 @@ Rectangle
         ComboBox
         {
             id: enterGroup
+
             anchors.top: enterDob.bottom
             anchors.right: dataArea.right
             anchors.left: photo.right
             height: dataArea.height / 3
-            model: groupsListModel
-            textRole: "name"
+            model: groupsListModel.groupNames
         }
     }
 
@@ -148,14 +151,15 @@ Rectangle
     DatePicker
     {
         id: dobPicker
+
         visible: false
         anchors.fill: parent
         onDateNotPicked: visible=false
         onDatePicked:
-            {
+        {
             enterDob.text = date
             visible=false
-            }
+        }
     }
 }
 
