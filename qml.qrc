@@ -5,10 +5,7 @@
         <file>qml/ParentsList.qml</file>
         <file>qml/AttendedDays.qml</file>
         <file>images/add.png</file>
-        <file>qml/ChildrenListModel.qml</file>
         <file>images/face.jpg</file>
-        <file>qml/TimetablesListModel.qml</file>
-        <file>qml/ParentsListModel.qml</file>
         <file>qml/AddChild.qml</file>
         <file>images/PreviousYear.png</file>
         <file>images/NextYear.png</file>
@@ -16,7 +13,6 @@
         <file>images/NextMonth.png</file>
         <file>qml/DatePicker.qml</file>
         <file>images/calendar.png</file>
-        <file>qml/GroupsListModel.qml</file>
         <file>database/parkway.db</file>
     </qresource>
 </RCC>
