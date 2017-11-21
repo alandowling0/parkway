@@ -15,8 +15,6 @@ public:
         NameRole = Qt::UserRole + 1,
     };
 
-    Q_INVOKABLE QString getGroupName(int index) const;
-
     GroupsListModel(QObject *parent = 0);
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex & index, int role) const override;

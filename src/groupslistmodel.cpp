@@ -14,14 +14,6 @@ GroupsListModel::GroupsListModel(QObject *parent)
    }
 }
 
-QString GroupsListModel::getGroupName(int index) const
-{
-    auto modelIndex =  QAbstractItemModel::createIndex(index, 0);
-    QVariant name = data(modelIndex, NameRole);
-
-    return name.toString();
-}
-
 QHash<int, QByteArray> GroupsListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;

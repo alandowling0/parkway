@@ -2,31 +2,24 @@ import QtQuick 2.0
 
 ListModel
 {
-    function setChild(childName)
+    ListElement
     {
-
+        name: "Pandas"
     }
 
     ListElement
     {
-        child: "Name1"
-        term: "Term name"
-        mon: true
-        tue: false
-        wed: true
-        thu: false
-        fri: true
+        name: "Koalas"
     }
 
     ListElement
     {
-        child: "Name2"
-        term: "Term name"
-        mon: true
-        tue: true
-        wed: true
-        thu: true
-        fri: true
+        name: "Giraffes"
+    }
+
+    ListElement
+    {
+        name: "Squirrels"
     }
 }
 
