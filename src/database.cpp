@@ -3,7 +3,8 @@
 
 const QString Database::DATABASE_NAME = "parkway.db";
 
-Database::Database()
+Database::Database(QObject* parent) :
+    QObject(parent)
 {
     auto names = QSqlDatabase::connectionNames();
     auto count = names.size();
@@ -189,6 +190,8 @@ void Database::AddChild(Child const& child)
     query.addBindValue(imageData);
 
     query.exec();
+
+    emit updated();
 }
 
 int Database::ChildId(QString const& childName) const

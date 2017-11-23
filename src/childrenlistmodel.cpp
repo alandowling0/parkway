@@ -12,21 +12,20 @@ namespace
 ChildrenListModel::ChildrenListModel(QObject *parent)
     :QAbstractListModel(parent), iSortRole(NameRole), iSortOrder(Qt::AscendingOrder)
 {
-   auto children = iDatabase.GetAllChildren();
-
-   for(auto const& child : children)
+   for(auto const& child : iDatabase.GetAllChildren())
    {
        addChild(child);
    }
 
    std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::CompareName);
+
+   connect(&iDatabase, &Database::updated, this, &ChildrenListModel::onDatabaseUpdated);
 }
 
 void ChildrenListModel::addChild(QString const& name, QString const& dateOfBirth, QString const& group, QUrl const& imageFilePath)
 {
     auto image = imageFilePath.isLocalFile() ? QImage(imageFilePath.toLocalFile()) : QImage(DefaultPhoto);
     auto child = Child(name, dateOfBirth, group, image);
-    addChild(child);
     iDatabase.AddChild(child);
 }
 
@@ -106,6 +105,20 @@ QVariant ChildrenListModel::data(const QModelIndex &index, int role) const
 int ChildrenListModel::rowCount(const QModelIndex & /*parent*/) const
 {
     return iChildren.size();
+}
+
+void ChildrenListModel::onDatabaseUpdated()
+{
+    beginResetModel();
+
+    iChildren.clear();
+
+    for(auto const& child : iDatabase.GetAllChildren())
+    {
+        addChild(child);
+    }
+
+    endResetModel();
 }
 
 void ChildrenListModel::sort(ChildRole sortRole)

@@ -1,16 +1,18 @@
 #pragma once
 
 #include <QString>
+#include <QObject>
 #include <QtSql>
-#include <QByteArray>
 #include "child.h"
 #include "parent.h"
 #include "timetable.h"
 
-class Database
+class Database : public QObject
 {
+    Q_OBJECT
+
 public:
-    Database();
+    Database(QObject* parent = nullptr);
     ~Database();
 
     std::vector<Child> GetAllChildren() const;
@@ -22,6 +24,9 @@ public:
     void AddChild(Child const& child);
 
     static const QString DATABASE_NAME;
+
+signals:
+    void updated();
 
 private:
      int ChildId(QString const& childName) const;

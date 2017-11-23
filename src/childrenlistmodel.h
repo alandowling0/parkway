@@ -33,6 +33,9 @@ public:
     QVariant data(const QModelIndex & index, int role) const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
 
+public slots:
+    void onDatabaseUpdated();
+
 private:
     void addChild(Child const& child);
     void sort(ChildRole sortRole);
