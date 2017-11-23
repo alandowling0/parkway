@@ -6,6 +6,7 @@
 namespace
 {
     const QString ChildImageProvider = "image://childimageprovider/";
+    const QString DefaultPhoto = ":/images/face.jpg";
 }
 
 ChildrenListModel::ChildrenListModel(QObject *parent)
@@ -23,7 +24,8 @@ ChildrenListModel::ChildrenListModel(QObject *parent)
 
 void ChildrenListModel::addChild(QString const& name, QString const& dateOfBirth, QString const& group, QUrl const& imageFilePath)
 {
-    auto child = Child(name, dateOfBirth, group, QImage(imageFilePath.toLocalFile()));
+    auto image = imageFilePath.isLocalFile() ? QImage(imageFilePath.toLocalFile()) : QImage(DefaultPhoto);
+    auto child = Child(name, dateOfBirth, group, image);
     addChild(child);
     iDatabase.AddChild(child);
 }
