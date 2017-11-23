@@ -13,13 +13,13 @@ public:
               bool thursday,
               bool friday);
 
-    QString Child() const;
-    QString Term() const;
-    bool Mon() const;
-    bool Tue() const;
-    bool Wed() const;
-    bool Thu() const;
-    bool Fri() const;
+    QString child() const;
+    QString term() const;
+    bool mon() const;
+    bool tue() const;
+    bool wed() const;
+    bool thu() const;
+    bool fri() const;
 
 private:
     QString iChild;

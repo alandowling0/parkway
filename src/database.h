@@ -15,13 +15,13 @@ public:
     Database(QObject* parent = nullptr);
     ~Database();
 
-    std::vector<Child> GetAllChildren() const;
-    std::vector<Parent> GetAllParents() const;
-    std::vector<QString> GetAllGroups() const;
-    std::vector<Parent> GetParents(QString const& childName) const;
-    std::vector<Timetable> GetTimetables(QString const& childName) const;
+    std::vector<Child> children() const;
+    std::vector<Parent> parents() const;
+    std::vector<QString> groups() const;
+    std::vector<Parent> parents(QString const& childName) const;
+    std::vector<Timetable> timetables(QString const& childName) const;
 
-    void AddChild(Child const& child);
+    void addChild(Child const& child);
 
     static const QString DATABASE_NAME;
 
@@ -29,8 +29,8 @@ signals:
     void updated();
 
 private:
-     int ChildId(QString const& childName) const;
-     int GroupId(QString const& groupName) const;
+     int childId(QString const& childName) const;
+     int groupId(QString const& groupName) const;
 
 private:
      QSqlDatabase iSqliteDatabase;

@@ -11,13 +11,13 @@ ParentsListModel::ParentsListModel(QObject *parent)
 
 void ParentsListModel::setChild(QString const& childName)
 {
-    ClearParents();
+    clearParents();
 
-    auto parents = iDatabase.GetParents(childName);
+    auto parents = iDatabase.parents(childName);
 
     for(auto const& parent : parents)
     {
-        AddParent(parent);
+        addParent(parent);
     }
 }
 
@@ -43,13 +43,13 @@ QVariant ParentsListModel::data(const QModelIndex &index, int role) const
         switch (role)
         {
         case NameRole:
-            data = QVariant(parent.Name());
+            data = QVariant(parent.name());
             break;
         case EmailRole:
-            data = QVariant(parent.Email());
+            data = QVariant(parent.email());
             break;
         case PhoneRole:
-            data = QVariant(parent.Phone());
+            data = QVariant(parent.phone());
             break;
         default:
             assert(false);
@@ -64,14 +64,14 @@ int ParentsListModel::rowCount(const QModelIndex & /*parent*/) const
     return iParents.size();
 }
 
-void ParentsListModel::AddParent(Parent const& parent)
+void ParentsListModel::addParent(Parent const& parent)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     iParents.push_back(parent);
     endInsertRows();
 }
 
-void ParentsListModel::ClearParents()
+void ParentsListModel::clearParents()
 {
     if(!iParents.empty())
     {

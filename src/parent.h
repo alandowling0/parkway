@@ -7,9 +7,9 @@ class Parent
 public:
     Parent(const QString &name, const QString &email, const QString &phone);
 
-    QString Name() const;
-    QString Email() const;
-    QString Phone() const;
+    QString name() const;
+    QString email() const;
+    QString phone() const;
 
 private:
     QString iName;

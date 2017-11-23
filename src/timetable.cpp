@@ -19,37 +19,37 @@ Timetable::Timetable(const QString &child,
 
 }
 
-QString Timetable::Child() const
+QString Timetable::child() const
 {
     return iChild;
 }
 
-QString Timetable::Term() const
+QString Timetable::term() const
 {
     return iTerm;
 }
 
-bool Timetable::Mon() const
+bool Timetable::mon() const
 {
     return iMon;
 }
 
-bool Timetable::Tue() const
+bool Timetable::tue() const
 {
     return iTue;
 }
 
-bool Timetable::Wed() const
+bool Timetable::wed() const
 {
     return iWed;
 }
 
-bool Timetable::Thu() const
+bool Timetable::thu() const
 {
     return iThu;
 }
 
-bool Timetable::Fri() const
+bool Timetable::fri() const
 {
     return iFri;
 }

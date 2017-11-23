@@ -26,8 +26,8 @@ public:
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
 
 private:
-    void AddParent(Parent const& parent);
-    void ClearParents();
+    void addParent(Parent const& parent);
+    void clearParents();
 
 private:
     QList<Parent> iParents;

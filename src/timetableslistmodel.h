@@ -30,8 +30,8 @@ public:
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
 
 private:
-    void AddTimetable(Timetable const& timetable);
-    void ClearTimetables();
+    void addTimetable(Timetable const& timetable);
+    void clearTimetables();
 
 private:
     QList<Timetable> iTimetables;

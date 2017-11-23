@@ -9,45 +9,45 @@ Child::Child(QString const& name, QString const& dateOfBirth, QString const& gro
 {
 }
 
-QString Child::Name() const
+QString Child::name() const
 {
     return iName;
 }
 
-QString Child::DateOfBirth() const
+QString Child::dateOfBirth() const
 {
     return iDateOfBirth;
 }
 
-QString Child::Group() const
+QString Child::group() const
 {
     return iGroup;
 }
 
-QImage Child::Image() const
+QImage Child::image() const
 {
     return iImage;
 }
 
 
-bool ChildUtils::CompareName(Child const& child, Child const& other)
+bool ChildUtils::compareName(Child const& child, Child const& other)
 {
-    return QString::localeAwareCompare(child.Name(), other.Name()) < 0;
+    return QString::localeAwareCompare(child.name(), other.name()) < 0;
 }
 
-bool ChildUtils::CompareAge(Child const& child, Child const& other)
+bool ChildUtils::compareAge(Child const& child, Child const& other)
 {
-    return ChildUtils::Age(child) < ChildUtils::Age(other);
+    return ChildUtils::age(child) < ChildUtils::age(other);
 }
 
-bool ChildUtils::CompareGroup(Child const& child, Child const& other)
+bool ChildUtils::compareGroup(Child const& child, Child const& other)
 {
-    return QString::localeAwareCompare(child.Group(), other.Group()) < 0;
+    return QString::localeAwareCompare(child.group(), other.group()) < 0;
 }
 
-double ChildUtils::Age(Child const& child)
+double ChildUtils::age(Child const& child)
 {
-    auto dob = QDate::fromString(child.DateOfBirth(), "dd/MM/yyyy");
+    auto dob = QDate::fromString(child.dateOfBirth(), "dd/MM/yyyy");
     auto today = QDate::currentDate();
 
     auto days = dob.daysTo(today);

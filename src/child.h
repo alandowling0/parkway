@@ -8,10 +8,10 @@ class Child
 public:
     Child(QString const& name, QString const& dateOfBirth, QString const& group, QImage const& image);
 
-    QString Name() const;
-    QString DateOfBirth() const;
-    QString Group() const;
-    QImage Image() const;
+    QString name() const;
+    QString dateOfBirth() const;
+    QString group() const;
+    QImage image() const;
 
 private:
     QString iName;
@@ -22,9 +22,9 @@ private:
 
 namespace ChildUtils
 {
-    bool CompareName(Child const& child, Child const& other);
-    bool CompareAge(Child const& child, Child const& other);
-    bool CompareGroup(Child const& child, Child const& other);
+    bool compareName(Child const& child, Child const& other);
+    bool compareAge(Child const& child, Child const& other);
+    bool compareGroup(Child const& child, Child const& other);
 
-    double Age(Child const& child);
+    double age(Child const& child);
 }

@@ -9,13 +9,13 @@ TimetablesListModel::TimetablesListModel(QObject *parent)
 
 void TimetablesListModel::setChild(QString const& childName)
 {
-    ClearTimetables();
+    clearTimetables();
 
-    auto timetables = iDatabase.GetTimetables(childName);
+    auto timetables = iDatabase.timetables(childName);
 
     for(auto const& timetable : timetables)
     {
-        AddTimetable(timetable);
+        addTimetable(timetable);
     }
 }
 
@@ -46,25 +46,25 @@ QVariant TimetablesListModel::data(const QModelIndex & index, int role) const
         switch (role)
         {
         case ChildRole:
-            data = QVariant(timetable.Child());
+            data = QVariant(timetable.child());
             break;
         case TermRole:
-            data = QVariant(timetable.Term());
+            data = QVariant(timetable.term());
             break;
         case MondayRole:
-            data = QVariant(timetable.Mon());
+            data = QVariant(timetable.mon());
             break;
         case TuesdayRole:
-            data = QVariant(timetable.Tue());
+            data = QVariant(timetable.tue());
             break;
         case WednesdayRole:
-            data = QVariant(timetable.Wed());
+            data = QVariant(timetable.wed());
             break;
         case ThursdayRole:
-            data = QVariant(timetable.Thu());
+            data = QVariant(timetable.thu());
             break;
         case FridayRole:
-            data = QVariant(timetable.Fri());
+            data = QVariant(timetable.fri());
             break;
         default:
             assert(false);
@@ -79,14 +79,14 @@ int TimetablesListModel::rowCount(const QModelIndex & /*parent*/) const
     return iTimetables.size();
 }
 
-void TimetablesListModel::AddTimetable(Timetable const& timetable)
+void TimetablesListModel::addTimetable(Timetable const& timetable)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     iTimetables.push_back(timetable);
     endInsertRows();
 }
 
-void TimetablesListModel::ClearTimetables()
+void TimetablesListModel::clearTimetables()
 {
     if(!iTimetables.empty())
     {

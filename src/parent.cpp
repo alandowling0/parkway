@@ -7,17 +7,17 @@ Parent::Parent(const QString &name, const QString &email, const QString &phone)
 {
 }
 
-QString Parent::Name() const
+QString Parent::name() const
 {
     return iName;
 }
 
-QString Parent::Email() const
+QString Parent::email() const
 {
     return iEmail;
 }
 
-QString Parent::Phone() const
+QString Parent::phone() const
 {
     return iPhone;
 }

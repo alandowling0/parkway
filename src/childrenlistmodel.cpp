@@ -23,7 +23,7 @@ void ChildrenListModel::addChild(QString const& name, QString const& dateOfBirth
 {
     auto image = imageFilePath.isLocalFile() ? QImage(imageFilePath.toLocalFile()) : QImage(DefaultPhoto);
     auto child = Child(name, dateOfBirth, group, image);
-    iDatabase.AddChild(child);
+    iDatabase.addChild(child);
 }
 
 void ChildrenListModel::sortByName()
@@ -74,9 +74,9 @@ QImage ChildrenListModel::getImage(QString const& name) const
 
     for(auto const& child : iChildren)
     {
-        if(child.Name() == name)
+        if(child.name() == name)
         {
-            image = child.Image();
+            image = child.image();
 			break;
         }
     }
@@ -107,16 +107,16 @@ QVariant ChildrenListModel::data(const QModelIndex &index, int role) const
         switch (role)
         {
         case NameRole:
-            data = QVariant(child.Name());
+            data = QVariant(child.name());
             break;
         case GroupRole:
-            data = QVariant(child.Group());
+            data = QVariant(child.group());
             break;
         case AgeRole:
-            data = QVariant(QString::number(ChildUtils::Age(child), 'g', 3));
+            data = QVariant(QString::number(ChildUtils::age(child), 'g', 3));
             break;
         case ImageRole:
-            data = QVariant(ChildImageProvider + child.Name());
+            data = QVariant(ChildImageProvider + child.name());
             break;
         default:
             assert(false);
@@ -143,13 +143,13 @@ void ChildrenListModel::sort()
     switch(iSortRole)
     {
     case NameRole:
-        std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::CompareName);
+        std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::compareName);
         break;
     case AgeRole:
-        std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::CompareAge);
+        std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::compareAge);
         break;
     case GroupRole:
-        std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::CompareGroup);
+        std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::compareGroup);
         break;
     default:
         assert(false);
@@ -167,7 +167,7 @@ void ChildrenListModel::refresh()
 {
     beginResetModel();
 
-    iChildren = iDatabase.GetAllChildren();
+    iChildren = iDatabase.children();
 
     sort();
 

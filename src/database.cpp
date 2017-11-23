@@ -31,7 +31,7 @@ Database::~Database()
     QSqlDatabase::removeDatabase(iConnectionName);
 }
 
-std::vector<Child> Database::GetAllChildren() const
+std::vector<Child> Database::children() const
 {
     std::vector<Child> children;
 
@@ -58,7 +58,7 @@ std::vector<Child> Database::GetAllChildren() const
     return children;
 }
 
-std::vector<Parent> Database::GetAllParents() const
+std::vector<Parent> Database::parents() const
 {
     std::vector<Parent> parents;
 
@@ -82,7 +82,7 @@ std::vector<Parent> Database::GetAllParents() const
     return parents;
 }
 
-std::vector<QString> Database::GetAllGroups() const
+std::vector<QString> Database::groups() const
 {
     std::vector<QString> groups;
 
@@ -104,15 +104,13 @@ std::vector<QString> Database::GetAllGroups() const
     return groups;
 }
 
-std::vector<Parent> Database::GetParents(QString const& childName) const
+std::vector<Parent> Database::parents(QString const& childName) const
 {
     std::vector<Parent> parents;
 
-    auto childId = ChildId(childName);
-
     QSqlQuery relation(iSqliteDatabase);
     relation.prepare("SELECT parent FROM Relations WHERE child=?");
-    relation.addBindValue(childId);
+    relation.addBindValue(childId(childName));
 
     if(!relation.exec())
         qDebug() << relation.lastError().text();
@@ -143,16 +141,14 @@ std::vector<Parent> Database::GetParents(QString const& childName) const
     return parents;
 }
 
-std::vector<Timetable> Database::GetTimetables(QString const& childName) const
+std::vector<Timetable> Database::timetables(QString const& childName) const
 {
     std::vector<Timetable> timetables;
-
-    auto childId = ChildId(childName);
 
     QSqlQuery timetable(iSqliteDatabase);
     timetable.prepare("SELECT term, monday, tuesday, wednesday, thursday, friday "
                       "FROM Timetables WHERE child=?");
-    timetable.addBindValue(childId);
+    timetable.addBindValue(childId(childName));
 
     if(!timetable.exec())
         qDebug() << timetable.lastError().text();
@@ -172,21 +168,19 @@ std::vector<Timetable> Database::GetTimetables(QString const& childName) const
     return timetables;
 }
 
-void Database::AddChild(Child const& child)
+void Database::addChild(Child const& child)
 {
-    auto groupId = GroupId(child.Group());
-
     QBuffer buffer;
     buffer.open(QIODevice::WriteOnly);
-    child.Image().save(&buffer, "JPG");
+    child.image().save(&buffer, "JPG");
     auto imageData = buffer.data();
 
     QSqlQuery query(iSqliteDatabase);
     query.prepare("INSERT INTO Children (name, dob, \"group\", imageData) "
                   "VALUES (?, ?, ?, ?)");
-    query.addBindValue(child.Name());
-    query.addBindValue(child.DateOfBirth());
-    query.addBindValue(groupId);
+    query.addBindValue(child.name());
+    query.addBindValue(child.dateOfBirth());
+    query.addBindValue(groupId(child.group()));
     query.addBindValue(imageData);
 
     query.exec();
@@ -194,7 +188,7 @@ void Database::AddChild(Child const& child)
     emit updated();
 }
 
-int Database::ChildId(QString const& childName) const
+int Database::childId(QString const& childName) const
 {
     QSqlQuery childId(iSqliteDatabase);
     childId.prepare("SELECT id FROM Children WHERE name=?");
@@ -212,7 +206,7 @@ int Database::ChildId(QString const& childName) const
     }
 }
 
-int Database::GroupId(QString const& groupName) const
+int Database::groupId(QString const& groupName) const
 {
     QSqlQuery groupId(iSqliteDatabase);
     groupId.prepare("SELECT id FROM Groups WHERE name=?");

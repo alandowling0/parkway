@@ -6,7 +6,7 @@
 GroupsListModel::GroupsListModel(QObject *parent)
     :QObject(parent)
 {
-   auto groups = iDatabase.GetAllGroups();
+   auto groups = iDatabase.groups();
 
    for(auto const& group : groups)
    {
