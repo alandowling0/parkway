@@ -10,23 +10,21 @@
 
 int main(int argc, char *argv[])
 {
-    if(QFile::exists(Database::DATABASE_NAME))
+    if(!QFile::exists(Database::DATABASE_NAME))
     {
-        auto removeOk = QFile::remove(Database::DATABASE_NAME);
-
-        qDebug() << removeOk;
+        QFile defaultDatabase(":/database/" + Database::DATABASE_NAME);
+        defaultDatabase.copy(Database::DATABASE_NAME);
     }
-    QFile database(":/database/" + Database::DATABASE_NAME);
-    database.copy(Database::DATABASE_NAME);
 
-    QFile copy(Database::DATABASE_NAME);
-    copy.setPermissions(QFile::WriteUser);
+    QFile database(Database::DATABASE_NAME);
+    database.setPermissions(QFile::WriteUser);
 
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    engine.addImageProvider("childimageprovider", new ChildImageProvider());
-    engine.rootContext()->setContextProperty(QString("childrenListModel"), new ChildrenListModel());
+    auto childrenListModel = new ChildrenListModel();
+    engine.addImageProvider("childimageprovider", new ChildImageProvider(*childrenListModel));
+    engine.rootContext()->setContextProperty(QString("childrenListModel"), childrenListModel);
     engine.rootContext()->setContextProperty(QString("parentsListModel"), new ParentsListModel());
     engine.rootContext()->setContextProperty(QString("timetablesListModel"), new TimetablesListModel());
     engine.rootContext()->setContextProperty(QString("groupsListModel"), new GroupsListModel());

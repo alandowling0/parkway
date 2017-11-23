@@ -18,7 +18,6 @@ public:
     std::vector<QString> GetAllGroups() const;
     std::vector<Parent> GetParents(QString const& childName) const;
     std::vector<Timetable> GetTimetables(QString const& childName) const;
-    QByteArray GetImageData(QString const& childName) const;
 
     void AddChild(Child const& child);
 

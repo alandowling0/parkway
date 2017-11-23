@@ -2,16 +2,17 @@
 
 #include <QQuickImageProvider>
 #include <QMutex>
-#include "database.h"
+
+class ChildrenListModel;
 
 class ChildImageProvider : public QQuickImageProvider
 {
 public:
-    ChildImageProvider();
+    ChildImageProvider(ChildrenListModel const& childrenListModel);
 
     QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize) override;
 
 private:
-    Database iDatabase;
     QMutex iMutex;
+    ChildrenListModel const& iChildrenListModel;
 };

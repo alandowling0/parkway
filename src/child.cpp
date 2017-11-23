@@ -4,8 +4,8 @@
 #include <QString>
 #include <QDate>
 
-Child::Child(QString const& name, QString const& dateOfBirth, QString const& group)
-    :iName(name), iDateOfBirth(dateOfBirth), iGroup(group)
+Child::Child(QString const& name, QString const& dateOfBirth, QString const& group, QImage const& image)
+    :iName(name), iDateOfBirth(dateOfBirth), iGroup(group), iImage(image)
 {
 }
 
@@ -24,6 +24,10 @@ QString Child::Group() const
     return iGroup;
 }
 
+QImage Child::Image() const
+{
+    return iImage;
+}
 
 
 bool ChildUtils::CompareName(Child const& child, Child const& other)

@@ -275,11 +275,11 @@ Rectangle
 
             anchors.fill: parent
             onSaved: {
-                console.log(name, image, group, dob)
+                console.log(name, dob, group, image)
 
                 addChildWindow.close()
 
-                childrenListModel.addChild(name, dob, group)
+                childrenListModel.addChild(name, dob, group, image)
             }
             onCanceled: addChildWindow.close()
         }

@@ -43,11 +43,11 @@ Rectangle
             source: annonymousFace
             fillMode: Image.PreserveAspectFit
 
-//            MouseArea
-//            {
-//                anchors.fill: parent
-//                onClicked: fileDialog.open()
-//            }
+            MouseArea
+            {
+                anchors.fill: parent
+                onClicked: fileDialog.open()
+            }
         }
 
         TextField
@@ -119,6 +119,7 @@ Rectangle
         Button
         {
             id: cancelButton
+
             anchors.top: buttonArea.top
             anchors.bottom: buttonArea.bottom
             anchors.right: buttonArea.right
@@ -130,6 +131,7 @@ Rectangle
         Button
         {
             id: saveButton
+
             anchors.top: buttonArea.top
             anchors.bottom: buttonArea.bottom
             anchors.right: cancelButton.left
@@ -139,14 +141,15 @@ Rectangle
         }
     }
 
-//    FileDialog
-//    {
-//        id: fileDialog
-//        title: "Please choose a photo"
-//        nameFilters: [ "Image files (*.jpg *.png)" ]
-//        folder: shortcuts.pictures
-//        onAccepted: photo.source = fileDialog.fileUrl
-//    }
+    FileDialog
+    {
+        id: fileDialog
+
+        title: "Please choose a photo"
+        nameFilters: [ "Image files (*.jpg *.png)" ]
+        folder: shortcuts.pictures
+        onAccepted: photo.source = fileDialog.fileUrl
+    }
 
     DatePicker
     {

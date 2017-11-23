@@ -36,7 +36,7 @@ std::vector<Child> Database::GetAllChildren() const
 
     QSqlQuery query(iSqliteDatabase);
 
-    query.prepare("SELECT Children.name, Children.dob, Groups.name "
+    query.prepare("SELECT Children.name, Children.dob, Groups.name, Children.imageData "
                   "FROM Children "
                   "INNER JOIN Groups "
                   "ON Children.\"group\"=Groups.id");
@@ -49,8 +49,9 @@ std::vector<Child> Database::GetAllChildren() const
         auto name = query.value(0).toString();
         auto dob = query.value(1).toString();
         auto group = query.value(2).toString();
+        auto imageData = query.value(3).toByteArray();
 
-        children.emplace_back(name, dob, group);
+        children.emplace_back(name, dob, group, QImage::fromData(imageData));
     }
 
     return children;
@@ -141,7 +142,6 @@ std::vector<Parent> Database::GetParents(QString const& childName) const
     return parents;
 }
 
-
 std::vector<Timetable> Database::GetTimetables(QString const& childName) const
 {
     std::vector<Timetable> timetables;
@@ -171,39 +171,22 @@ std::vector<Timetable> Database::GetTimetables(QString const& childName) const
     return timetables;
 }
 
-QByteArray Database::GetImageData(QString const& childName) const
-{
-    QByteArray data;
-
-    auto childId = ChildId(childName);
-
-    QSqlQuery query(iSqliteDatabase);
-    query.prepare("SELECT imageData FROM Children WHERE id=?");
-    query.addBindValue(childId);
-
-    auto queryOk = query.exec() && query.first();
-    if(queryOk)
-    {
-        data = query.value(0).toByteArray();
-    }
-    else
-    {
-        qDebug() << query.lastError().text();
-    }
-
-    return data;
-}
-
 void Database::AddChild(Child const& child)
 {
     auto groupId = GroupId(child.Group());
 
+    QBuffer buffer;
+    buffer.open(QIODevice::WriteOnly);
+    child.Image().save(&buffer, "JPG");
+    auto imageData = buffer.data();
+
     QSqlQuery query(iSqliteDatabase);
-    query.prepare("INSERT INTO Children (name, dob, \"group\") "
-                  "VALUES (?, ?, ?)");
+    query.prepare("INSERT INTO Children (name, dob, \"group\", imageData) "
+                  "VALUES (?, ?, ?, ?)");
     query.addBindValue(child.Name());
     query.addBindValue(child.DateOfBirth());
     query.addBindValue(groupId);
+    query.addBindValue(imageData);
 
     query.exec();
 }

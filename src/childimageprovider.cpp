@@ -1,7 +1,9 @@
 #include "childimageprovider.h"
+#include "childrenlistmodel.h"
 
-ChildImageProvider::ChildImageProvider() :
-    QQuickImageProvider(QQuickImageProvider::Image)
+ChildImageProvider::ChildImageProvider(ChildrenListModel const& childrenListModel) :
+    QQuickImageProvider(QQuickImageProvider::Image),
+    iChildrenListModel(childrenListModel)
 {
 
 }
@@ -10,7 +12,5 @@ QImage ChildImageProvider::requestImage(QString const& id, QSize */*size*/, QSiz
 {
     QMutexLocker locker(&iMutex);
 
-    auto data = iDatabase.GetImageData(id);
-
-    return QImage::fromData(data);
+    return iChildrenListModel.getImage(id);
 }
