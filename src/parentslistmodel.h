@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QAbstractListModel>
-#include <QList>
+#include <vector>
 #include <QtSql>
 
 #include "parent.h"
@@ -25,12 +25,13 @@ public:
     QVariant data(const QModelIndex & index, int role) const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
 
-private:
-    void addParent(Parent const& parent);
-    void clearParents();
+public slots:
+    void onDatabaseUpdated();
 
 private:
-    QList<Parent> iParents;
+    void refresh();
 
+    std::vector<Parent> iParents;
+    QString iChildName;
     Database iDatabase;
 };

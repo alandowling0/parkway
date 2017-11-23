@@ -3,21 +3,19 @@
 #include <cassert>
 
 
-ParentsListModel::ParentsListModel(QObject *parent)
-    :QAbstractListModel(parent)
+ParentsListModel::ParentsListModel(QObject *parent) :
+    QAbstractListModel(parent)
 {
-
+    connect(&iDatabase, &Database::updated, this, &ParentsListModel::onDatabaseUpdated);
 }
 
 void ParentsListModel::setChild(QString const& childName)
 {
-    clearParents();
-
-    auto parents = iDatabase.parents(childName);
-
-    for(auto const& parent : parents)
+    if(childName != iChildName)
     {
-        addParent(parent);
+        iChildName = childName;
+
+        refresh();
     }
 }
 
@@ -34,7 +32,7 @@ QVariant ParentsListModel::data(const QModelIndex &index, int role) const
 {
     QVariant data;
 
-    auto row = index.row();
+    size_t row = index.row();
 
     if(row < iParents.size())
     {
@@ -64,19 +62,22 @@ int ParentsListModel::rowCount(const QModelIndex & /*parent*/) const
     return iParents.size();
 }
 
-void ParentsListModel::addParent(Parent const& parent)
+void ParentsListModel::onDatabaseUpdated()
 {
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    iParents.push_back(parent);
-    endInsertRows();
+    refresh();
 }
 
-void ParentsListModel::clearParents()
+void ParentsListModel::refresh()
 {
-    if(!iParents.empty())
+    beginResetModel();
+
+    iParents.clear();
+
+    if(!iChildName.isEmpty())
     {
-        beginRemoveRows(QModelIndex(), 0, rowCount()-1);
-        iParents.clear();
-        endRemoveRows();
+        iParents = iDatabase.parents(iChildName);
     }
+
+    endResetModel();
 }
+

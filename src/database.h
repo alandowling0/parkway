@@ -16,8 +16,8 @@ public:
     ~Database();
 
     std::vector<Child> children() const;
-    std::vector<Parent> parents() const;
     std::vector<QString> groups() const;
+    std::vector<Parent> parents() const;
     std::vector<Parent> parents(QString const& childName) const;
     std::vector<Timetable> timetables(QString const& childName) const;
 

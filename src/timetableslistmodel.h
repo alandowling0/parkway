@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QAbstractListModel>
-#include <QList>
+#include <vector>
 #include <QtSql>
 #include "timetable.h"
 #include "database.h"
@@ -29,12 +29,13 @@ public:
     QVariant data(const QModelIndex & index, int role) const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
 
-private:
-    void addTimetable(Timetable const& timetable);
-    void clearTimetables();
+public slots:
+    void onDatabaseUpdated();
 
 private:
-    QList<Timetable> iTimetables;
+    void refresh();
 
+    std::vector<Timetable> iTimetables;
+    QString iChildName;
     Database iDatabase;
 };

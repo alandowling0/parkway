@@ -6,14 +6,9 @@
 GroupsListModel::GroupsListModel(QObject *parent)
     :QObject(parent)
 {
-   auto groups = iDatabase.groups();
+    refresh();
 
-   for(auto const& group : groups)
-   {
-       iGroupNames.push_back(group);
-   }
-
-   emit groupNamesChanged();
+    connect(&iDatabase, &Database::updated, this, &GroupsListModel::onDatabaseUpdated);
 }
 
 QStringList GroupsListModel::groupNames() const
@@ -21,6 +16,22 @@ QStringList GroupsListModel::groupNames() const
     return iGroupNames;
 }
 
+void GroupsListModel::onDatabaseUpdated()
+{
+    refresh();
+}
+
+void GroupsListModel::refresh()
+{
+    iGroupNames.clear();
+
+    for(auto const& group : iDatabase.groups())
+    {
+        iGroupNames.push_back(group);
+    }
+
+    emit groupNamesChanged();
+}
 
 
 

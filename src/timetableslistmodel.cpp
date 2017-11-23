@@ -2,20 +2,19 @@
 #include <cassert>
 
 
-TimetablesListModel::TimetablesListModel(QObject *parent)
-    :QAbstractListModel(parent)
+TimetablesListModel::TimetablesListModel(QObject *parent) :
+    QAbstractListModel(parent)
 {
+    connect(&iDatabase, &Database::updated, this, &TimetablesListModel::onDatabaseUpdated);
 }
 
 void TimetablesListModel::setChild(QString const& childName)
 {
-    clearTimetables();
-
-    auto timetables = iDatabase.timetables(childName);
-
-    for(auto const& timetable : timetables)
+    if(childName != iChildName)
     {
-        addTimetable(timetable);
+        iChildName = childName;
+
+        refresh();
     }
 }
 
@@ -37,7 +36,7 @@ QVariant TimetablesListModel::data(const QModelIndex & index, int role) const
 {
     QVariant data;
 
-    auto row = index.row();
+    size_t row = index.row();
 
     if(row < iTimetables.size())
     {
@@ -79,19 +78,21 @@ int TimetablesListModel::rowCount(const QModelIndex & /*parent*/) const
     return iTimetables.size();
 }
 
-void TimetablesListModel::addTimetable(Timetable const& timetable)
+void TimetablesListModel::onDatabaseUpdated()
 {
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    iTimetables.push_back(timetable);
-    endInsertRows();
+    refresh();
 }
 
-void TimetablesListModel::clearTimetables()
+void TimetablesListModel::refresh()
 {
-    if(!iTimetables.empty())
+    beginResetModel();
+
+    iTimetables.clear();
+
+    if(!iChildName.isEmpty())
     {
-        beginRemoveRows(QModelIndex(), 0, rowCount()-1);
-        iTimetables.clear();
-        endRemoveRows();
+        iTimetables = iDatabase.timetables(iChildName);
     }
+
+    endResetModel();
 }

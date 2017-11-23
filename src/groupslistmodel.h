@@ -16,12 +16,16 @@ public:
 
     QStringList groupNames() const;
 
+public slots:
+    void onDatabaseUpdated();
+
 signals:
     void groupNamesChanged();
 
 private:
-    QStringList iGroupNames;
+    void refresh();
 
+    QStringList iGroupNames;
     Database iDatabase;
 };
 
