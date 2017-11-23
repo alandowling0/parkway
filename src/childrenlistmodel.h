@@ -37,8 +37,9 @@ public slots:
     void onDatabaseUpdated();
 
 private:
-    void addChild(Child const& child);
-    void sort(ChildRole sortRole);
+    void refresh();
+    void sort();
+    void toggleSortOrder();
 
 private:
     std::vector<Child> iChildren;

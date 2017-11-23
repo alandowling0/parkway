@@ -10,16 +10,13 @@ namespace
 }
 
 ChildrenListModel::ChildrenListModel(QObject *parent)
-    :QAbstractListModel(parent), iSortRole(NameRole), iSortOrder(Qt::AscendingOrder)
+    :QAbstractListModel(parent),
+      iSortRole(NameRole),
+      iSortOrder(Qt::AscendingOrder)
 {
-   for(auto const& child : iDatabase.GetAllChildren())
-   {
-       addChild(child);
-   }
+    refresh();
 
-   std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::CompareName);
-
-   connect(&iDatabase, &Database::updated, this, &ChildrenListModel::onDatabaseUpdated);
+    connect(&iDatabase, &Database::updated, this, &ChildrenListModel::onDatabaseUpdated);
 }
 
 void ChildrenListModel::addChild(QString const& name, QString const& dateOfBirth, QString const& group, QUrl const& imageFilePath)
@@ -30,18 +27,45 @@ void ChildrenListModel::addChild(QString const& name, QString const& dateOfBirth
 }
 
 void ChildrenListModel::sortByName()
-{
-    sort(NameRole);
+{    
+    if(iSortRole != NameRole)
+    {
+        iSortRole = NameRole;
+    }
+    else
+    {
+        toggleSortOrder();
+    }
+
+    sort();
 }
 
 void ChildrenListModel::sortByAge()
 {
-    sort(AgeRole);
+    if(iSortRole != AgeRole)
+    {
+        iSortRole = AgeRole;
+    }
+    else
+    {
+        toggleSortOrder();
+    }
+
+    sort();
 }
 
 void ChildrenListModel::sortByGroup()
 {
-    sort(GroupRole);
+    if(iSortRole != GroupRole)
+    {
+        iSortRole = GroupRole;
+    }
+    else
+    {
+        toggleSortOrder();
+    }
+
+    sort();
 }
 
 QImage ChildrenListModel::getImage(QString const& name) const
@@ -89,7 +113,7 @@ QVariant ChildrenListModel::data(const QModelIndex &index, int role) const
             data = QVariant(child.Group());
             break;
         case AgeRole:
-            data = QVariant(ChildUtils::Age(child));
+            data = QVariant(QString::number(ChildUtils::Age(child), 'g', 3));
             break;
         case ImageRole:
             data = QVariant(ChildImageProvider + child.Name());
@@ -109,23 +133,14 @@ int ChildrenListModel::rowCount(const QModelIndex & /*parent*/) const
 
 void ChildrenListModel::onDatabaseUpdated()
 {
-    beginResetModel();
-
-    iChildren.clear();
-
-    for(auto const& child : iDatabase.GetAllChildren())
-    {
-        addChild(child);
-    }
-
-    endResetModel();
+    refresh();
 }
 
-void ChildrenListModel::sort(ChildRole sortRole)
+void ChildrenListModel::sort()
 {
     layoutAboutToBeChanged();
 
-    switch(sortRole)
+    switch(iSortRole)
     {
     case NameRole:
         std::stable_sort(iChildren.begin(), iChildren.end(), ChildUtils::CompareName);
@@ -140,27 +155,33 @@ void ChildrenListModel::sort(ChildRole sortRole)
         assert(false);
     }
 
-    //Ordinarily sort ascending
-    //if already sorted ascending by this column then sort descending
-    //hence the sort order will toggle
-    if(iSortRole == sortRole && iSortOrder == Qt::AscendingOrder)
+    if(iSortOrder == Qt::DescendingOrder)
     {
         std::reverse(iChildren.begin(), iChildren.end());
+    }
+
+    layoutChanged();
+}
+
+void ChildrenListModel::refresh()
+{
+    beginResetModel();
+
+    iChildren = iDatabase.GetAllChildren();
+
+    sort();
+
+    endResetModel();
+}
+
+void ChildrenListModel::toggleSortOrder()
+{
+    if(iSortOrder == Qt::AscendingOrder)
+    {
         iSortOrder = Qt::DescendingOrder;
     }
     else
     {
         iSortOrder = Qt::AscendingOrder;
     }
-
-    iSortRole = sortRole;
-
-    layoutChanged();
-}
-
-void ChildrenListModel::addChild(Child const& child)
-{
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    iChildren.push_back(child);
-    endInsertRows();
 }

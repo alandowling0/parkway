@@ -32,7 +32,7 @@ QImage Child::Image() const
 
 bool ChildUtils::CompareName(Child const& child, Child const& other)
 {
-    return child.Name() < other.Name();
+    return QString::localeAwareCompare(child.Name(), other.Name()) < 0;
 }
 
 bool ChildUtils::CompareAge(Child const& child, Child const& other)
@@ -42,20 +42,15 @@ bool ChildUtils::CompareAge(Child const& child, Child const& other)
 
 bool ChildUtils::CompareGroup(Child const& child, Child const& other)
 {
-    return child.Group() < other.Group();
+    return QString::localeAwareCompare(child.Group(), other.Group()) < 0;
 }
 
-QString ChildUtils::Age(Child const& child)
+double ChildUtils::Age(Child const& child)
 {
     auto dob = QDate::fromString(child.DateOfBirth(), "dd/MM/yyyy");
     auto today = QDate::currentDate();
 
     auto days = dob.daysTo(today);
 
-    auto years = days / 365.0;
-
-    std::stringstream ss;
-    ss << std::setprecision(3) << years;
-
-    return QString::fromStdString(ss.str());
+    return days / 365.0;
 }
