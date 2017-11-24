@@ -113,6 +113,7 @@ Rectangle
         focus: true
         highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
         model: childrenListModel
+        onModelChanged: currentIndex = -1
         delegate: delegate
         header: header
         footer: footer
@@ -132,25 +133,23 @@ Rectangle
             onPressAndHold:
             {
                 childrenList.currentIndex = index
+                root.selectedChildName = model.name
                 contextMenu.popup();
             }
             onClicked:
             {
-                if (mouse.button === Qt.LeftButton)
-                {
-                    childrenList.currentIndex = index
-                    root.selectedChildName = model.name
-                }
-                else if (mouse.button === Qt.RightButton)
-                {
-                    childrenList.currentIndex = index
+                childrenList.currentIndex = index
+                root.selectedChildName = model.name
+
+                if (mouse.button === Qt.RightButton)
+                {  
                     contextMenu.popup();
                 }
             }
 
             Image
             {
-                id:image
+                id: image
 
                 anchors.left: parent.left
                 anchors.top: parent.top
@@ -163,7 +162,7 @@ Rectangle
 
             Text
             {
-                id:name
+                id: name
 
                 anchors.left: image.right
                 anchors.top: parent.top
@@ -178,7 +177,7 @@ Rectangle
 
             Text
             {
-                id:group
+                id: group
 
                 anchors.left: name.right
                 anchors.top: parent.top
@@ -193,7 +192,7 @@ Rectangle
 
             Text
             {
-                id:age
+                id: age
 
                 anchors.left: group.right
                 anchors.top: parent.top
@@ -252,6 +251,7 @@ Rectangle
         }
         MenuItem {
             text: "Delete";
+            onTriggered: childrenListModel.removeChild(root.selectedChildName)
         }
     }
 

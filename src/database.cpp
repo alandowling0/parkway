@@ -183,7 +183,29 @@ void Database::addChild(Child const& child)
     query.addBindValue(groupId(child.group()));
     query.addBindValue(imageData);
 
-    query.exec();
+    if(!query.exec())
+        qDebug() << query.lastError().text();
+
+    emit updated();
+}
+
+void Database::removeChild(QString const& childName)
+{
+    QSqlQuery query(iSqliteDatabase);
+    query.prepare("DELETE FROM Relations WHERE child = (?)");
+    query.addBindValue(childId(childName));
+    if(!query.exec())
+        qDebug() << query.lastError().text();
+
+    query.prepare("DELETE FROM Timetables WHERE child = (?)");
+    query.addBindValue(childId(childName));
+    if(!query.exec())
+        qDebug() << query.lastError().text();
+
+    query.prepare("DELETE FROM Children WHERE name = (?)");
+    query.addBindValue(childName);
+    if(!query.exec())
+        qDebug() << query.lastError().text();
 
     emit updated();
 }

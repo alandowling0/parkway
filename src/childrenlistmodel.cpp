@@ -26,6 +26,11 @@ void ChildrenListModel::addChild(QString const& name, QString const& dateOfBirth
     iDatabase.addChild(child);
 }
 
+void ChildrenListModel::removeChild(QString const& name)
+{
+    iDatabase.removeChild(name);
+}
+
 void ChildrenListModel::sortByName()
 {    
     if(iSortRole != NameRole)

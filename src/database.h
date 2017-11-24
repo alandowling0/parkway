@@ -22,6 +22,7 @@ public:
     std::vector<Timetable> timetables(QString const& childName) const;
 
     void addChild(Child const& child);
+    void removeChild(QString const& childName);
 
     static const QString DATABASE_NAME;
 
