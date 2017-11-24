@@ -3,8 +3,9 @@
 #include <cassert>
 
 
-ParentsListModel::ParentsListModel(QObject *parent) :
-    QAbstractListModel(parent)
+ParentsListModel::ParentsListModel(Database &database, QObject *parent) :
+    QAbstractListModel(parent),
+    iDatabase(database)
 {
     connect(&iDatabase, &Database::updated, this, &ParentsListModel::onDatabaseUpdated);
 }

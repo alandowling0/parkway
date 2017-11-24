@@ -7,27 +7,30 @@
 #include "timetableslistmodel.h"
 #include "groupslistmodel.h"
 #include "childimageprovider.h"
+#include "database.h"
 
 int main(int argc, char *argv[])
 {
     if(!QFile::exists(Database::DATABASE_NAME))
     {
-        QFile defaultDatabase(":/database/" + Database::DATABASE_NAME);
-        defaultDatabase.copy(Database::DATABASE_NAME);
+        QFile defaultDatabaseFile(":/database/" + Database::DATABASE_NAME);
+        defaultDatabaseFile.copy(Database::DATABASE_NAME);
     }
 
-    QFile database(Database::DATABASE_NAME);
-    database.setPermissions(QFile::WriteUser);
+    QFile databaseFile(Database::DATABASE_NAME);
+    databaseFile.setPermissions(QFile::WriteUser);
 
     QGuiApplication app(argc, argv);
 
+    Database database;
+
     QQmlApplicationEngine engine;
-    auto childrenListModel = new ChildrenListModel();
+    auto childrenListModel = new ChildrenListModel(database);
     engine.addImageProvider("childimageprovider", new ChildImageProvider(*childrenListModel));
     engine.rootContext()->setContextProperty(QString("childrenListModel"), childrenListModel);
-    engine.rootContext()->setContextProperty(QString("parentsListModel"), new ParentsListModel());
-    engine.rootContext()->setContextProperty(QString("timetablesListModel"), new TimetablesListModel());
-    engine.rootContext()->setContextProperty(QString("groupsListModel"), new GroupsListModel());
+    engine.rootContext()->setContextProperty(QString("parentsListModel"), new ParentsListModel(database));
+    engine.rootContext()->setContextProperty(QString("timetablesListModel"), new TimetablesListModel(database));
+    engine.rootContext()->setContextProperty(QString("groupsListModel"), new GroupsListModel(database));
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
     return app.exec();

@@ -3,8 +3,9 @@
 #include <cassert>
 
 
-GroupsListModel::GroupsListModel(QObject *parent)
-    :QObject(parent)
+GroupsListModel::GroupsListModel(Database& database, QObject *parent) :
+    QObject(parent),
+    iDatabase(database)
 {
     refresh();
 

@@ -9,10 +9,11 @@ namespace
     const QString DefaultPhoto = ":/images/face.jpg";
 }
 
-ChildrenListModel::ChildrenListModel(QObject *parent)
-    :QAbstractListModel(parent),
-      iSortRole(NameRole),
-      iSortOrder(Qt::AscendingOrder)
+ChildrenListModel::ChildrenListModel(Database& database, QObject *parent) :
+    QAbstractListModel(parent),
+    iDatabase(database),
+    iSortRole(NameRole),
+    iSortOrder(Qt::AscendingOrder)
 {
     refresh();
 

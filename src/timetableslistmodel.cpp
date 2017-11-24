@@ -2,8 +2,9 @@
 #include <cassert>
 
 
-TimetablesListModel::TimetablesListModel(QObject *parent) :
-    QAbstractListModel(parent)
+TimetablesListModel::TimetablesListModel(Database& database, QObject *parent) :
+    QAbstractListModel(parent),
+    iDatabase(database)
 {
     connect(&iDatabase, &Database::updated, this, &TimetablesListModel::onDatabaseUpdated);
 }

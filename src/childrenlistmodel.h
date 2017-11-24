@@ -20,7 +20,7 @@ public:
         ImageRole
     };
 
-    ChildrenListModel(QObject *parent = 0);
+    ChildrenListModel(Database& database, QObject *parent = 0);
 
     Q_INVOKABLE void addChild(QString const& name, QString const& dateOfBirth, QString const& group, QUrl const& imageFilePath);
     Q_INVOKABLE void removeChild(QString const& name);
@@ -45,7 +45,7 @@ private:
 private:
     std::vector<Child> iChildren;
 
-    Database iDatabase;
+    Database& iDatabase;
 
     ChildRole iSortRole;
     Qt::SortOrder iSortOrder;

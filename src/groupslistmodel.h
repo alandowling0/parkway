@@ -12,7 +12,7 @@ class GroupsListModel : public QObject
     Q_PROPERTY(QStringList groupNames READ groupNames NOTIFY groupNamesChanged)
 
 public:
-    GroupsListModel(QObject *parent = nullptr);
+    GroupsListModel(Database& database, QObject *parent = nullptr);
 
     QStringList groupNames() const;
 
@@ -26,6 +26,6 @@ private:
     void refresh();
 
     QStringList iGroupNames;
-    Database iDatabase;
+    Database& iDatabase;
 };
 

@@ -251,7 +251,11 @@ Rectangle
         }
         MenuItem {
             text: "Delete";
-            onTriggered: childrenListModel.removeChild(root.selectedChildName)
+            onTriggered: {
+                childrenListModel.removeChild(root.selectedChildName)
+                childrenList.currentIndex = -1
+                root.selectedChildName = ""
+            }
         }
     }
 

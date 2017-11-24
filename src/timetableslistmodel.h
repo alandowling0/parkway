@@ -22,9 +22,10 @@ public:
         FridayRole
     };
 
+    TimetablesListModel(Database& database, QObject *parent = 0);
+
     Q_INVOKABLE void setChild(QString const& childName);
 
-    TimetablesListModel(QObject *parent = 0);
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex & index, int role) const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
@@ -37,5 +38,5 @@ private:
 
     std::vector<Timetable> iTimetables;
     QString iChildName;
-    Database iDatabase;
+    Database& iDatabase;
 };
