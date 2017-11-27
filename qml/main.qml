@@ -1,50 +1,85 @@
 import QtQuick 2.4
 import QtQuick.Window 2.2
+import QtQuick.Controls 2.0
 
 Window {
     visible: true
     width: 1000
     height: 600
 
-    color: "lightgray"    
+    color: "gray"
 
-    Component.onCompleted: showMaximized()
-
-    ChildrenList
-    {
-        id: children
+    Rectangle {
+        id: header
 
         anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 40
+
+        color: "lightgray"
+
+        Row {
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+
+            ToolButton {
+                height: parent.height
+                width: height
+                enabled: stackView.depth > 1
+                opacity: enabled ? 1.0 : 0.5
+                onClicked: stackView.pop()
+                contentItem: Image {
+                    source: "../images/back.png"
+                }
+            }
+
+            ToolButton {
+                height: parent.height
+                width: height
+                onClicked: stackView.goHome()
+                contentItem: Image {
+                    source: "../images/home.png"
+                }
+            }
+        }
+    }
+
+    StackView {
+        id: stackView
+
+        function goHome()
+        {
+            while (depth > 1)
+            {
+                pop()
+            }
+        }
+
+        anchors.top: header.bottom
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: parent.width / 2
-        anchors.margins: 10
-
-    }
-
-    ParentsList
-    {
-        id: parents
-
-        anchors.top: parent.top
         anchors.right: parent.right
-        anchors.left: children.right
-        height: parent.height / 4
-        anchors.margins: 10
 
-        childName: children.selectedChildName
-    }
+        pushEnter: fadeIn
+        popEnter: fadeIn
+        replaceEnter: fadeIn
+        pushExit: null
+        popExit: null
+        replaceExit: null
 
-    AttendedDays
-    {
-        id: attendedDays
+        Transition {
+            id: fadeIn
 
-        anchors.top: parents.bottom
-        anchors.right: parent.right
-        anchors.left: children.right
-        anchors.margins: 10
-        height: parent.height / 6
+            PropertyAnimation {
+                property: "opacity"
+                from: 0
+                to: 1
+                duration: 250
+            }
+        }
 
-        childName: children.selectedChildName
+        initialItem: Home {}
     }
 }

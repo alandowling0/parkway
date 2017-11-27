@@ -7,6 +7,8 @@ ParentsListModel::ParentsListModel(Database &database, QObject *parent) :
     QAbstractListModel(parent),
     iDatabase(database)
 {
+    refresh();
+
     connect(&iDatabase, &Database::updated, this, &ParentsListModel::onDatabaseUpdated);
 }
 
@@ -74,7 +76,11 @@ void ParentsListModel::refresh()
 
     iParents.clear();
 
-    if(!iChildName.isEmpty())
+    if(iChildName.isEmpty())
+    {
+        iParents = iDatabase.parents();
+    }
+    else
     {
         iParents = iDatabase.parents(iChildName);
     }

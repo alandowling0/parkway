@@ -7,8 +7,6 @@ Rectangle
 {
     id: root
 
-    width: 1000
-    height: 600
     border.color: "red"
     border.width: 2
     radius: 5
