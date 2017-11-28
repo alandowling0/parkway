@@ -109,7 +109,6 @@ Rectangle
         anchors.margins: 10
         clip: true
         focus: true
-        highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
         model: childrenListModel
         onModelChanged: currentIndex = -1
         delegate: delegate
@@ -117,6 +116,9 @@ Rectangle
         footer: footer
         footerPositioning: ListView.OverlayFooter
         currentIndex: -1
+        highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+        highlightFollowsCurrentItem: true
+        highlightMoveDuration: 250
     }
 
     Component
