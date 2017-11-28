@@ -20,11 +20,9 @@ Item {
             cellHeight: parent.height * 0.5
             cellWidth: parent.width * 0.333
 
-            delegate: Rectangle {
+            delegate: Item {
                 height: gridView.cellHeight
                 width: gridView.cellWidth
-                border.width: 1
-                border.color: "lightblue"
 
                 Button {
                     anchors.centerIn: parent
