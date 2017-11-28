@@ -3,28 +3,27 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Window 2.2
 
-Rectangle
-{
+Rectangle {
     id: root
+
+    signal addClicked()
+
+    property string selectedChildName: ""
+    property string imageRoot: "../images/"
 
     border.color: "red"
     border.width: 2
     radius: 5
 
-    property string selectedChildName: ""
-    property string imageRoot: "../images/"
 
-    Component
-    {
+    Component {
         id: header
 
-        Item
-        {
+        Item {
             height: 50
             width: childrenList.width
 
-            Text
-            {
+            Text {
                 id: headerImage
 
                 anchors.top: parent.top
@@ -36,8 +35,7 @@ Rectangle
 
             }
 
-            Text
-            {
+            Text {
                 id: headerName
 
                 anchors.top: parent.top
@@ -50,15 +48,13 @@ Rectangle
                 font.pointSize: 16
                 font.bold: true
 
-                MouseArea
-                {
+                MouseArea {
                     anchors.fill: parent
                     onClicked: childrenListModel.sortByName()
                 }
             }
 
-            Text
-            {
+            Text {
                 id: headerGroup
 
                 anchors.top: parent.top
@@ -71,15 +67,13 @@ Rectangle
                 font.pointSize: 16
                 font.bold: true
 
-                MouseArea
-                {
+                MouseArea {
                     anchors.fill: parent
                     onClicked: childrenListModel.sortByGroup()
                 }
             }
 
-            Text
-            {
+            Text {
                 id: headerAge
 
                 anchors.top: parent.top
@@ -92,8 +86,7 @@ Rectangle
                 font.pointSize: 16
                 font.bold: true
 
-                MouseArea
-                {
+                MouseArea {
                     anchors.fill: parent
                     onClicked: childrenListModel.sortByAge()
                 }
@@ -101,8 +94,7 @@ Rectangle
         }
     }
 
-    ListView
-    {
+    ListView {
         id: childrenList
 
         anchors.fill: parent
@@ -121,23 +113,21 @@ Rectangle
         highlightMoveDuration: 250
     }
 
-    Component
-    {
+    Component {
         id: delegate
 
-        MouseArea
-        {
+        MouseArea {
             height: 100
             width: parent.width
             acceptedButtons: Qt.LeftButton | Qt.RightButton
-            onPressAndHold:
-            {
+
+            onPressAndHold: {
                 childrenList.currentIndex = index
                 root.selectedChildName = model.name
                 contextMenu.popup();
             }
-            onClicked:
-            {
+
+            onClicked: {
                 childrenList.currentIndex = index
                 root.selectedChildName = model.name
 
@@ -147,8 +137,7 @@ Rectangle
                 }
             }
 
-            Image
-            {
+            Image {
                 id: image
 
                 anchors.left: parent.left
@@ -160,8 +149,7 @@ Rectangle
                 source: model.imageUrl
             }
 
-            Text
-            {
+            Text {
                 id: name
 
                 anchors.left: image.right
@@ -190,8 +178,7 @@ Rectangle
                 wrapMode: Text.Wrap
             }
 
-            Text
-            {
+            Text {
                 id: age
 
                 anchors.left: group.right
@@ -207,48 +194,43 @@ Rectangle
         }
     }
 
-    Component
-    {
+    Component {
         id: footer
 
-        Rectangle
-        {
+        Rectangle {
             height: 75
             width: childrenList.width
             z: 2
 
-            Button
-            {
+            Button {
                 anchors.fill: parent
                 anchors.margins: 10
 
-                Image
-                {
+                Image {
                     anchors.fill: parent
                     source: imageRoot + "add.png"
                     fillMode: Image.PreserveAspectFit
                 }
 
-                onClicked:
-                {
-                    addChildWindow.show()
+                onClicked: {
+                    root.addClicked()
                 }
             }
         }
     }
 
-    Menu
-    {
+    Menu {
         id: contextMenu
 
-        style: MenuStyle
-        {
+        style: MenuStyle {
             frame: Rectangle{border.color: "blue"}
             itemDelegate.label: Text{text: styleData.text; font.pointSize: 30;}
         }
+
         MenuItem {
             text: "Edit";
         }
+
         MenuItem {
             text: "Delete";
             onTriggered: {
@@ -256,36 +238,6 @@ Rectangle
                 childrenList.currentIndex = -1
                 root.selectedChildName = ""
             }
-        }
-    }
-
-    Window
-    {
-        id: addChildWindow
-
-        height: 400
-        width: 1000
-        minimumWidth: height * 2
-        modality: Qt.WindowModal
-        title: "Add Child"
-
-        onClosing:
-        {
-            addChild.clear()
-        }
-
-        AddChild{
-            id: addChild
-
-            anchors.fill: parent
-            onSaved: {
-                console.log(name, dob, group, image)
-
-                addChildWindow.close()
-
-                childrenListModel.addChild(name, dob, group, image)
-            }
-            onCanceled: addChildWindow.close()
         }
     }
 }

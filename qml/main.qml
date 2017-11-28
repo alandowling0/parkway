@@ -38,7 +38,7 @@ Window {
             ToolButton {
                 height: parent.height
                 width: height
-                onClicked: stackView.goHome()
+                onClicked: stackView.pop(null)
                 contentItem: Image {
                     source: "../images/home.png"
                 }
@@ -48,14 +48,6 @@ Window {
 
     StackView {
         id: stackView
-
-        function goHome()
-        {
-            while (depth > 1)
-            {
-                pop()
-            }
-        }
 
         anchors.top: header.bottom
         anchors.bottom: parent.bottom

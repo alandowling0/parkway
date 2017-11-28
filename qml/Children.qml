@@ -1,7 +1,10 @@
-import QtQuick 2.0
+import QtQuick 2.5
+import QtQuick.Controls 2.0
 
 Item {
     id: root
+
+    property var stackView: StackView.view
 
     ChildrenList {
         id: childrenList
@@ -13,6 +16,10 @@ Item {
 
         Component.onCompleted: parentsOfChildListModel.setChildFilter(selectedChildName)
         onSelectedChildNameChanged: parentsOfChildListModel.setChildFilter(selectedChildName)
+
+        onAddClicked: {
+            root.stackView.push(addOrEditChild)
+        }
     }
 
     ParentsList {
@@ -24,6 +31,20 @@ Item {
         anchors.right: parent.right
 
         parentsModel: parentsOfChildListModel
+    }
+
+    Component {
+        id: addOrEditChild
+
+        AddChild{
+            onSaved: {
+                console.log(name, dob, group, image)
+
+                childrenListModel.addChild(name, dob, group, image)
+
+                root.stackView.pop()
+            }
+        }
     }
 
 }

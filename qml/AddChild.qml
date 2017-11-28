@@ -1,18 +1,14 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.4
+import QtQuick 2.5
+import QtQuick.Controls 2.0
 import QtQuick.Dialogs 1.2
 
-Rectangle
-{
-    width: 1000
-    height: 300
-
+Rectangle {
     property int textInputMaxLength: 100
     property int textInputFontSize: 20
     property string annonymousFace: "../images/face.jpg"
 
-    signal saved(string name, string dob, string group, string image);
-    signal canceled;
+    signal saved(string name, string dob, string group, string image)
+    signal canceled
 
     function clear()
     {
@@ -22,8 +18,7 @@ Rectangle
         enterGroup.currentIndex = 0
     }
 
-    Item
-    {
+    Item {
         id: dataArea
 
         anchors.top: parent.top
@@ -31,8 +26,7 @@ Rectangle
         anchors.right: parent.right
         anchors.bottom: buttonArea.top
 
-        Image
-        {
+        Image {
             id: photo
 
             anchors.top: dataArea.top
@@ -43,15 +37,13 @@ Rectangle
             source: annonymousFace
             fillMode: Image.PreserveAspectFit
 
-            MouseArea
-            {
+            MouseArea {
                 anchors.fill: parent
                 onClicked: fileDialog.open()
             }
         }
 
-        TextField
-        {
+        TextField {
             id: enterName
 
             anchors.top: dataArea.top
@@ -64,8 +56,7 @@ Rectangle
             placeholderText: "Name"
         }
 
-        TextField
-        {
+        TextField {
             id: enterDob
 
             anchors.top: enterName.bottom
@@ -78,16 +69,14 @@ Rectangle
             placeholderText: "Date of Birth"
             readOnly: true
 
-            Button
-            {
+            Button {
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 width: parent.height
                 onClicked: dobPicker.visible = true
 
-                Image
-                {
+                Image {
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                     source: "../images/calendar.png"
@@ -95,8 +84,7 @@ Rectangle
             }
         }
 
-        ComboBox
-        {
+        ComboBox {
             id: enterGroup
 
             anchors.top: enterDob.bottom
@@ -107,8 +95,7 @@ Rectangle
         }
     }
 
-    Item
-    {
+    Item {
         id: buttonArea
 
         anchors.bottom: parent.bottom
@@ -116,8 +103,7 @@ Rectangle
         anchors.right: parent.right
         height: 50
 
-        Button
-        {
+        Button {
             id: cancelButton
 
             anchors.top: buttonArea.top
@@ -128,8 +114,7 @@ Rectangle
             onClicked: canceled()
         }
 
-        Button
-        {
+        Button {
             id: saveButton
 
             anchors.top: buttonArea.top
@@ -141,8 +126,7 @@ Rectangle
         }
     }
 
-    FileDialog
-    {
+    FileDialog {
         id: fileDialog
 
         title: "Please choose a photo"
@@ -151,15 +135,13 @@ Rectangle
         onAccepted: photo.source = fileDialog.fileUrl
     }
 
-    DatePicker
-    {
+    DatePicker {
         id: dobPicker
 
         visible: false
         anchors.fill: parent
         onDateNotPicked: visible=false
-        onDatePicked:
-        {
+        onDatePicked: {
             enterDob.text = date
             visible=false
         }
