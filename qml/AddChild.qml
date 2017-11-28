@@ -3,96 +3,135 @@ import QtQuick.Controls 2.0
 import QtQuick.Dialogs 1.2
 
 Rectangle {
-    property int textInputMaxLength: 100
-    property int textInputFontSize: 20
-    property string annonymousFace: "../images/face.jpg"
+    id: root
 
     signal saved(string name, string dob, string group, string image)
     signal canceled
 
-    function clear()
-    {
-        photo.source = annonymousFace
-        enterName.text = ""
-        enterDob.text = ""
-        enterGroup.currentIndex = 0
-    }
+    property var stackView: StackView.view
+    property real rowHeight: Math.min(height * 0.2, 100)
+    property real fontSize: Math.max(8, rowHeight * 0.2)
 
     Item {
-        id: dataArea
+        id: lhs
 
         anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
         anchors.bottom: buttonArea.top
+        anchors.left: parent.left
+        width: parent.width * 0.6
 
-        Image {
-            id: photo
+        Column {
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width * 0.9
 
-            anchors.top: dataArea.top
-            anchors.bottom: dataArea.bottom
-            anchors.left: dataArea.left
-            width: dataArea.height
-
-            source: annonymousFace
-            fillMode: Image.PreserveAspectFit
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: fileDialog.open()
-            }
-        }
-
-        TextField {
-            id: enterName
-
-            anchors.top: dataArea.top
-            anchors.right: dataArea.right
-            anchors.left: photo.right
-            height: dataArea.height / 3
-            font.pointSize: textInputFontSize
-            maximumLength: textInputMaxLength
-            selectByMouse: true
-            placeholderText: "Name"
-        }
-
-        TextField {
-            id: enterDob
-
-            anchors.top: enterName.bottom
-            anchors.right: dataArea.right
-            anchors.left: photo.right
-            height: dataArea.height / 3
-            font.pointSize: textInputFontSize
-            maximumLength: textInputMaxLength
-            selectByMouse: true
-            placeholderText: "Date of Birth"
-            readOnly: true
-
-            Button {
+            Item {
+                anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                width: parent.height
-                onClicked: dobPicker.visible = true
+                height: root.rowHeight
+
+                TextField {
+                    id: enterName
+
+                    anchors.centerIn: parent
+                    height: parent.height * 0.75
+                    width: parent.width
+
+                    selectByMouse: true
+                    placeholderText: "Name"
+                    font.pointSize: root.fontSize
+                }
+            }
+
+            Item {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: root.rowHeight
+
+                TextField {
+                    id: enterDob
+
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    height: parent.height * 0.75
+                    width: parent.width - (parent.height * 1.1)
+
+                    font.pointSize: root.fontSize
+                    selectByMouse: true
+                    placeholderText: "Date of Birth"
+                    readOnly: true
+                }
+
+                Item {
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    width: parent.height
+
+                    Button {
+                        anchors.centerIn: parent
+                        height: parent.height * 0.75
+                        width: parent.width * 0.75
+
+                        onClicked: root.stackView.push(dobPicker)
+
+                        Image {
+                            anchors.fill: parent
+                            fillMode: Image.PreserveAspectFit
+                            source: "../images/calendar.png"
+                        }
+                    }
+                }
+            }
+
+            Item {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: root.rowHeight
+
+                ComboBox {
+                    id: enterGroup
+
+                    anchors.centerIn: parent
+                    height: parent.height * 0.75
+                    width: parent.width
+
+                    model: groupsListModel.groupNames
+                }
+            }
+
+            Item {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: root.rowHeight
 
                 Image {
-                    anchors.fill: parent
+                    id: photo
+
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    width: height
+
+                    source: "../images/face.jpg"
                     fillMode: Image.PreserveAspectFit
-                    source: "../images/calendar.png"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: fileDialog.open()
+                    }
                 }
             }
         }
+    }
 
-        ComboBox {
-            id: enterGroup
+    Item {
+        id: rhs
 
-            anchors.top: enterDob.bottom
-            anchors.right: dataArea.right
-            anchors.left: photo.right
-            height: dataArea.height / 3
-            model: groupsListModel.groupNames
-        }
+        anchors.top: parent.top
+        anchors.bottom: buttonArea.top
+        anchors.left: lhs.right
+        anchors.right: parent.right
     }
 
     Item {
@@ -101,28 +140,29 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        height: 50
+        height: root.rowHeight
 
-        Button {
-            id: cancelButton
+        Row {
+            anchors.centerIn: parent
+            height: parent.height * 0.5
 
-            anchors.top: buttonArea.top
-            anchors.bottom: buttonArea.bottom
-            anchors.right: buttonArea.right
-            width: 200
-            text: "Cancel"
-            onClicked: canceled()
-        }
+            spacing: height * 0.25
 
-        Button {
-            id: saveButton
+            Button {
+                height: parent.height
+                width: height * 2.5
+                text: "Save"
 
-            anchors.top: buttonArea.top
-            anchors.bottom: buttonArea.bottom
-            anchors.right: cancelButton.left
-            width: 200
-            text: "Save"
-            onClicked: saved(enterName.text, enterDob.text, enterGroup.currentText, photo.source)
+                onClicked: root.saved(enterName.text, enterDob.text, enterGroup.currentText, photo.source)
+            }
+
+            Button {
+                height: parent.height
+                width: height * 2.5
+                text: "Cancel"
+
+                onClicked: root.canceled()
+            }
         }
     }
 
@@ -135,16 +175,15 @@ Rectangle {
         onAccepted: photo.source = fileDialog.fileUrl
     }
 
-    DatePicker {
+    Component {
         id: dobPicker
 
-        visible: false
-        anchors.fill: parent
-        onDateNotPicked: visible=false
-        onDatePicked: {
-            enterDob.text = date
-            visible=false
+        DatePicker {
+            onDateNotPicked: root.stackView.pop()
+            onDatePicked: {
+                enterDob.text = date
+                root.stackView.pop()
+            }
         }
     }
 }
-

@@ -44,6 +44,8 @@ Item {
 
                 root.stackView.pop()
             }
+
+            onCanceled: root.stackView.pop()
         }
     }
 

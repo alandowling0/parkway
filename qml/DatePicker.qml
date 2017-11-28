@@ -6,63 +6,54 @@ import QtQuick.Controls.Styles 1.4
 Item {
     id: root
 
-    width: 1000
-    height: 620
-
     property int margin: 50
 
     signal dateNotPicked()
     signal datePicked(string date)
 
-    Rectangle
-    {
+    Rectangle {
         anchors.fill: parent
         opacity: 0.8
 
-        MouseArea
-        {
+        MouseArea {
             anchors.fill: parent
             onClicked: dateNotPicked()
         }
     }
 
-    MouseArea
-    {
+    MouseArea {
         height: Math.min(parent.height, parent.width) - root.margin
         width: height
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
-        Calendar
-        {
-            id:calendar
-            anchors.fill: parent
+        Calendar {
+            id: calendar
 
             property date today: new Date()
+
+            anchors.fill: parent
+
             maximumDate: Date.fromLocaleDateString(today.toLocaleDateString())
 
-            onClicked:
-            {
-                datePicked(date.toLocaleDateString(Locale.ShortFormat))
-            }
+            onClicked: datePicked(date.toLocaleDateString(Locale.ShortFormat))
 
-            style: CalendarStyle
-            {
-                navigationBar: Rectangle
-                {
-                    height: calendar.height / 8
+            style: CalendarStyle {
+                navigationBar: Rectangle {
+
                     property int toolButtonWidth: calendar.width / 7
 
-                    ToolButton
-                    {
+                    height: calendar.height / 8
+
+                    ToolButton {
                         id: previousYear
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.left: parent.left
                         width: toolButtonWidth
                         onClicked: control.showPreviousYear()
-                        Image
-                        {
+
+                        Image {
                             anchors.top: parent.top
                             anchors.bottom: parent.bottom
                             width: height
@@ -71,16 +62,16 @@ Item {
                         }
                     }
 
-                    ToolButton
-                    {
+                    ToolButton {
                         id: previousMonth
+
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.left: previousYear.right
                         width: toolButtonWidth
                         onClicked: control.showPreviousMonth()
-                        Image
-                        {
+
+                        Image {
                             anchors.top: parent.top
                             anchors.bottom: parent.bottom
                             width: height
@@ -89,8 +80,7 @@ Item {
                         }
                     }
 
-                    Text
-                    {
+                    Text {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.left: previousMonth.right
@@ -102,16 +92,16 @@ Item {
                         fontSizeMode: Text.Fit
                     }
 
-                    ToolButton
-                    {
+                    ToolButton {
                         id: nextYear
+
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.right: parent.right
                         width: toolButtonWidth
                         onClicked: control.showNextYear()
-                        Image
-                        {
+
+                        Image {
                             anchors.top: parent.top
                             anchors.bottom: parent.bottom
                             width: height
@@ -120,16 +110,16 @@ Item {
                         }
                     }
 
-                    ToolButton
-                    {
+                    ToolButton {
                         id: nextMonth
+
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.right: nextYear.left
                         width: toolButtonWidth
                         onClicked: control.showNextMonth()
-                        Image
-                        {
+
+                        Image {
                             anchors.top: parent.top
                             anchors.bottom: parent.bottom
                             width: height

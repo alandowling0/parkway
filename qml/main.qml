@@ -54,24 +54,6 @@ Window {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        pushEnter: fadeIn
-        popEnter: fadeIn
-        replaceEnter: fadeIn
-        pushExit: null
-        popExit: null
-        replaceExit: null
-
-        Transition {
-            id: fadeIn
-
-            PropertyAnimation {
-                property: "opacity"
-                from: 0
-                to: 1
-                duration: 250
-            }
-        }
-
         initialItem: Home {}
     }
 }
