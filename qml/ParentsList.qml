@@ -1,15 +1,15 @@
 import QtQuick 2.0
 
 Rectangle {
+    id: root
+
     width: 1000
     height: 600
     border.color: "red"
     border.width: 2
     radius: 5
 
-    property string childName: ""
-
-    onChildNameChanged: parentsListModel.setChild(childName)
+    property var parentsModel: parentsListModel
 
     ListView
     {
@@ -18,7 +18,7 @@ Rectangle {
         anchors.fill: parent
         anchors.margins: 10
         clip: true
-        model: parentsListModel
+        model: root.parentsModel
         delegate: delegate
     }
 

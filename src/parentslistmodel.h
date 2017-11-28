@@ -20,7 +20,8 @@ public:
 
     ParentsListModel(Database& database, QObject *parent = 0);
 
-    Q_INVOKABLE void setChild(QString const& childName);
+    Q_INVOKABLE void setChildFilter(QString const& childName);
+    Q_INVOKABLE void clearChildFilter();
 
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex & index, int role) const override;
@@ -32,7 +33,9 @@ public slots:
 private:
     void refresh();
 
-    std::vector<Parent> iParents;
-    QString iChildName;
     Database& iDatabase;
+    std::vector<Parent> iParents;
+
+    bool iChildFilterOn;
+    QString iChildFilter;
 };

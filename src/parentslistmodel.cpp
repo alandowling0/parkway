@@ -5,21 +5,27 @@
 
 ParentsListModel::ParentsListModel(Database &database, QObject *parent) :
     QAbstractListModel(parent),
-    iDatabase(database)
+    iDatabase(database),
+    iChildFilterOn(false),
+    iChildFilter("")
 {
     refresh();
 
     connect(&iDatabase, &Database::updated, this, &ParentsListModel::onDatabaseUpdated);
 }
 
-void ParentsListModel::setChild(QString const& childName)
+void ParentsListModel::setChildFilter(QString const& childName)
 {
-    if(childName != iChildName)
-    {
-        iChildName = childName;
+    iChildFilterOn = true;
+    iChildFilter = childName;
+    refresh();
+}
 
-        refresh();
-    }
+void ParentsListModel::clearChildFilter()
+{
+    iChildFilterOn = false;
+    iChildFilter = "";
+    refresh();
 }
 
 QHash<int, QByteArray> ParentsListModel::roleNames() const
@@ -76,13 +82,13 @@ void ParentsListModel::refresh()
 
     iParents.clear();
 
-    if(iChildName.isEmpty())
+    if(iChildFilterOn)
     {
-        iParents = iDatabase.parents();
+        iParents = iDatabase.parents(iChildFilter);
     }
     else
     {
-        iParents = iDatabase.parents(iChildName);
+        iParents = iDatabase.parents();
     }
 
     endResetModel();

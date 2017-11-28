@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
     engine.addImageProvider("childimageprovider", new ChildImageProvider(*childrenListModel));
     engine.rootContext()->setContextProperty(QString("childrenListModel"), childrenListModel);
     engine.rootContext()->setContextProperty(QString("parentsListModel"), new ParentsListModel(database));
+    engine.rootContext()->setContextProperty(QString("parentsOfChildListModel"), new ParentsListModel(database));
     engine.rootContext()->setContextProperty(QString("timetablesListModel"), new TimetablesListModel(database));
     engine.rootContext()->setContextProperty(QString("groupsListModel"), new GroupsListModel(database));
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
