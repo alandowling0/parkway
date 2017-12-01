@@ -20,11 +20,16 @@ ChildrenListModel::ChildrenListModel(Database& database, QObject *parent) :
     connect(&iDatabase, &Database::updated, this, &ChildrenListModel::onDatabaseUpdated);
 }
 
-void ChildrenListModel::addChild(QString const& name, QString const& dateOfBirth, QString const& group, QUrl const& imageFilePath)
+void ChildrenListModel::addChild(QString const& name, QString const& dateOfBirth, QString const& group, QUrl const& imageFilePath, QStringList parents)
 {
     auto image = imageFilePath.isLocalFile() ? QImage(imageFilePath.toLocalFile()) : QImage(DefaultPhoto);
     auto child = Child(name, dateOfBirth, group, image);
     iDatabase.addChild(child);
+
+    for(auto const& parent : parents)
+    {
+        iDatabase.addRelationship(name, parent);
+    }
 }
 
 void ChildrenListModel::removeChild(QString const& name)

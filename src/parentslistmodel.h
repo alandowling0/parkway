@@ -11,6 +11,8 @@ class ParentsListModel : public QAbstractListModel
 {
     Q_OBJECT
 
+    Q_PROPERTY(QStringList parentsNames READ parentsNames NOTIFY parentNamesChanged)
+
 public:
     enum ParentRoles {
         NameRole = Qt::UserRole + 1,
@@ -26,6 +28,11 @@ public:
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex & index, int role) const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
+
+    QStringList parentsNames() const;
+
+signals:
+    void parentNamesChanged();
 
 public slots:
     void onDatabaseUpdated();

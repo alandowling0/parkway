@@ -38,9 +38,9 @@ Item {
 
         AddChild{
             onSaved: {
-                console.log(name, dob, group, image)
+                console.log(name, dob, group, image, parents)
 
-                childrenListModel.addChild(name, dob, group, image)
+                childrenListModel.addChild(name, dob, group, image, parents)
 
                 root.stackView.pop()
             }

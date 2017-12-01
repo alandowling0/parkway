@@ -92,5 +92,19 @@ void ParentsListModel::refresh()
     }
 
     endResetModel();
+
+    emit parentNamesChanged();
+}
+
+QStringList ParentsListModel::parentsNames() const
+{
+    QStringList names;
+
+    for(auto const& parent : iParents)
+    {
+        names.push_back(parent.name());
+    }
+
+    return names;
 }
 

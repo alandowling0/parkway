@@ -5,7 +5,7 @@ import QtQuick.Dialogs 1.2
 Rectangle {
     id: root
 
-    signal saved(string name, string dob, string group, string image)
+    signal saved(string name, string dob, string group, string image, var parents)
     signal canceled
 
     property var stackView: StackView.view
@@ -38,7 +38,7 @@ Rectangle {
                     width: parent.width
 
                     selectByMouse: true
-                    placeholderText: "Name"
+                    placeholderText: "Enter Name..."
                     font.pointSize: root.fontSize
                 }
             }
@@ -58,7 +58,7 @@ Rectangle {
 
                     font.pointSize: root.fontSize
                     selectByMouse: true
-                    placeholderText: "Date of Birth"
+                    placeholderText: "Select Date of Birth..."
                     readOnly: true
                 }
 
@@ -97,6 +97,8 @@ Rectangle {
                     width: parent.width
 
                     model: groupsListModel.groupNames
+
+                    font.pointSize: root.fontSize
                 }
             }
 
@@ -128,10 +130,141 @@ Rectangle {
     Item {
         id: rhs
 
+        z: 1
+
         anchors.top: parent.top
         anchors.bottom: buttonArea.top
         anchors.left: lhs.right
         anchors.right: parent.right
+
+        Item {
+            id: addParentArea
+
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: root.rowHeight
+
+            z: 1
+
+            Item {
+                id: searchBoxArea
+
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.right: addButtonArea.left
+
+                Completer {
+                    id: searchBox
+
+                    anchors.centerIn: parent
+                    height: parent.height * 0.75
+                    width: parent.width
+                    rowHeight: parent.height * 0.75
+
+                    model: parentsListModel.parentsNames
+
+                    placeholderText: "Add Parent.."
+                }
+            }
+
+            Item {
+                id: addButtonArea
+
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                width: height
+
+                Button {
+                    anchors.centerIn: parent
+                    height: parent.height * 0.75
+                    width: parent.width * 0.75
+
+                    text: "Add"
+
+                    enabled: searchBox.valid && !parentsList.model.contains(searchBox.text)
+                    opacity: enabled ? 1.0 : 0.5
+
+                    onClicked: {
+                        parentsList.model.append({"name": searchBox.text})
+                        parentsList.positionViewAtEnd()
+                        searchBox.clear()
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            id: parentsListArea
+
+            anchors.top: addParentArea.bottom
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            border.width: 1
+
+            ListView {
+                id: parentsList
+
+                anchors.fill: parent
+
+                clip: true
+
+                model: ListModel {
+                    function contains(name)
+                    {
+                        var found = false
+
+                        for(var i=0; i<count; ++i)
+                        {
+                            if(get(i).name === name)
+                            {
+                                found = true
+                            }
+                        }
+
+                        return found
+                    }
+                }
+
+                delegate: Item {
+                    height: root.rowHeight
+                    width: parent.width
+
+                    Text {
+                        anchors.centerIn: parent
+                        width: parent.width * 0.9
+                        elide: Text.ElideRight
+
+                        text: model.name
+                        font.pointSize: root.fontSize
+                    }
+
+                    Item {
+                        id: removeButtonArea
+
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        anchors.right: parent.right
+                        width: height
+
+                        Button {
+                            anchors.centerIn: parent
+                            height: parent.height * 0.75
+                            width: parent.width * 0.75
+                            text: "Remove"
+
+                            onClicked: {
+                                parentsList.model.remove(index)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     Item {
@@ -153,7 +286,16 @@ Rectangle {
                 width: height * 2.5
                 text: "Save"
 
-                onClicked: root.saved(enterName.text, enterDob.text, enterGroup.currentText, photo.source)
+                onClicked: {
+                    var parents = []
+
+                    for(var i=0; i<parentsList.model.count; ++i)
+                    {
+                        parents.push(parentsList.model.get(i).name)
+                    }
+
+                    root.saved(enterName.text, enterDob.text, enterGroup.currentText, photo.source, parents)
+                }
             }
 
             Button {

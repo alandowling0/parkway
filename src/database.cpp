@@ -210,6 +210,25 @@ void Database::removeChild(QString const& childName)
     emit updated();
 }
 
+void Database::addRelationship(QString childName, QString parentName)
+{
+    auto child = childId(childName);
+    auto parent = parentId(parentName);
+
+    if(child >= 0 && parent >= 0)
+    {
+        QSqlQuery query(iSqliteDatabase);
+        query.prepare("INSERT INTO Relations (child, parent) VALUES (?, ?)");
+        query.addBindValue(child);
+        query.addBindValue(parent);
+
+        if(!query.exec())
+            qDebug() << query.lastError().text();
+
+        emit updated();
+    }
+}
+
 int Database::childId(QString const& childName) const
 {
     QSqlQuery childId(iSqliteDatabase);
@@ -221,6 +240,24 @@ int Database::childId(QString const& childName) const
     if(childId.first())
     {
         return childId.value(0).toInt();
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+int Database::parentId(QString const& parentName) const
+{
+    QSqlQuery parentId(iSqliteDatabase);
+    parentId.prepare("SELECT id FROM Parents WHERE name=?");
+    parentId.addBindValue(parentName);
+    if(!parentId.exec())
+        qDebug() << parentId.lastError().text();
+
+    if(parentId.first())
+    {
+        return parentId.value(0).toInt();
     }
     else
     {

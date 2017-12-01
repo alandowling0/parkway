@@ -23,6 +23,9 @@ public:
 
     void addChild(Child const& child);
     void removeChild(QString const& childName);
+    void addRelationship(QString childName, QString parentName);
+
+
 
     static const QString DATABASE_NAME;
 
@@ -31,6 +34,7 @@ signals:
 
 private:
      int childId(QString const& childName) const;
+     int parentId(QString const& parentName) const;
      int groupId(QString const& groupName) const;
 
 private:
