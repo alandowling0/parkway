@@ -2,14 +2,14 @@ import QtQuick 2.5
 import QtQuick.Controls 2.0
 import QtQuick.Dialogs 1.2
 
-Rectangle {
+Item {
     id: root
 
     signal saved(string name, string dob, string group, string image, var parents)
     signal canceled
 
     property var stackView: StackView.view
-    property real rowHeight: Math.min(height * 0.2, 100)
+    property real rowHeight: Math.min(height * 0.125, 100)
     property real fontSize: Math.max(8, rowHeight * 0.2)
 
     Item {

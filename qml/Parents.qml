@@ -1,10 +1,31 @@
-import QtQuick 2.0
+import QtQuick 2.5
+import QtQuick.Controls 2.0
 
 Item {
     ParentsList {
+        id: parentList
+
         anchors.top: parent.top
+        anchors.bottom: buttonArea.top
+        anchors.left: parent.left
+        width: parent.width * 0.7
+    }
+
+    Item {
+        id: buttonArea
+
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: parent.width * 0.6
+        anchors.right: parentList.right
+        height: parentList.rowHeight
+
+        Button {
+            anchors.centerIn: parent
+
+            height: parent.height * 0.75
+            width: height * 3
+
+            text: "Add Parent"
+        }
     }
 }

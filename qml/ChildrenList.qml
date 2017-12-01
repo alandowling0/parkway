@@ -1,242 +1,225 @@
 import QtQuick 2.5
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
 
-Rectangle {
+Item {
     id: root
 
-    signal addClicked()
-
     property string selectedChildName: ""
-    property string imageRoot: "../images/"
 
-    border.color: "red"
-    border.width: 2
-    radius: 5
-
-
-    Component {
-        id: header
-
-        Item {
-            height: 50
-            width: childrenList.width
-
-            Text {
-                id: headerImage
-
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                width: parent.width / 4
-
-            }
-
-            Text {
-                id: headerName
-
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.left: headerImage.right
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                width: parent.width / 4
-                text: "Name"
-                font.pointSize: 16
-                font.bold: true
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: childrenListModel.sortByName()
-                }
-            }
-
-            Text {
-                id: headerGroup
-
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.left: headerName.right
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                width: parent.width / 4
-                text: "Group"
-                font.pointSize: 16
-                font.bold: true
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: childrenListModel.sortByGroup()
-                }
-            }
-
-            Text {
-                id: headerAge
-
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.left: headerGroup.right
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                width: parent.width / 4
-                text: "Age"
-                font.pointSize: 16
-                font.bold: true
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: childrenListModel.sortByAge()
-                }
-            }
-        }
-    }
+    property real rowHeight: 50
+    property real pointSize: root.rowHeight * 0.25
 
     ListView {
         id: childrenList
 
         anchors.fill: parent
-        anchors.margins: 10
         clip: true
         focus: true
         model: childrenListModel
         onModelChanged: currentIndex = -1
         delegate: delegate
         header: header
-        footer: footer
-        footerPositioning: ListView.OverlayFooter
         currentIndex: -1
-        highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+        highlight: Rectangle {color: "lightgray"; radius: 5}
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 250
     }
 
     Component {
-        id: delegate
+        id: header
 
-        MouseArea {
-            height: 100
-            width: parent.width
-            acceptedButtons: Qt.LeftButton | Qt.RightButton
+        Row {
+            height: root.rowHeight
+            anchors.right: parent.right
 
-            onPressAndHold: {
-                childrenList.currentIndex = index
-                root.selectedChildName = model.name
-                contextMenu.popup();
-            }
+            Item {
+                id: nameHeaderArea
 
-            onClicked: {
-                childrenList.currentIndex = index
-                root.selectedChildName = model.name
+                height: parent.height
+                width: childrenList.width * 0.3
 
-                if (mouse.button === Qt.RightButton)
-                {  
-                    contextMenu.popup();
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    elide: Text.ElideRight
+                    font.pointSize: root.pointSize
+                    font.bold: true
+                    text: "Name"
                 }
+
+//                MouseArea {
+//                    anchors.fill: parent
+//                    onClicked: childrenListModel.sortByName()
+//                }
             }
 
-            Image {
-                id: image
+            Item {
+                id: groupHeaderArea
 
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.margins: 5
-                width: parent.width / 4
-                fillMode: Image.PreserveAspectFit
-                source: model.imageUrl
+                height: parent.height
+                width: childrenList.width * 0.3
+
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    elide: Text.ElideRight
+                    font.pointSize: root.pointSize
+                    font.bold: true
+                    text: "Group"
+                }
+
+//                MouseArea {
+//                    anchors.fill: parent
+//                    onClicked: childrenListModel.sortByGroup()
+//                }
             }
 
-            Text {
-                id: name
+            Item {
+                id: ageHeaderArea
 
-                anchors.left: image.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                width: parent.width / 4
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.pointSize: 16
-                text: model.name
-                wrapMode: Text.Wrap
-            }
+                height: parent.height
+                width: childrenList.width * 0.3
 
-            Text
-            {
-                id: group
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    elide: Text.ElideRight
+                    font.pointSize: root.pointSize
+                    font.bold: true
+                    text: "Age"
+                }
 
-                anchors.left: name.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                width: parent.width / 4
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.pointSize: 16
-                text: model.group
-                wrapMode: Text.Wrap
-            }
-
-            Text {
-                id: age
-
-                anchors.left: group.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                width: parent.width / 4
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.pointSize: 16
-                text: model.age
-                wrapMode: Text.Wrap
+//                MouseArea {
+//                    anchors.fill: parent
+//                    onClicked: childrenListModel.sortByAge()
+//                }
             }
         }
     }
 
     Component {
-        id: footer
+        id: delegate
 
-        Rectangle {
-            height: 75
+        Item {
+            id: rowArea
+
+            height: root.rowHeight
             width: childrenList.width
-            z: 2
 
-            Button {
-                anchors.fill: parent
-                anchors.margins: 10
+            Row {
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
 
-                Image {
-                    anchors.fill: parent
-                    source: imageRoot + "add.png"
-                    fillMode: Image.PreserveAspectFit
+                Item {
+                    id: imageArea
+
+                    height: parent.height
+                    width: rowArea.width * 0.1
+
+                    Image {
+                        id: image
+
+                        anchors.centerIn: parent
+                        height: parent.height * 0.9
+                        width: parent.width * 0.9
+
+                        fillMode: Image.PreserveAspectFit
+                        source: model.imageUrl
+                    }
                 }
 
-                onClicked: {
-                    root.addClicked()
+                Item {
+                    id: nameArea
+
+                    height: parent.height
+                    width: rowArea.width * 0.3
+
+                    Text {
+                        id: name
+
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width
+                        horizontalAlignment: Text.AlignHCenter
+                        elide: Text.ElideRight
+                        font.pointSize: root.pointSize
+                        text: model.name
+                    }
+                }
+
+                Item {
+                    id: groupArea
+
+                    height: parent.height
+                    width: rowArea.width * 0.3
+
+                    Text {
+                        id: group
+
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width
+                        horizontalAlignment: Text.AlignHCenter
+                        elide: Text.ElideRight
+                        font.pointSize: root.pointSize
+                        text: model.group
+                    }
+                }
+
+                Item {
+                    id: ageArea
+
+                    height: parent.height
+                    width: rowArea.width * 0.3
+
+                    Text {
+                        id: age
+
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width
+                        horizontalAlignment: Text.AlignHCenter
+                        elide: Text.ElideRight
+                        font.pointSize: root.pointSize
+                        text: model.age
+                    }
                 }
             }
-        }
-    }
 
-    Menu {
-        id: contextMenu
+            MouseArea {
+                anchors.fill: parent
 
-        style: MenuStyle {
-            frame: Rectangle{border.color: "blue"}
-            itemDelegate.label: Text{text: styleData.text; font.pointSize: 30;}
-        }
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-        MenuItem {
-            text: "Edit";
-        }
+                onClicked: {
+                    childrenList.currentIndex = index
+                    root.selectedChildName = model.name
 
-        MenuItem {
-            text: "Delete";
-            onTriggered: {
-                childrenListModel.removeChild(root.selectedChildName)
-                childrenList.currentIndex = -1
-                root.selectedChildName = ""
+                    if (mouse.button === Qt.RightButton)
+                    {
+                        contextMenu.open();
+                    }
+                }
+            }
+
+            Menu {
+                id: contextMenu
+
+                y: parent.height
+                width: parent.width
+
+                MenuItem {
+                    text: "Edit";
+                }
+
+                MenuItem {
+                    text: "Delete";
+                    onTriggered: {
+                        childrenListModel.removeChild(root.selectedChildName)
+                    }
+                }
             }
         }
     }

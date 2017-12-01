@@ -10,27 +10,45 @@ Item {
         id: childrenList
 
         anchors.top: parent.top
-        anchors.bottom: parent.bottom
+        anchors.bottom: buttonArea.top
         anchors.left: parent.left
-        width: parent.width * 0.6
+        anchors.margins: 10
+        width: parent.width * 0.7
 
         Component.onCompleted: parentsOfChildListModel.setChildFilter(selectedChildName)
         onSelectedChildNameChanged: parentsOfChildListModel.setChildFilter(selectedChildName)
-
-        onAddClicked: {
-            root.stackView.push(addOrEditChild)
-        }
     }
 
-    ParentsList {
+    ParentsOfChild {
         id: parentsOfChild
 
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: childrenList.right
         anchors.right: parent.right
+        anchors.margins: 10
 
         parentsModel: parentsOfChildListModel
+    }
+
+    Item {
+        id: buttonArea
+
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: childrenList.right
+        height: childrenList.rowHeight
+
+        Button {
+            anchors.centerIn: parent
+
+            height: parent.height * 0.75
+            width: height * 3
+
+            text: "Add Child"
+
+            onClicked: root.stackView.push(addOrEditChild)
+        }
     }
 
     Component {
@@ -48,5 +66,4 @@ Item {
             onCanceled: root.stackView.pop()
         }
     }
-
 }

@@ -20,5 +20,6 @@
         <file>images/back.png</file>
         <file>images/home.png</file>
         <file>qml/Completer.qml</file>
+        <file>qml/ParentsOfChild.qml</file>
     </qresource>
 </RCC>
