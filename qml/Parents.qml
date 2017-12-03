@@ -35,9 +35,9 @@ Item {
 
         AddParent{
             onSaved: {
-                console.log(name, image, email, phone)
+                console.log(name, image, email, phone, children)
 
-                parentsListModel.addParent(name, email, phone, image, [])
+                parentsListModel.addParent(name, email, phone, image, children)
 
                 root.stackView.pop()
             }

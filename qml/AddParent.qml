@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 Item {
     id: root
 
-    signal saved(string name, string image, string email, string phone)
+    signal saved(string name, string image, string email, string phone, var children)
     signal canceled
 
     property var stackView: StackView.view
@@ -238,7 +238,14 @@ Item {
                 text: "Save"
 
                 onClicked: {
-                    root.saved(enterName.text, "../images/face.jpg", enterEmail.text, enterPhone.text)
+                    var children = []
+
+                    for(var i=0; i<childrenList.model.count; ++i)
+                    {
+                        children.push(childrenList.model.get(i).name)
+                    }
+
+                    root.saved(enterName.text, "../images/face.jpg", enterEmail.text, enterPhone.text, children)
                 }
             }
 

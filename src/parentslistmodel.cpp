@@ -14,9 +14,14 @@ ParentsListModel::ParentsListModel(Database &database, QObject *parent) :
     connect(&iDatabase, &Database::updated, this, &ParentsListModel::onDatabaseUpdated);
 }
 
-void ParentsListModel::addParent(QString const& name, QString const& email, QString const& phone, QUrl const& /*imageFilePath*/, QStringList /*children*/)
+void ParentsListModel::addParent(QString const& name, QString const& email, QString const& phone, QUrl const& /*imageFilePath*/, QStringList children)
 {
     iDatabase.addParent(Parent(name, email, phone));
+
+    for(auto const& child : children)
+    {
+        iDatabase.addRelationship(child, name);
+    }
 }
 
 void ParentsListModel::removeParent(QString const& name)

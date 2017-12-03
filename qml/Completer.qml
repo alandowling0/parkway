@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import QtQuick.Controls 2.0
 
 FocusScope {
@@ -25,7 +25,9 @@ FocusScope {
 
         onActiveFocusChanged: {
             if(activeFocus)
+            {
                 optionsPopup.open()
+            }
         }
 
         onPressed: optionsPopup.open()
