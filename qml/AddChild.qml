@@ -153,7 +153,7 @@ Item {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
-                anchors.right: addButtonArea.left
+                anchors.right: parent.right
 
                 Completer {
                     id: searchBox
@@ -161,36 +161,17 @@ Item {
                     anchors.centerIn: parent
                     height: parent.height * 0.75
                     width: parent.width
-                    rowHeight: parent.height * 0.75
 
                     model: parentsListModel.parentsNames
 
                     placeholderText: "Add Parent.."
-                }
-            }
 
-            Item {
-                id: addButtonArea
-
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.right: parent.right
-                width: height
-
-                Button {
-                    anchors.centerIn: parent
-                    height: parent.height * 0.75
-                    width: parent.width * 0.75
-
-                    text: "Add"
-
-                    enabled: searchBox.valid && !parentsList.model.contains(searchBox.text)
-                    opacity: enabled ? 1.0 : 0.5
-
-                    onClicked: {
-                        parentsList.model.append({"name": searchBox.text})
-                        parentsList.positionViewAtEnd()
-                        searchBox.clear()
+                    onSelected: {
+                        if(!parentsList.model.contains(selectedText))
+                        {
+                            parentsList.model.append({"name": selectedText})
+                            parentsList.positionViewAtEnd()
+                        }
                     }
                 }
             }
@@ -249,7 +230,7 @@ Item {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.right: parent.right
-                        width: height
+                        width: height * 1.5
 
                         Button {
                             anchors.centerIn: parent

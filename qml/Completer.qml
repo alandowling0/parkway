@@ -4,99 +4,89 @@ import QtQuick.Controls 2.0
 FocusScope {
     id: root
 
-    property real rowHeight: 50
+    signal selected(string selectedText)
+
     property int maxRows: 5
-    property real fontSize: Math.max(8, root.rowHeight * 0.25)
-    property var model: [
-        "Alan",
-        "Isabel",
-        "Michelle Gilchrist",
-        "Rohan Gilchrist",
-        "Alex",
-        "Alan Dowling"
-    ]
-
-    property string text: textField.text
-    property bool valid: textField.validInput
-    property string placeholderText: "Enter Text"
-
-    function clear() {
-        textField.clear()
-        optionsArea.optionSelected = false
-    }
+    property var model: []
+    property real fontSize: Math.max(8, root.height * 0.25)
+    property string placeholderText: "Search..."
 
     TextField {
         id: textField
 
-        property bool validInput: root.model.indexOf(text) >= 0
-
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        height: root.rowHeight
+        height: root.height
+
         selectByMouse: true
-
         font.pointSize: root.fontSize
-
         placeholderText: root.placeholderText
 
-        onTextEdited: {
-            var options = []
-
-            for(var i=0; i<root.model.length; ++i)
-            {
-                if(root.model[i].toLowerCase().indexOf(text.toLowerCase()) >= 0)
-                {
-                    options.push(root.model[i])
-                }
-            }
-
-            optionsList.model = options
-
-            optionsArea.optionSelected = false
+        onActiveFocusChanged: {
+            if(activeFocus)
+                optionsPopup.open()
         }
 
-        opacity: validInput ? 1.0 : 0.5
+        onPressed: optionsPopup.open()
     }
 
-    Rectangle {
+    Item {
         id: optionsArea
-
-        property bool optionSelected: false
 
         anchors.top: textField.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        height: root.activeFocus && !optionsArea.optionSelected ? (root.rowHeight * Math.min(root.maxRows, optionsList.count)) : 0
-        clip: true
+        height: optionsPopup.visible ? root.height * Math.min(root.maxRows, optionsList.count) : 0
 
-        border.color: "lightgray"
+        Popup {
+            id: optionsPopup
 
-        ListView {
-            id: optionsList
+            height: parent.height
+            width: parent.width
 
-            anchors.fill: parent
-            model: root.model
+            padding: 0
 
-            delegate: Item {
-                height: root.rowHeight
-                width: parent.width
+            ListView {
+                id: optionsList
 
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: textField.leftPadding
-                    font.pointSize: root.fontSize
-                    text: modelData
+                anchors.fill: parent
+                clip: true
+
+                model: {
+                    var options = []
+
+                    for(var i=0; i<root.model.length; ++i)
+                    {
+                        if(root.model[i].toLowerCase().indexOf(textField.text.toLowerCase()) >= 0)
+                        {
+                            options.push(root.model[i])
+                        }
+                    }
+
+                    return options
                 }
 
-                MouseArea {
-                    anchors.fill: parent
+                delegate: Item {
+                    height: root.height
+                    width: parent.width
 
-                    onClicked: {
-                        textField.text = modelData
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: textField.leftPadding
+                        font.pointSize: root.fontSize
+                        text: modelData
+                    }
 
-                        optionsArea.optionSelected = true
+                    MouseArea {
+                        anchors.fill: parent
+
+                        onClicked: {
+                            root.selected(modelData)
+                            optionsPopup.close()
+                            textField.clear()
+                        }
                     }
                 }
             }
