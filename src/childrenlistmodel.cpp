@@ -142,6 +142,18 @@ int ChildrenListModel::rowCount(const QModelIndex & /*parent*/) const
     return iChildren.size();
 }
 
+QStringList ChildrenListModel::childrenNames() const
+{
+    QStringList names;
+
+    for(auto const& child : iChildren)
+    {
+        names.push_back(child.name());
+    }
+
+    return names;
+}
+
 void ChildrenListModel::onDatabaseUpdated()
 {
     refresh();
@@ -183,6 +195,8 @@ void ChildrenListModel::refresh()
     sort();
 
     endResetModel();
+
+    emit childrenNamesChanged();
 }
 
 void ChildrenListModel::toggleSortOrder()

@@ -26,6 +26,23 @@ Item {
             width: height * 3
 
             text: "Add Parent"
+            onClicked: root.stackView.push(addOrEditParent)
+        }
+    }
+
+    Component {
+        id: addOrEditParent
+
+        AddParent{
+            onSaved: {
+                console.log(name, image, email, phone)
+
+                parentsListModel.addParent(name, email, phone, image, [])
+
+                root.stackView.pop()
+            }
+
+            onCanceled: root.stackView.pop()
         }
     }
 }

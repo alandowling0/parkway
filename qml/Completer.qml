@@ -29,6 +29,8 @@ FocusScope {
         }
 
         onPressed: optionsPopup.open()
+
+        onTextEdited: optionsPopup.open()
     }
 
     Item {

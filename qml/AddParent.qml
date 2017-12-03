@@ -1,11 +1,10 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.0
-import QtQuick.Dialogs 1.2
 
 Item {
     id: root
 
-    signal saved(string name, string dob, string group, string image, var parents)
+    signal saved(string name, string image, string email, string phone)
     signal canceled
 
     property var stackView: StackView.view
@@ -38,7 +37,7 @@ Item {
                     width: parent.width
 
                     selectByMouse: true
-                    placeholderText: "Enter Name..."
+                    placeholderText: "Name..."
                     font.pointSize: root.fontSize
                 }
             }
@@ -49,38 +48,15 @@ Item {
                 height: root.rowHeight
 
                 TextField {
-                    id: enterDob
+                    id: enterEmail
 
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
+                    anchors.centerIn: parent
                     height: parent.height * 0.75
-                    width: parent.width - (parent.height * 1.1)
+                    width: parent.width
 
-                    font.pointSize: root.fontSize
                     selectByMouse: true
-                    placeholderText: "Select Date of Birth..."
-                    readOnly: true
-                }
-
-                Item {
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: parent.height
-
-                    Button {
-                        anchors.centerIn: parent
-                        height: parent.height * 0.75
-                        width: parent.width * 0.75
-
-                        onClicked: root.stackView.push(dobPicker)
-
-                        Image {
-                            anchors.fill: parent
-                            fillMode: Image.PreserveAspectFit
-                            source: "../images/calendar.png"
-                        }
-                    }
+                    placeholderText: "Email..."
+                    font.pointSize: root.fontSize
                 }
             }
 
@@ -89,16 +65,17 @@ Item {
                 anchors.right: parent.right
                 height: root.rowHeight
 
-                ComboBox {
-                    id: enterGroup
+                TextField {
+                    id: enterPhone
 
-                    anchors.centerIn: parent
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
                     height: parent.height * 0.75
                     width: parent.width
 
-                    model: groupsListModel.groupNames
-
                     font.pointSize: root.fontSize
+                    selectByMouse: true
+                    placeholderText: "Phone..."
                 }
             }
 
@@ -120,7 +97,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: fileDialog.open()
+                       // onClicked: fileDialog.open()
                     }
                 }
             }
@@ -136,7 +113,7 @@ Item {
         anchors.right: parent.right
 
         Item {
-            id: addParentArea
+            id: addChildArea
 
             anchors.centerIn: parent
             height: parent.height
@@ -146,7 +123,7 @@ Item {
                 id: searchBoxArea
 
                 anchors.top: parent.top
-                anchors.left: parent.left
+                anchors.left:parent.left
                 anchors.right: parent.right
                 height: root.rowHeight
 
@@ -157,30 +134,30 @@ Item {
                     height: parent.height * 0.75
                     width: parent.width
 
-                    model: parentsListModel.parentsNames
+                    model: childrenListModel.childrenNames
 
-                    placeholderText: "Add Parent.."
+                    placeholderText: "Add Child.."
 
                     onSelected: {
-                        if(!parentsList.model.contains(selectedText))
+                        if(!childrenList.model.contains(selectedText))
                         {
-                            parentsList.model.append({"name": selectedText})
-                            parentsList.positionViewAtEnd()
+                            childrenList.model.append({"name": selectedText})
+                            childrenList.positionViewAtEnd()
                         }
                     }
                 }
             }
 
             Rectangle {
-                id: parentsListArea
+                id: childrenListArea
 
                 anchors.top: searchBoxArea.bottom
                 anchors.bottom: parent.bottom
-                anchors.left: parent.left
+                anchors.left:parent.left
                 anchors.right: parent.right
 
                 ListView {
-                    id: parentsList
+                    id: childrenList
 
                     anchors.fill: parent
 
@@ -222,7 +199,7 @@ Item {
                             anchors.top: parent.top
                             anchors.bottom: parent.bottom
                             anchors.right: parent.right
-                            width: height * 1.5
+                            width: height
 
                             Button {
                                 anchors.centerIn: parent
@@ -231,7 +208,7 @@ Item {
                                 text: "Remove"
 
                                 onClicked: {
-                                    parentsList.model.remove(index)
+                                    childrenList.model.remove(index)
                                 }
                             }
                         }
@@ -239,15 +216,13 @@ Item {
                 }
             }
         }
-
-
     }
 
     Item {
         id: buttonArea
 
         anchors.bottom: parent.bottom
-        anchors.left: parent.left
+        anchors.left:parent.left
         anchors.right: parent.right
         height: root.rowHeight
 
@@ -263,14 +238,7 @@ Item {
                 text: "Save"
 
                 onClicked: {
-                    var parents = []
-
-                    for(var i=0; i<parentsList.model.count; ++i)
-                    {
-                        parents.push(parentsList.model.get(i).name)
-                    }
-
-                    root.saved(enterName.text, enterDob.text, enterGroup.currentText, photo.source, parents)
+                    root.saved(enterName.text, "../images/face.jpg", enterEmail.text, enterPhone.text)
                 }
             }
 
@@ -280,27 +248,6 @@ Item {
                 text: "Cancel"
 
                 onClicked: root.canceled()
-            }
-        }
-    }
-
-    FileDialog {
-        id: fileDialog
-
-        title: "Please choose a photo"
-        nameFilters: [ "Image files (*.jpg *.png)" ]
-        folder: shortcuts.pictures
-        onAccepted: photo.source = fileDialog.fileUrl
-    }
-
-    Component {
-        id: dobPicker
-
-        DatePicker {
-            onDateNotPicked: root.stackView.pop()
-            onDatePicked: {
-                enterDob.text = date
-                root.stackView.pop()
             }
         }
     }

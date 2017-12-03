@@ -197,6 +197,8 @@ Item {
 
                 MenuItem {
                     text: "Delete";
+
+                    onClicked: parentsListModel.removeParent(model.name)
                 }
             }
         }

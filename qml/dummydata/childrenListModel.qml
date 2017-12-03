@@ -2,6 +2,8 @@ import QtQuick 2.0
 
 ListModel
 {
+    property var childrenNames: ["Sara", "Robbie", "Elsie", "Matilde", "Irene"]
+
     function addChild(name, dateOfBirth, group)
 	{
 	}

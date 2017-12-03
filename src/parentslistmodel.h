@@ -22,6 +22,8 @@ public:
 
     ParentsListModel(Database& database, QObject *parent = 0);
 
+    Q_INVOKABLE void addParent(QString const& name, QString const& email, QString const& phone, QUrl const& imageFilePath, QStringList children);
+    Q_INVOKABLE void removeParent(QString const& name);
     Q_INVOKABLE void setChildFilter(QString const& childName);
     Q_INVOKABLE void clearChildFilter();
 

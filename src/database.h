@@ -23,6 +23,8 @@ public:
 
     void addChild(Child const& child);
     void removeChild(QString const& childName);
+    void addParent(Parent const& parent);
+    void removeParent(QString const& parentName);
     void addRelationship(QString childName, QString parentName);
 
 

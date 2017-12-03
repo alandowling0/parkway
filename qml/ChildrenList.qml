@@ -217,7 +217,7 @@ Item {
                 MenuItem {
                     text: "Delete";
                     onTriggered: {
-                        childrenListModel.removeChild(root.selectedChildName)
+                        childrenListModel.removeChild(model.name)
                     }
                 }
             }
