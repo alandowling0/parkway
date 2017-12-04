@@ -23,9 +23,9 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     Database database;
+    auto childrenListModel = new ChildrenListModel(database);
 
     QQmlApplicationEngine engine;
-    auto childrenListModel = new ChildrenListModel(database);
     engine.addImageProvider("childimageprovider", new ChildImageProvider(*childrenListModel));
     engine.rootContext()->setContextProperty(QString("childrenListModel"), childrenListModel);
     engine.rootContext()->setContextProperty(QString("parentsListModel"), new ParentsListModel(database));

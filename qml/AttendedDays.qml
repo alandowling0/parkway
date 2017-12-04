@@ -15,6 +15,7 @@ Rectangle
     ListView
     {
         id: daysList
+
         anchors.fill: parent
         anchors.margins: 10
         clip: true

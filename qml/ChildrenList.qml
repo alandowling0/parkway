@@ -14,7 +14,9 @@ Item {
         id: childrenList
 
         anchors.fill: parent
+
         clip: true
+        ScrollBar.vertical: ScrollBar { }
         focus: true
         model: childrenListModel
         onModelChanged: currentIndex = -1

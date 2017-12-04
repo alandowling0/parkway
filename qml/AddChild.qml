@@ -185,6 +185,7 @@ Item {
                     anchors.fill: parent
 
                     clip: true
+                    ScrollBar.vertical: ScrollBar { }
 
                     model: ListModel {
                         function contains(name)

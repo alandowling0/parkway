@@ -13,7 +13,9 @@ Item {
 
         anchors.fill: parent
         anchors.margins: 10
+
         clip: true
+        ScrollBar.vertical: ScrollBar { }
         focus: true
         model: parentsListModel
         onModelChanged: currentIndex = -1

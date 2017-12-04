@@ -55,7 +55,9 @@ FocusScope {
                 id: optionsList
 
                 anchors.fill: parent
+
                 clip: true
+                ScrollBar.vertical: ScrollBar { }
 
                 model: {
                     var options = []
